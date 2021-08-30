@@ -1,13 +1,14 @@
+using GraphQL.Server;
 using GraphQL.Server.Ui.Voyager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ObrasApi.src.Shared.Database;
-using ObrasApi.src.Shared.GraphQL;
-using ObrasApi.src.Shared.GraphQL.Account;
-using ObrasApi.src.Shared.GraphQL.Company;
+using Obras.Api;
+using Obras.Data;
+using Obras.GraphQLModels.Schemas;
 
 namespace ObrasApi
 {
@@ -24,35 +25,60 @@ namespace ObrasApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddPooledDbContextFactory<AppDbContext>(options =>
-                    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
 
-            services
-                .AddGraphQLServer()
-                .AddQueryType<Query>()
-                .AddType<CompanyType>()
-                .AddType<AccountType>()
-                .AddProjections()
-                .AddMutationType<Mutation>()
-                .AddFiltering()
-                .AddSorting();
+            services.AddControllers();
+
+            services.AddDbContext<ObrasDBContext>(
+                optionsAction: options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")),
+                contextLifetime: ServiceLifetime.Singleton);
+
+            services.AddCustomIdentityAuth();
+
+            services.AddCustomJWT(Configuration);
+
+            services.AddCustomGraphQLAuth();
+
+            services.AddCustomService();
+
+            services.AddCustomGraphQLServices();
+
+            services.AddCustomGraphQLTypes();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ObrasDBContext dbContext)
         {
-            app
-            .UseRouting()
-            .UseEndpoints(endpoints =>
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseAuthentication();
+
+            app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGraphQL();
+                endpoints.MapControllers();
             });
 
-            app.UseGraphQLVoyager(new VoyagerOptions()
-            {
-                GraphQLEndPoint = "/graphql"
-            }, "/graphql-ui");
+            //dbContext.EnsureDataSeeding();
+
+            app.UseWebSockets();
+
+            app.UseGraphQL<CompanySchema>();
+
+            app.UseGraphQLWebSockets<CompanySchema>();
+
+            app.UseGraphQLPlayground();
         }
     }
 }
