@@ -39,6 +39,7 @@ namespace Obras.Business.Services
                 Address = company.Address,
                 CellPhone = company.CellPhone,
                 EMail = company.EMail,
+                CorporateName = company.CorporateName,
                 FantasyName = company.FantasyName,
                 Neighbourhood = company.Neighbourhood,
                 Number = company.Number,
@@ -50,10 +51,10 @@ namespace Obras.Business.Services
             _dbContext.Companies.Add(comp);
             try
             {
-                await _dbContext.SaveChangesAsync();
+                var retorno =  await _dbContext.SaveChangesAsync();
             } catch (Exception e)
             {
-                Console.WriteLine(e);
+                throw e;
             }
             return comp;
         }

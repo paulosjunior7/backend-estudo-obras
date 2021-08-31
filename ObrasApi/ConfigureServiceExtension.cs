@@ -13,6 +13,7 @@
     using Microsoft.IdentityModel.Tokens;
     using Obras.Business.Services;
     using Obras.Data;
+    using Obras.Data.Entities;
     using Obras.GraphQLModels;
     using Obras.GraphQLModels.Enums;
     using Obras.GraphQLModels.InputTypes;
@@ -28,7 +29,7 @@
         public static void AddCustomIdentityAuth(this IServiceCollection services)
         {
             // Added Identity
-            services.AddIdentity<Microsoft.AspNetCore.Identity.IdentityUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ObrasDBContext>()
                 .AddDefaultTokenProviders();
 
@@ -58,22 +59,23 @@
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
             SymmetricSecurityKey signingKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(configuration.GetSection("JwtIssuerOptions:SecretKey").Value));
 
-            services.AddAuthentication(options =>
+
+            services.AddAuthentication(x =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(configureOptions =>
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
             {
-                configureOptions.TokenValidationParameters = new TokenValidationParameters()
+                x.RequireHttpsMetadata = false;
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = signingKey,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     ValidIssuer = configuration.GetSection("JwtIssuerOptions:Issuer").Value,
                     ValidAudience = configuration.GetSection("JwtIssuerOptions:Audience").Value,
                     ValidateLifetime = true,
-                    IssuerSigningKey = signingKey,
                     RequireExpirationTime = true,
                     ClockSkew = TimeSpan.Zero
                 };

@@ -11,13 +11,13 @@
         public CompanyFilterByInputType()
         {
             Field(x => x.Id, nullable: true);
-            Field(x => x.Cnpj);
-            Field(x => x.CorporateName);
+            Field(x => x.Cnpj, nullable: true);
+            Field(x => x.CorporateName, nullable: true);
             Field(x => x.Active, nullable: true);
-            Field(x => x.City);
-            Field(x => x.FantasyName);
-            Field(x => x.Neighbourhood);
-            Field(x => x.State);
+            Field(x => x.City, nullable: true);
+            Field(x => x.FantasyName, nullable: true);
+            Field(x => x.Neighbourhood, nullable: true);
+            Field(x => x.State, nullable: true);
         }
     }
 }

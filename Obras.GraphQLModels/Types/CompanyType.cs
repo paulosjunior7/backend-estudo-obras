@@ -13,22 +13,22 @@
             Name = nameof(CompanyType);
 
             Field(x => x.Id);
-            Field(x => x.Neighbourhood);
-            Field(x => x.Number);
-            Field(x => x.State);
-            Field(x => x.Telephone);
-            Field(x => x.ZipCode);
+            Field(x => x.Neighbourhood, nullable: true);
+            Field(x => x.Number, nullable: true);
+            Field(x => x.State, nullable: true);
+            Field(x => x.Telephone, nullable: true);
+            Field(x => x.ZipCode, nullable: true);
             Field(x => x.Active);
-            Field(x => x.Address);
-            Field(x => x.CellPhone);
+            Field(x => x.Address, nullable: true);
+            Field(x => x.CellPhone, nullable: true);
             Field(x => x.ChangeDate, nullable: true);
-            Field(x => x.City);
-            Field(x => x.Cnpj);
-            Field(x => x.Complement);
-            Field(x => x.CorporateName);
+            Field(x => x.City, nullable: true);
+            Field(x => x.Cnpj, nullable: true);
+            Field(x => x.Complement, nullable: true);
+            Field(x => x.CorporateName, nullable: true);
             Field(x => x.CreationDate, nullable: true);
-            Field(x => x.EMail);
-            Field(x => x.FantasyName); 
+            Field(x => x.EMail, nullable: true);
+            Field(x => x.FantasyName, nullable: true); 
         }
     }
 }

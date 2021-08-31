@@ -7,8 +7,10 @@ namespace Obras.Data
 {
     public class ObrasDBContext : IdentityDbContext
     {
-        public ObrasDBContext()
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
         }
 
         public ObrasDBContext(DbContextOptions<ObrasDBContext> options)

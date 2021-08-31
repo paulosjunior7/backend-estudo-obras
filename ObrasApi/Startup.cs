@@ -1,11 +1,13 @@
 using GraphQL.Server;
 using GraphQL.Server.Ui.Voyager;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Obras.Api;
 using Obras.Data;
 using Obras.GraphQLModels.Schemas;
@@ -36,9 +38,10 @@ namespace ObrasApi
 
             services.AddControllers();
 
-            services.AddDbContext<ObrasDBContext>(
-                optionsAction: options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")),
-                contextLifetime: ServiceLifetime.Singleton);
+            services.AddDbContext<ObrasDBContext>(options => options
+                            .UseNpgsql(Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);
+
+            services.AddSingleton<ObrasDBContext>();
 
             services.AddCustomIdentityAuth();
 
