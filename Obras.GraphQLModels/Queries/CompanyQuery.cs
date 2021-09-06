@@ -19,13 +19,8 @@
     {
         public CompanyQuery(ICompanyService companyService)
         {
-            Name = nameof(CompanyQuery);
-            //this.AuthorizeWith(Constants.AuthPolicy.CustomerPolicy, Constants.AuthPolicy.RestaurantPolicy);
-
-            //.AuthorizeWith(Constants.AuthPolicy.RestaurantPolicy);
-
             Connection<CompanyType>()
-                .Name("companies")
+                .Name("findall")
                 .Unidirectional()
                 .PageSize(10)
                 .Argument<CompanyByInputType>("sort", "Pass field & direction on which you want to sort data")

@@ -11,6 +11,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.IdentityModel.Tokens;
+    using Obras.Business.Helpers;
     using Obras.Business.Services;
     using Obras.Data;
     using Obras.Data.Entities;
@@ -23,6 +24,8 @@
     using Obras.GraphQLModels.Types;
     using System;
     using System.IdentityModel.Tokens.Jwt;
+    using System.Net;
+    using System.Security.Claims;
 
     public static class ConfigureServiceExtension
     {
@@ -84,7 +87,9 @@
 
         public static void AddCustomService(this IServiceCollection services)
         {
+            services.TryAddScoped<IAuthorizationEvaluator, AuthorizationEvaluator>();
             services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<IProductService, ProductService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -103,24 +108,39 @@
             .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { })
             .AddWebSockets()
             .AddDataLoader()
-            .AddGraphTypes(typeof(CompanySchema));
+            .AddGraphTypes(typeof(ObrasSchema));
         }
 
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             services.AddSingleton<CompanyType>();
-
+            services.AddSingleton<UserType>();
+            services.AddSingleton<ProductType>();
+                      
             services.AddSingleton<CompanySortingFieldsEnumType>();
+                      
+            services.AddSingleton<ProductSortingFieldsEnumType>();
+                      
             services.AddSingleton<SortingDirectionEnumType>();
-
-
+                      
+                      
             services.AddSingleton<CompanyByInputType>();
             services.AddSingleton<CompanyFilterByInputType>();
             services.AddSingleton<CompanyInputType>();
-
+                      
+            services.AddSingleton<ProductByInputType>();
+            services.AddSingleton<ProductFilterByInputType>();
+            services.AddSingleton<ProductInputType>();
+                      
             services.AddSingleton<CompanyMutation>();
             services.AddSingleton<CompanyQuery>();
-            services.AddSingleton<CompanySchema>();
+                      
+            services.AddSingleton<ProductMutation>();
+            services.AddSingleton<ProductQuery>();
+                      
+            services.AddSingleton<ObrasQuery>();
+            services.AddSingleton<ObrasMutation>();
+            services.AddSingleton<ObrasSchema>();
         }
 
         public static void AddCustomGraphQLAuth(this IServiceCollection services)
@@ -132,19 +152,21 @@
             services.TryAddSingleton(_ =>
             {
                 var authSettings = new AuthorizationSettings();
-                /*
+
+                authSettings.AddPolicy("LoggedIn", p => p.RequireAuthenticatedUser());
+
                 authSettings.AddPolicy(
                     Constants.AuthPolicy.CustomerPolicy,
                     policy => policy.RequireClaim(ClaimTypes.Role, Constants.Roles.Customer));
 
                 authSettings.AddPolicy(
-                    Constants.AuthPolicy.RestaurantPolicy,
-                    policy => policy.RequireClaim(ClaimTypes.Role, Constants.Roles.Restaurant));
+                    Constants.AuthPolicy.EngineerPolicy,
+                    policy => policy.RequireClaim(ClaimTypes.Role, Constants.Roles.Engineer));
 
                 authSettings.AddPolicy(
                     Constants.AuthPolicy.AdminPolicy,
-                    policy => policy.RequireClaim(ClaimTypes.Role, Constants.Roles.Customer, Constants.Roles.Restaurant, Constants.Roles.Admin));
-                */
+                    policy => policy.RequireClaim(ClaimTypes.Role, Constants.Roles.Customer, Constants.Roles.Engineer, Constants.Roles.Admin));
+                
                 return authSettings;
             });
         }

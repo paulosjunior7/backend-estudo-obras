@@ -34,7 +34,7 @@
                     int companyId = context.GetArgument<int>("id");
                     var companyModel = context.GetArgument<CompanyModel>("company");
 
-                    return await companyService.UpdateStatusAsync(companyId, companyModel);
+                    return await companyService.UpdateCompanyAsync(companyId, companyModel);
                 });
         }
     }

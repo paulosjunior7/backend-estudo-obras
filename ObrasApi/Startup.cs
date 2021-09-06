@@ -3,6 +3,8 @@ using GraphQL.Server.Ui.Voyager;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Obras.Api;
 using Obras.Data;
+using Obras.Data.Entities;
 using Obras.GraphQLModels.Schemas;
 
 namespace ObrasApi
@@ -77,9 +80,9 @@ namespace ObrasApi
 
             app.UseWebSockets();
 
-            app.UseGraphQL<CompanySchema>();
+            app.UseGraphQL<ObrasSchema>();
 
-            app.UseGraphQLWebSockets<CompanySchema>();
+            app.UseGraphQLWebSockets<ObrasSchema>();
 
             app.UseGraphQLPlayground();
         }

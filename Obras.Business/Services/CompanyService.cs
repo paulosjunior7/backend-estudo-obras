@@ -15,8 +15,9 @@ namespace Obras.Business.Services
     public interface ICompanyService
     {
         Task<Company> CreateAsync(CompanyModel company);
-        Task<Company> UpdateStatusAsync(int companyId, CompanyModel company);
+        Task<Company> UpdateCompanyAsync(int companyId, CompanyModel company);
         Task<PageResponse<Company>> GetCompaniesAsync(PageRequest<CompanyFilter, CompanySortingFields> pageRequest);
+        Task<Company> GetCompanyId(int id);
     }
 
     public class CompanyService : ICompanyService
@@ -59,7 +60,7 @@ namespace Obras.Business.Services
             return comp;
         }
 
-        public async Task<Company> UpdateStatusAsync(int companyId, CompanyModel company)
+        public async Task<Company> UpdateCompanyAsync(int companyId, CompanyModel company)
         {
             var comp = await _dbContext.Companies.FindAsync(company);
 
@@ -80,6 +81,11 @@ namespace Obras.Business.Services
             }
 
             return comp;
+        }
+
+        public async Task<Company> GetCompanyId(int id)
+        {
+            return await _dbContext.Companies.FindAsync(id);
         }
 
         public async Task<PageResponse<Company>> GetCompaniesAsync(PageRequest<CompanyFilter, CompanySortingFields> pageRequest)
