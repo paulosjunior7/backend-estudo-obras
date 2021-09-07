@@ -39,6 +39,8 @@ namespace ObrasApi
                 options.AllowSynchronousIO = true;
             });
 
+            services.AddCors();
+
             services.AddControllers();
 
             //IServiceCollection serviceCollection = services.AddDbContext<ObrasDBContext>(options => options
