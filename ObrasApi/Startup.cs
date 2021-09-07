@@ -41,9 +41,13 @@ namespace ObrasApi
 
             services.AddControllers();
 
-            IServiceCollection serviceCollection = services.AddDbContext<ObrasDBContext>(options => options
-                        .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);
-                            //.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);
+            //IServiceCollection serviceCollection = services.AddDbContext<ObrasDBContext>(options => options
+            //            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);
+            //.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);
+
+            services.AddDbContext<ObrasDBContext>(
+                optionsAction: options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
+                contextLifetime: ServiceLifetime.Singleton);
 
             services.AddSingleton<ObrasDBContext>();
 

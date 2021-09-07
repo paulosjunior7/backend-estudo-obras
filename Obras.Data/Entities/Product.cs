@@ -25,12 +25,10 @@
 
         public virtual Company Company { get; set; }
 
-        [Required]
         public string RegistrationUserId { get; set; }
 
         public virtual User RegistrationUser { get; set; }
 
-        [Required]
         public string ChangeUserId { get; set; }
 
         public virtual User ChangeUser { get; set; }
