@@ -39,7 +39,12 @@ namespace ObrasApi
                 options.AllowSynchronousIO = true;
             });
 
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
 
             services.AddControllers();
 
@@ -70,6 +75,7 @@ namespace ObrasApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ObrasDBContext dbContext)
         {
+            app.UseCors("MyPolicy");
             app.UseHttpsRedirection();
 
             app.UseRouting();
