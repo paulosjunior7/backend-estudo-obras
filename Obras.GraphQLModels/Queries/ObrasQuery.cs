@@ -10,6 +10,7 @@ namespace Obras.GraphQLModels.Queries
             Name = nameof(ObrasQuery);
             Field<CompanyQuery>("companies", resolve: context => new { });
             Field<ProductQuery>("products", resolve: context => new { });
+            Field<ProviderQuery>("providers", resolve: context => new { });
         }
     }
 }

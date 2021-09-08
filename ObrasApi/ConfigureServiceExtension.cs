@@ -90,6 +90,7 @@
             services.TryAddScoped<IAuthorizationEvaluator, AuthorizationEvaluator>();
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProviderService, ProviderService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -116,10 +117,11 @@
             services.AddSingleton<CompanyType>();
             services.AddSingleton<UserType>();
             services.AddSingleton<ProductType>();
+            services.AddSingleton<ProviderType>();
                       
             services.AddSingleton<CompanySortingFieldsEnumType>();
-                      
             services.AddSingleton<ProductSortingFieldsEnumType>();
+            services.AddSingleton<ProviderSortingFieldsEnumType>();
                       
             services.AddSingleton<SortingDirectionEnumType>();
                       
@@ -131,13 +133,20 @@
             services.AddSingleton<ProductByInputType>();
             services.AddSingleton<ProductFilterByInputType>();
             services.AddSingleton<ProductInputType>();
-                      
+
+            services.AddSingleton<ProviderByInputType>();
+            services.AddSingleton<ProviderFilterByInputType>();
+            services.AddSingleton<ProviderInputType>();
+
             services.AddSingleton<CompanyMutation>();
             services.AddSingleton<CompanyQuery>();
                       
             services.AddSingleton<ProductMutation>();
             services.AddSingleton<ProductQuery>();
-                      
+
+            services.AddSingleton<ProviderMutation>();
+            services.AddSingleton<ProviderQuery>();
+
             services.AddSingleton<ObrasQuery>();
             services.AddSingleton<ObrasMutation>();
             services.AddSingleton<ObrasSchema>();

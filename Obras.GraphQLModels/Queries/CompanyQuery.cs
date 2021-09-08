@@ -22,17 +22,14 @@
             Connection<CompanyType>()
                 .Name("findall")
                 .Unidirectional()
-                .PageSize(10)
+                .Argument<PaginationDetailsType>("pagination", "Paginarion")
                 .Argument<CompanyByInputType>("sort", "Pass field & direction on which you want to sort data")
                 .Argument<CompanyFilterByInputType>("filter", "filter on which you want to sort data")
                 .ResolveAsync(async context =>
                 {
                     var pageRequest = new PageRequest<CompanyFilter, CompanySortingFields>
                     {
-                        First = context.First,
-                        Last = context.Last,
-                        After = context.After,
-                        Before = context.Before,
+                        Pagination = context.GetArgument<PaginationDetails>("pagination") ?? new PaginationDetails(),
                         Filter = context.GetArgument<CompanyFilter>("filter"),
                         OrderBy = context.GetArgument<SortingDetails<CompanySortingFields>>("sort")
                     };

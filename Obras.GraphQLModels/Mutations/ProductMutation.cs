@@ -17,6 +17,8 @@
         {
             Name = nameof(ProductMutation);
 
+            this.AuthorizeWith("LoggedIn");
+
             FieldAsync<ProductType>(
                 name: "createProduct",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<ProductInputType>> { Name = "product" }),
@@ -27,7 +29,7 @@
 
                     var user = await dBContext.User.FindAsync(userId);
 
-                    productModel.CompanyId = (int)(user.CompanyId != null ? user.CompanyId : 0);
+                    productModel.CompanyId = (int)(productModel.CompanyId == null ? user.CompanyId != null ? user.CompanyId : 0 : productModel.CompanyId);
                     productModel.ChangeUserId = userId;
                     productModel.RegistrationUserId = userId;
 
@@ -48,7 +50,7 @@
 
                     var user = await dBContext.User.FindAsync(userId);
 
-                    productModel.CompanyId = (int)(user.CompanyId != null ? user.CompanyId : 0);
+                    productModel.CompanyId = (int)(productModel.CompanyId == null ? user.CompanyId != null ? user.CompanyId : 0 : productModel.CompanyId);
                     productModel.ChangeUserId = userId;
 
                     return await productService.UpdateProductAsync(productId, productModel);

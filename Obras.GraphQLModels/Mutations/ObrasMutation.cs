@@ -12,6 +12,7 @@
             Name = nameof(ObrasMutation);
             Field<CompanyMutation>("companies", resolve: context => new { });
             Field<ProductMutation>("products", resolve: context => new { });
+            Field<ProviderMutation>("providers", resolve: context => new { });
         }
     }
 }

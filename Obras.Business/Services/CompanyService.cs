@@ -95,20 +95,13 @@ namespace Obras.Business.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
-            if (pageRequest.First.HasValue)
-            {
-                if (!string.IsNullOrEmpty(pageRequest.After))
-                {
-                    int lastId = CursorHelper.FromCursor(pageRequest.After);
-                    dataQuery = dataQuery.Where(x => x.Id > lastId);
-                }
-
-                dataQuery = dataQuery.Take(pageRequest.First.Value);
-            }
 
             dataQuery = LoadOrder(pageRequest, dataQuery);
 
-            List<Company> nodes = await dataQuery.ToListAsync();
+            int totalCount = await dataQuery.CountAsync();
+
+            List<Company> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)
+                   .Take(pageRequest.Pagination.PageSize).ToListAsync();
 
             #endregion
 
@@ -116,9 +109,9 @@ namespace Obras.Business.Services
 
             int maxId = nodes.Count > 0 ? nodes.Max(x => x.Id) : 0;
             int minId = nodes.Count > 0 ? nodes.Min(x => x.Id) : 0;
-            bool hasNextPage = await filterQuery.AnyAsync(x => x.Id > maxId);
-            bool hasPrevPage = await filterQuery.AnyAsync(x => x.Id < minId);
-            int totalCount = await filterQuery.CountAsync();
+            bool hasNextPage = (totalCount - 1) >= ((pageRequest.Pagination.PageNumber) * pageRequest.Pagination.PageSize);
+            bool hasPrevPage = pageRequest.Pagination.PageNumber > 1;
+            
 
             #endregion
 

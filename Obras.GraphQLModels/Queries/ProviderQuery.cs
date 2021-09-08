@@ -7,7 +7,6 @@
     using Obras.Business.Helpers;
     using Obras.Business.Models;
     using Obras.Business.Services;
-    using Obras.Data;
     using Obras.Data.Entities;
     using Obras.GraphQLModels.InputTypes;
     using Obras.GraphQLModels.Types;
@@ -16,42 +15,37 @@
     using System.Linq;
     using System.Text;
 
-    public class ProductQuery : ObjectGraphType
+    public class ProviderQuery : ObjectGraphType
     {
-        public ProductQuery(IProductService productService, ObrasDBContext dBContext)
+        public ProviderQuery(IProviderService providerService)
         {
-            Connection<ProductType>()
+            Connection<ProviderType>()
                 .Name("findall")
                 .Unidirectional()
                 .AuthorizeWith("LoggedIn")
                 .Argument<PaginationDetailsType>("pagination", "Paginarion")
-                .Argument<ProductByInputType>("sort", "Pass field & direction on which you want to sort data")
-                .Argument<ProductFilterByInputType>("filter", "filter on which you want to sort data")
+                .Argument<ProviderByInputType>("sort", "Pass field & direction on which you want to sort data")
+                .Argument<ProviderFilterByInputType>("filter", "filter on which you want to sort data")
                 .ResolveAsync(async context =>
                 {
-                    var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
-
-                    var user = await dBContext.User.FindAsync(userId);
-                    var pageRequest = new PageRequest<ProductFilter, ProductSortingFields>
+                    var pageRequest = new PageRequest<ProviderFilter, ProviderSortingFields>
                     {
                         Pagination = context.GetArgument<PaginationDetails>("pagination") ?? new PaginationDetails(),
-                        Filter = context.GetArgument<ProductFilter>("filter"),
-                        OrderBy = context.GetArgument<SortingDetails<ProductSortingFields>>("sort")
+                        Filter = context.GetArgument<ProviderFilter>("filter"),
+                        OrderBy = context.GetArgument<SortingDetails<ProviderSortingFields>>("sort")
                     };
 
-                    pageRequest.Filter.CompanyId = (int)(pageRequest.Filter.CompanyId == null ? user.CompanyId : pageRequest.Filter.CompanyId);
-
-                    var pageResponse = await productService.GetProductsAsync(pageRequest);
+                    var pageResponse = await providerService.GetProvidersAsync(pageRequest);
 
                     (string startCursor, string endCursor) = CursorHelper.GetFirstAndLastCursor(pageResponse.Nodes.Select(x => x.Id));
 
-                    var edge = pageResponse.Nodes.Select(x => new Edge<Product>
+                    var edge = pageResponse.Nodes.Select(x => new Edge<Provider>
                     {
                         Cursor = CursorHelper.ToCursor(x.Id),
                         Node = x
                     }).ToList();
 
-                    var connection = new Connection<Product>()
+                    var connection = new Connection<Provider>()
                     {
                         Edges = edge,
                         TotalCount = pageResponse.TotalCount,

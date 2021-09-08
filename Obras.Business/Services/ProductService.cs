@@ -40,7 +40,7 @@ namespace Obras.Business.Services
                 Active = product.Active,
                 RegistrationUserId = product.RegistrationUserId,
                 ChangeUserId = product.ChangeUserId,
-                CompanyId = product.CompanyId
+                CompanyId = (int)(product.CompanyId == null ? 0 : product.CompanyId)
             };
 
             _dbContext.Products.Add(prod);
@@ -82,20 +82,10 @@ namespace Obras.Business.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
-            if (pageRequest.First.HasValue)
-            {
-                if (!string.IsNullOrEmpty(pageRequest.After))
-                {
-                    int lastId = CursorHelper.FromCursor(pageRequest.After);
-                    dataQuery = dataQuery.Where(x => x.Id > lastId);
-                }
+            int totalCount = await dataQuery.CountAsync();
 
-                dataQuery = dataQuery.Take(pageRequest.First.Value);
-            }
-
-            dataQuery = LoadOrder(pageRequest, dataQuery);
-
-            List<Product> nodes = await dataQuery.ToListAsync();
+            List<Product> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)
+                   .Take(pageRequest.Pagination.PageSize).ToListAsync();
 
             #endregion
 
@@ -103,9 +93,8 @@ namespace Obras.Business.Services
 
             int maxId = nodes.Count > 0 ? nodes.Max(x => x.Id) : 0;
             int minId = nodes.Count > 0 ? nodes.Min(x => x.Id) : 0;
-            bool hasNextPage = await filterQuery.AnyAsync(x => x.Id > maxId);
-            bool hasPrevPage = await filterQuery.AnyAsync(x => x.Id < minId);
-            int totalCount = await filterQuery.CountAsync();
+            bool hasNextPage = (totalCount - 1) >= ((pageRequest.Pagination.PageNumber) * pageRequest.Pagination.PageSize);
+            bool hasPrevPage = pageRequest.Pagination.PageNumber > 1;
 
             #endregion
 
