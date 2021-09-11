@@ -91,6 +91,7 @@
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProviderService, ProviderService>();
+            services.AddTransient<IBrandService, BrandService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -118,10 +119,12 @@
             services.AddSingleton<UserType>();
             services.AddSingleton<ProductType>();
             services.AddSingleton<ProviderType>();
+            services.AddSingleton<BrandType>();
                       
             services.AddSingleton<CompanySortingFieldsEnumType>();
             services.AddSingleton<ProductSortingFieldsEnumType>();
             services.AddSingleton<ProviderSortingFieldsEnumType>();
+            services.AddSingleton<BrandSortingFieldsEnumType>();
                       
             services.AddSingleton<SortingDirectionEnumType>();
                       
@@ -129,7 +132,7 @@
             services.AddSingleton<CompanyByInputType>();
             services.AddSingleton<CompanyFilterByInputType>();
             services.AddSingleton<CompanyInputType>();
-                      
+
             services.AddSingleton<ProductByInputType>();
             services.AddSingleton<ProductFilterByInputType>();
             services.AddSingleton<ProductInputType>();
@@ -137,6 +140,10 @@
             services.AddSingleton<ProviderByInputType>();
             services.AddSingleton<ProviderFilterByInputType>();
             services.AddSingleton<ProviderInputType>();
+
+            services.AddSingleton<BrandByInputType>();
+            services.AddSingleton<BrandFilterByInputType>();
+            services.AddSingleton<BrandInputType>();
 
             services.AddSingleton<CompanyMutation>();
             services.AddSingleton<CompanyQuery>();
@@ -146,6 +153,9 @@
 
             services.AddSingleton<ProviderMutation>();
             services.AddSingleton<ProviderQuery>();
+
+            services.AddSingleton<BrandMutation>();
+            services.AddSingleton<BrandQuery>();
 
             services.AddSingleton<ObrasQuery>();
             services.AddSingleton<ObrasMutation>();

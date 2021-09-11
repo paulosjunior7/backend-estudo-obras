@@ -1,17 +1,16 @@
-﻿namespace Obras.GraphQLModels.Types
-{
-    using GraphQL.Types;
-    using Obras.Data;
-    using Obras.Data.Entities;
+﻿using GraphQL.Types;
+using Obras.Data;
+using Obras.Data.Entities;
 
-    public class ProductType : ObjectGraphType<Product>
+namespace Obras.GraphQLModels.Types
+{
+    public class BrandType : ObjectGraphType<Brand>
     {
-        public ProductType(ObrasDBContext dbContext)
+        public BrandType(ObrasDBContext dbContext)
         {
-            Name = nameof(ProductType);
+            Name = nameof(BrandType);
 
             Field(x => x.Id);
-            Field(x => x.Detail, nullable: true);
             Field(x => x.Description, nullable: true);
             Field(x => x.CreationDate, nullable: true);
             Field(x => x.ChangeDate, nullable: true);

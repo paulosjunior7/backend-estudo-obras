@@ -7,9 +7,6 @@
     using Obras.Data;
     using Obras.GraphQLModels.InputTypes;
     using Obras.GraphQLModels.Types;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     public class ProductMutation : ObjectGraphType
     {

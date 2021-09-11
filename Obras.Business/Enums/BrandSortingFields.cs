@@ -1,6 +1,6 @@
 ﻿namespace Obras.Business.Enums
 {
-    public enum ProductSortingFields
+    public enum BrandSortingFields
     {
         Id,
         Description,

@@ -30,7 +30,7 @@
                     var pageRequest = new PageRequest<CompanyFilter, CompanySortingFields>
                     {
                         Pagination = context.GetArgument<PaginationDetails>("pagination") ?? new PaginationDetails(),
-                        Filter = context.GetArgument<CompanyFilter>("filter"),
+                        Filter = context.GetArgument<CompanyFilter>("filter") ?? new CompanyFilter(),
                         OrderBy = context.GetArgument<SortingDetails<CompanySortingFields>>("sort")
                     };
 

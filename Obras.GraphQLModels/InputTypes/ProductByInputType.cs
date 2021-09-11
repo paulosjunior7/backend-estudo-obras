@@ -4,9 +4,6 @@
     using Obras.Business.Enums;
     using Obras.Business.Models;
     using Obras.GraphQLModels.Enums;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     public class ProductByInputType : InputObjectGraphType<SortingDetails<ProductSortingFields>>
     {

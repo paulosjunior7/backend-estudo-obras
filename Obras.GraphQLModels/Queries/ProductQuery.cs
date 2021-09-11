@@ -35,7 +35,7 @@
                     var pageRequest = new PageRequest<ProductFilter, ProductSortingFields>
                     {
                         Pagination = context.GetArgument<PaginationDetails>("pagination") ?? new PaginationDetails(),
-                        Filter = context.GetArgument<ProductFilter>("filter"),
+                        Filter = context.GetArgument<ProductFilter>("filter") ?? new ProductFilter(),
                         OrderBy = context.GetArgument<SortingDetails<ProductSortingFields>>("sort")
                     };
 

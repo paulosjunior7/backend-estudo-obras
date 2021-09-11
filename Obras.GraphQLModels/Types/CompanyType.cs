@@ -2,9 +2,6 @@
 {
     using GraphQL.Types;
     using Obras.Data.Entities;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     public class CompanyType : ObjectGraphType<Company>
     {

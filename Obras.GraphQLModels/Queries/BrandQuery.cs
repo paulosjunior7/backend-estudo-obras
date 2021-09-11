@@ -1,58 +1,54 @@
-﻿namespace Obras.GraphQLModels.Queries
-{
-    using GraphQL;
-    using GraphQL.Types;
-    using GraphQL.Types.Relay.DataObjects;
-    using Obras.Business.Enums;
-    using Obras.Business.Helpers;
-    using Obras.Business.Models;
-    using Obras.Business.Services;
-    using Obras.Data;
-    using Obras.Data.Entities;
-    using Obras.GraphQLModels.InputTypes;
-    using Obras.GraphQLModels.Types;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+﻿using GraphQL;
+using GraphQL.Types;
+using GraphQL.Types.Relay.DataObjects;
+using Obras.Business.Enums;
+using Obras.Business.Helpers;
+using Obras.Business.Models;
+using Obras.Business.Services;
+using Obras.Data;
+using Obras.Data.Entities;
+using Obras.GraphQLModels.InputTypes;
+using Obras.GraphQLModels.Types;
+using System.Linq;
 
-    public class ProviderQuery : ObjectGraphType
+namespace Obras.GraphQLModels.Queries
+{
+    public class BrandQuery : ObjectGraphType
     {
-        public ProviderQuery(IProviderService providerService, ObrasDBContext dBContext)
+        public BrandQuery(IBrandService brandService, ObrasDBContext dBContext)
         {
-            Connection<ProviderType>()
+            Connection<BrandType>()
                 .Name("findall")
                 .Unidirectional()
                 .AuthorizeWith("LoggedIn")
                 .Argument<PaginationDetailsType>("pagination", "Paginarion")
-                .Argument<ProviderByInputType>("sort", "Pass field & direction on which you want to sort data")
-                .Argument<ProviderFilterByInputType>("filter", "filter on which you want to sort data")
+                .Argument<BrandByInputType>("sort", "Pass field & direction on which you want to sort data")
+                .Argument<BrandFilterByInputType>("filter", "filter on which you want to sort data")
                 .ResolveAsync(async context =>
                 {
                     var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
 
                     var user = await dBContext.User.FindAsync(userId);
-
-                    var pageRequest = new PageRequest<ProviderFilter, ProviderSortingFields>
+                    var pageRequest = new PageRequest<BrandFilter, BrandSortingFields>
                     {
                         Pagination = context.GetArgument<PaginationDetails>("pagination") ?? new PaginationDetails(),
-                        Filter = context.GetArgument<ProviderFilter>("filter") ?? new ProviderFilter(),
-                        OrderBy = context.GetArgument<SortingDetails<ProviderSortingFields>>("sort") 
+                        Filter = context.GetArgument<BrandFilter>("filter") ?? new BrandFilter(),
+                        OrderBy = context.GetArgument<SortingDetails<BrandSortingFields>>("sort")
                     };
 
                     pageRequest.Filter.CompanyId = (int)(pageRequest.Filter.CompanyId == null ? user.CompanyId : pageRequest.Filter.CompanyId);
 
-                    var pageResponse = await providerService.GetProvidersAsync(pageRequest);
+                    var pageResponse = await brandService.GetBrandsAsync(pageRequest);
 
                     (string startCursor, string endCursor) = CursorHelper.GetFirstAndLastCursor(pageResponse.Nodes.Select(x => x.Id));
 
-                    var edge = pageResponse.Nodes.Select(x => new Edge<Provider>
+                    var edge = pageResponse.Nodes.Select(x => new Edge<Brand>
                     {
                         Cursor = CursorHelper.ToCursor(x.Id),
                         Node = x
                     }).ToList();
 
-                    var connection = new Connection<Provider>()
+                    var connection = new Connection<Brand>()
                     {
                         Edges = edge,
                         TotalCount = pageResponse.TotalCount,

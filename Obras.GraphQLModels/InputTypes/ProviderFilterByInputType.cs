@@ -15,7 +15,7 @@
             Field(x => x.Name, nullable: true);
             Field(x => x.Active, nullable: true);
             Field(x => x.City, nullable: true);
-            Field(x => x.CompanyId);
+            Field(x => x.CompanyId, nullable: true);
             Field(x => x.Neighbourhood, nullable: true);
             Field(x => x.State, nullable: true);
         }

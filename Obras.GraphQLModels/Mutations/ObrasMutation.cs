@@ -13,6 +13,7 @@
             Field<CompanyMutation>("companies", resolve: context => new { });
             Field<ProductMutation>("products", resolve: context => new { });
             Field<ProviderMutation>("providers", resolve: context => new { });
+            Field<BrandMutation>("brands", resolve: context => new { });
         }
     }
 }

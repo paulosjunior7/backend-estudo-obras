@@ -13,6 +13,6 @@
         public string City { get; set; }
         public string State { get; set; }
         public bool? Active { get; set; }
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
     }
 }
