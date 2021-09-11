@@ -92,6 +92,7 @@
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProviderService, ProviderService>();
             services.AddTransient<IBrandService, BrandService>();
+            services.AddTransient<IDocumentationService, DocumentationService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -120,12 +121,14 @@
             services.AddSingleton<ProductType>();
             services.AddSingleton<ProviderType>();
             services.AddSingleton<BrandType>();
-                      
+            services.AddSingleton<DocumentationType>();
+
             services.AddSingleton<CompanySortingFieldsEnumType>();
             services.AddSingleton<ProductSortingFieldsEnumType>();
             services.AddSingleton<ProviderSortingFieldsEnumType>();
             services.AddSingleton<BrandSortingFieldsEnumType>();
-                      
+            services.AddSingleton<DocumentationSortingFieldsEnumType>();
+
             services.AddSingleton<SortingDirectionEnumType>();
                       
                       
@@ -145,6 +148,10 @@
             services.AddSingleton<BrandFilterByInputType>();
             services.AddSingleton<BrandInputType>();
 
+            services.AddSingleton<DocumentationByInputType>();
+            services.AddSingleton<DocumentationFilterByInputType>();
+            services.AddSingleton<DocumentationInputType>();
+
             services.AddSingleton<CompanyMutation>();
             services.AddSingleton<CompanyQuery>();
                       
@@ -156,6 +163,9 @@
 
             services.AddSingleton<BrandMutation>();
             services.AddSingleton<BrandQuery>();
+
+            services.AddSingleton<DocumentationMutation>();
+            services.AddSingleton<DocumentationQuery>();
 
             services.AddSingleton<ObrasQuery>();
             services.AddSingleton<ObrasMutation>();

@@ -23,5 +23,6 @@ namespace Obras.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Documentation> Documentations { get; set; }
     }
 }

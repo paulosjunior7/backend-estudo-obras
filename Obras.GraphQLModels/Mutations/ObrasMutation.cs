@@ -14,6 +14,7 @@
             Field<ProductMutation>("products", resolve: context => new { });
             Field<ProviderMutation>("providers", resolve: context => new { });
             Field<BrandMutation>("brands", resolve: context => new { });
+            Field<DocumentationMutation>("documentations", resolve: context => new { });
         }
     }
 }
