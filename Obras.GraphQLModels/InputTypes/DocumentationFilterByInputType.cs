@@ -10,6 +10,7 @@ namespace Obras.GraphQLModels.InputTypes
             Field(x => x.Id, nullable: true);
             Field(x => x.Description, nullable: true);
             Field(x => x.CompanyId, nullable: true);
+            Field(x => x.Active, nullable: true);
         }
     }
 }

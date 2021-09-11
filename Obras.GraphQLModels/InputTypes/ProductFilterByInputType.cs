@@ -11,6 +11,7 @@
             Field(x => x.Detail, nullable: true);
             Field(x => x.Description, nullable: true);
             Field(x => x.CompanyId, nullable: true);
+            Field(x => x.Active, nullable: true);
         }
     }
 }
