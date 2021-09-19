@@ -93,6 +93,8 @@
             services.AddTransient<IProviderService, ProviderService>();
             services.AddTransient<IBrandService, BrandService>();
             services.AddTransient<IDocumentationService, DocumentationService>();
+            services.AddTransient<IResponsibilityService, ResponsibilityService>();
+            services.AddTransient<IExpenseService, ExpenseService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -114,58 +116,98 @@
             .AddGraphTypes(typeof(ObrasSchema));
         }
 
-        public static void AddCustomGraphQLTypes(this IServiceCollection services)
+        private static void AddCompany(IServiceCollection services)
         {
             services.AddSingleton<CompanyType>();
-            services.AddSingleton<UserType>();
-            services.AddSingleton<ProductType>();
-            services.AddSingleton<ProviderType>();
-            services.AddSingleton<BrandType>();
-            services.AddSingleton<DocumentationType>();
-
             services.AddSingleton<CompanySortingFieldsEnumType>();
-            services.AddSingleton<ProductSortingFieldsEnumType>();
-            services.AddSingleton<ProviderSortingFieldsEnumType>();
-            services.AddSingleton<BrandSortingFieldsEnumType>();
-            services.AddSingleton<DocumentationSortingFieldsEnumType>();
-
-            services.AddSingleton<SortingDirectionEnumType>();
-                      
-                      
             services.AddSingleton<CompanyByInputType>();
             services.AddSingleton<CompanyFilterByInputType>();
             services.AddSingleton<CompanyInputType>();
+            services.AddSingleton<CompanyMutation>();
+            services.AddSingleton<CompanyQuery>();
+        }
 
+        private static void AddProduct(IServiceCollection services)
+        {
+            services.AddSingleton<ProductType>();
+            services.AddSingleton<ProductSortingFieldsEnumType>();
             services.AddSingleton<ProductByInputType>();
             services.AddSingleton<ProductFilterByInputType>();
             services.AddSingleton<ProductInputType>();
+            services.AddSingleton<ProductMutation>();
+            services.AddSingleton<ProductQuery>();
+        }
 
+        private static void AddProvider(IServiceCollection services)
+        {
+            services.AddSingleton<ProviderType>();
+            services.AddSingleton<ProviderSortingFieldsEnumType>();
             services.AddSingleton<ProviderByInputType>();
             services.AddSingleton<ProviderFilterByInputType>();
             services.AddSingleton<ProviderInputType>();
+            services.AddSingleton<ProviderMutation>();
+            services.AddSingleton<ProviderQuery>();
+        }
 
+        private static void AddBrand(IServiceCollection services)
+        {
+            services.AddSingleton<BrandType>();
+            services.AddSingleton<BrandSortingFieldsEnumType>();
             services.AddSingleton<BrandByInputType>();
             services.AddSingleton<BrandFilterByInputType>();
             services.AddSingleton<BrandInputType>();
+            services.AddSingleton<BrandMutation>();
+            services.AddSingleton<BrandQuery>();
+        }
 
+        private static void AddDocumentation(IServiceCollection services)
+        {
+            services.AddSingleton<DocumentationType>();
+            services.AddSingleton<DocumentationSortingFieldsEnumType>();
             services.AddSingleton<DocumentationByInputType>();
             services.AddSingleton<DocumentationFilterByInputType>();
             services.AddSingleton<DocumentationInputType>();
-
-            services.AddSingleton<CompanyMutation>();
-            services.AddSingleton<CompanyQuery>();
-                      
-            services.AddSingleton<ProductMutation>();
-            services.AddSingleton<ProductQuery>();
-
-            services.AddSingleton<ProviderMutation>();
-            services.AddSingleton<ProviderQuery>();
-
-            services.AddSingleton<BrandMutation>();
-            services.AddSingleton<BrandQuery>();
-
             services.AddSingleton<DocumentationMutation>();
             services.AddSingleton<DocumentationQuery>();
+        }
+
+        private static void AddResponsibility(IServiceCollection services)
+        {
+            services.AddSingleton<ResponsibilityType>();
+            services.AddSingleton<ResponsibilitySortingFieldsEnumType>();
+            services.AddSingleton<ResponsibilityByInputType>();
+            services.AddSingleton<ResponsibilityFilterByInputType>();
+            services.AddSingleton<ResponsibilityInputType>();
+            services.AddSingleton<ResponsibilityMutation>();
+            services.AddSingleton<ResponsibilityQuery>();
+        }
+
+        private static void AddExpense(IServiceCollection services)
+        {
+            services.AddSingleton<ExpenseType>();
+            services.AddSingleton<ExpenseSortingFieldsEnumType>();
+            services.AddSingleton<TypeExpenseEnumType>();
+            services.AddSingleton<ExpenseByInputType>();
+            services.AddSingleton<ExpenseFilterByInputType>();
+            services.AddSingleton<ExpenseInputType>();
+            services.AddSingleton<ExpenseMutation>();
+            services.AddSingleton<ExpenseQuery>();
+        }
+
+        public static void AddCustomGraphQLTypes(this IServiceCollection services)
+        {
+            AddCompany(services);
+
+            services.AddSingleton<UserType>();
+            
+            AddProduct(services);
+            AddProvider(services);
+            AddBrand(services);
+            AddDocumentation(services);
+            AddResponsibility(services);
+            AddExpense(services);
+
+            services.AddSingleton<SortingDirectionEnumType>();
 
             services.AddSingleton<ObrasQuery>();
             services.AddSingleton<ObrasMutation>();

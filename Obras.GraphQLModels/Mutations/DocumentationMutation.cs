@@ -19,17 +19,17 @@ namespace Obras.GraphQLModels.Mutations
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<DocumentationInputType>> { Name = "documentation" }),
                 resolve: async context =>
                 {
-                    var brandModel = context.GetArgument<DocumentationModel>("documentation");
+                    var documentationModel = context.GetArgument<DocumentationModel>("documentation");
                     var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
 
                     var user = await dBContext.User.FindAsync(userId);
 
-                    brandModel.CompanyId = (int)(brandModel.CompanyId == null ? user.CompanyId != null ? user.CompanyId : 0 : brandModel.CompanyId);
-                    brandModel.ChangeUserId = userId;
-                    brandModel.RegistrationUserId = userId;
+                    documentationModel.CompanyId = (int)(documentationModel.CompanyId == null ? user.CompanyId != null ? user.CompanyId : 0 : documentationModel.CompanyId);
+                    documentationModel.ChangeUserId = userId;
+                    documentationModel.RegistrationUserId = userId;
 
-                    var brand = await documentationService.CreateAsync(brandModel);
-                    return brand;
+                    var documentation = await documentationService.CreateAsync(documentationModel);
+                    return documentation;
                 });
 
             FieldAsync<DocumentationType>(

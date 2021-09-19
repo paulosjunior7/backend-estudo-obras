@@ -1,9 +1,6 @@
 ﻿namespace Obras.GraphQLModels.Mutations
 {
     using GraphQL.Types;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     public class ObrasMutation : ObjectGraphType
     {
@@ -15,6 +12,8 @@
             Field<ProviderMutation>("providers", resolve: context => new { });
             Field<BrandMutation>("brands", resolve: context => new { });
             Field<DocumentationMutation>("documentations", resolve: context => new { });
+            Field<ResponsibilityMutation>("responsibilities", resolve: context => new { });
+            Field<ExpenseMutation>("expenses", resolve: context => new { });
         }
     }
 }

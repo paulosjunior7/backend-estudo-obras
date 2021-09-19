@@ -1,5 +1,4 @@
 ﻿using GraphQL.Types;
-using Obras.Business.Services;
 
 namespace Obras.GraphQLModels.Queries
 {
@@ -13,6 +12,8 @@ namespace Obras.GraphQLModels.Queries
             Field<ProviderQuery>("providers", resolve: context => new { });
             Field<BrandQuery>("brands", resolve: context => new { });
             Field<DocumentationQuery>("documentations", resolve: context => new { });
+            Field<ResponsibilityQuery>("responsibilities", resolve: context => new { });
+            Field<ExpenseQuery>("expenses", resolve: context => new { });
         }
     }
 }
