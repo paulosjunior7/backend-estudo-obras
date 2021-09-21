@@ -10,7 +10,7 @@ namespace Obras.GraphQLModels.Mutations
 {
     public class ExpenseMutation : ObjectGraphType
     {
-        public ExpenseMutation(IExpenseService brandService, ObrasDBContext dBContext)
+        public ExpenseMutation(IExpenseService expenseService, ObrasDBContext dBContext)
         {
             Name = nameof(ExpenseMutation);
 
@@ -28,7 +28,7 @@ namespace Obras.GraphQLModels.Mutations
                     expenseModel.ChangeUserId = userId;
                     expenseModel.RegistrationUserId = userId;
 
-                    var expense = await brandService.CreateAsync(expenseModel);
+                    var expense = await expenseService.CreateAsync(expenseModel);
                     return expense;
                 });
 
@@ -48,7 +48,7 @@ namespace Obras.GraphQLModels.Mutations
                     expenseModel.CompanyId = (int)(expenseModel.CompanyId == null ? user.CompanyId != null ? user.CompanyId : 0 : expenseModel.CompanyId);
                     expenseModel.ChangeUserId = userId;
 
-                    return await brandService.UpdateExpenseAsync(expenseId, expenseModel);
+                    return await expenseService.UpdateExpenseAsync(expenseId, expenseModel);
                 });
         }
     }

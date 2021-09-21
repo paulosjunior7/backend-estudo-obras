@@ -1,15 +1,16 @@
-﻿namespace Obras.GraphQLModels.InputTypes
+﻿using GraphQL.Types;
+using Obras.Business.Models;
+using Obras.GraphQLModels.Enums;
+
+namespace Obras.GraphQLModels.InputTypes
 {
-    using GraphQL.Types;
-    using Obras.Business.Models;
-
-    public class CompanyInputType : InputObjectGraphType<CompanyModel>
+    public class PeopleInputType : InputObjectGraphType<PeopleModel>
     {
-        public CompanyInputType()
+        public PeopleInputType()
         {
-            Name = nameof(CompanyInputType);
+            Name = nameof(PeopleInputType);
 
-            Field(x => x.Cnpj);
+            Field(x => x.Cnpj, nullable: true);
             Field(x => x.CorporateName);
             Field(x => x.FantasyName, nullable: true);
             Field(x => x.Active);
@@ -23,6 +24,8 @@
             Field(x => x.State, nullable: true);
             Field(x => x.Telephone, nullable: true);
             Field(x => x.ZipCode, nullable: true);
+            Field(x => x.Cpf, nullable: true);
+            Field<TypePeopleEnumType>("typePeople");
         }
     }
 }

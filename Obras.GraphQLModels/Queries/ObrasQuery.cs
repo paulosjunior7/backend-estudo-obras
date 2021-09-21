@@ -14,6 +14,7 @@ namespace Obras.GraphQLModels.Queries
             Field<DocumentationQuery>("documentations", resolve: context => new { });
             Field<ResponsibilityQuery>("responsibilities", resolve: context => new { });
             Field<ExpenseQuery>("expenses", resolve: context => new { });
+            Field<PeopleQuery>("peoples", resolve: context => new { });
         }
     }
 }

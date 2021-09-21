@@ -95,6 +95,7 @@
             services.AddTransient<IDocumentationService, DocumentationService>();
             services.AddTransient<IResponsibilityService, ResponsibilityService>();
             services.AddTransient<IExpenseService, ExpenseService>();
+            services.AddTransient<IPeopleService, PeopleService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -194,6 +195,18 @@
             services.AddSingleton<ExpenseQuery>();
         }
 
+        private static void AddPeople(IServiceCollection services)
+        {
+            services.AddSingleton<PeopleType>();
+            services.AddSingleton<PeopleSortingFieldsEnumType>();
+            services.AddSingleton<TypePeopleEnumType>();
+            services.AddSingleton<PeopleByInputType>();
+            services.AddSingleton<PeopleFilterByInputType>();
+            services.AddSingleton<PeopleInputType>();
+            services.AddSingleton<PeopleMutation>();
+            services.AddSingleton<PeopleQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -206,6 +219,7 @@
             AddDocumentation(services);
             AddResponsibility(services);
             AddExpense(services);
+            AddPeople(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 

@@ -14,6 +14,7 @@
             Field<DocumentationMutation>("documentations", resolve: context => new { });
             Field<ResponsibilityMutation>("responsibilities", resolve: context => new { });
             Field<ExpenseMutation>("expenses", resolve: context => new { });
+            Field<PeopleMutation>("peoples", resolve: context => new { });
         }
     }
 }

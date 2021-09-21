@@ -26,5 +26,6 @@ namespace Obras.Data
         public DbSet<Documentation> Documentations { get; set; }
         public DbSet<Responsibility> Responsibilities { get; set; }
         public DbSet<Expense> Expenses { get; set; }
+        public DbSet<People> Peoples { get; set; }
     }
 }
