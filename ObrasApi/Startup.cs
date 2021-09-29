@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Obras.Api;
 using Obras.Data;
-using Obras.GraphQLModels.Schemas;
+using Obras.GraphQLModels.SharedDomain.Schemas;
 
 namespace ObrasApi
 {
@@ -50,7 +50,7 @@ namespace ObrasApi
                 optionsAction: options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
                 contextLifetime: ServiceLifetime.Singleton);
 
-            services.AddSingleton<ObrasDBContext>();
+            services.AddSingleton<ObrasDBContext, ObrasDBContext>();
 
             services.AddCustomIdentityAuth();
 

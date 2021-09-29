@@ -7,7 +7,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using Obras.Api.Models;
-    using Obras.Business.Helpers;
+    using Obras.Business.SharedDomain.Helpers;
     using Obras.Data;
     using Obras.Data.Entities;
     using System;
