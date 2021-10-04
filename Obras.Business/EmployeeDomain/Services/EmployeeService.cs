@@ -45,6 +45,8 @@ namespace Obras.Business.EmployeeDomain.Services
                 Neighbourhood = model.Neighbourhood,
                 Number = model.Number,
                 State = model.State,
+                City = model.City,
+                Complement = model.Complement,
                 Telephone = model.Telephone,
                 ZipCode = model.ZipCode,
                 RegistrationUserId = model.RegistrationUserId,
@@ -79,6 +81,8 @@ namespace Obras.Business.EmployeeDomain.Services
                 emp.Neighbourhood = model.Neighbourhood;
                 emp.Number = model.Number;
                 emp.State = model.State;
+                emp.Complement = model.Complement;
+                emp.City = model.City;
                 emp.Telephone = model.Telephone;
                 emp.ZipCode = model.ZipCode;
                 emp.ChangeDate = DateTime.Now;

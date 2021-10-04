@@ -45,6 +45,8 @@ namespace Obras.Business.CompanyDomain.Services
                 Neighbourhood = company.Neighbourhood,
                 Number = company.Number,
                 State = company.State,
+                City = company.City,
+                Complement = company.Complement,
                 Telephone = company.Telephone,
                 ZipCode = company.ZipCode
             };
@@ -75,6 +77,8 @@ namespace Obras.Business.CompanyDomain.Services
                 comp.Neighbourhood = company.Neighbourhood;
                 comp.Number = company.Number;
                 comp.State = company.State;
+                comp.City = company.City;
+                comp.Complement = company.Complement;
                 comp.Telephone = company.Telephone;
                 comp.ZipCode = company.ZipCode;
                 await _dbContext.SaveChangesAsync();

@@ -47,6 +47,8 @@ namespace Obras.Business.PeopleDomain.Services
                 Neighbourhood = model.Neighbourhood,
                 Number = model.Number,
                 State = model.State,
+                City = model.City,
+                Complement = model.Complement,
                 Telephone = model.Telephone,
                 ZipCode = model.ZipCode,
                 RegistrationUserId = model.RegistrationUserId,
@@ -85,6 +87,8 @@ namespace Obras.Business.PeopleDomain.Services
                 peo.FantasyName = model.FantasyName;
                 peo.Neighbourhood = model.Neighbourhood;
                 peo.Number = model.Number;
+                peo.Complement = model.Complement;
+                peo.City = model.City;
                 peo.State = model.State;
                 peo.Telephone = model.Telephone;
                 peo.ZipCode = model.ZipCode;
