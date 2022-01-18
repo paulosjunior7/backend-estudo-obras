@@ -2,6 +2,7 @@
 using Obras.GraphQLModels.BrandDomain.Queries;
 using Obras.GraphQLModels.CompanyDomain.Queries;
 using Obras.GraphQLModels.DocumentationDomain.Queries;
+using Obras.GraphQLModels.EmployeeDomain.Queries;
 using Obras.GraphQLModels.ExpenseDomain.Queries;
 using Obras.GraphQLModels.PeopleDomainQueries;
 using Obras.GraphQLModels.ProductDomain.Queries;
@@ -23,6 +24,7 @@ namespace Obras.GraphQLModels.SharedDomain.Queries
             Field<ResponsibilityQuery>("responsibilities", resolve: context => new { });
             Field<ExpenseQuery>("expenses", resolve: context => new { });
             Field<PeopleQuery>("peoples", resolve: context => new { });
+            Field<EmployeeQuery>("employees", resolve: context => new { });
         }
     }
 }

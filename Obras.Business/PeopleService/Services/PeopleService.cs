@@ -85,6 +85,7 @@ namespace Obras.Business.PeopleDomain.Services
                 peo.Client = model.Client;
                 peo.Investor = model.Investor;
                 peo.FantasyName = model.FantasyName;
+                peo.CorporateName = model.CorporateName;
                 peo.Neighbourhood = model.Neighbourhood;
                 peo.Number = model.Number;
                 peo.Complement = model.Complement;

@@ -4,6 +4,7 @@
     using Obras.GraphQLModels.BrandDomain.Mutations;
     using Obras.GraphQLModels.CompanyDomain.Mutations;
     using Obras.GraphQLModels.DocumentationDomain.Mutations;
+    using Obras.GraphQLModels.EmployeeDomain.Mutations;
     using Obras.GraphQLModels.ExpenseDomain.Mutations;
     using Obras.GraphQLModels.PeopleDomain.Mutations;
     using Obras.GraphQLModels.ProductDomain.Mutations;
@@ -23,6 +24,7 @@
             Field<ResponsibilityMutation>("responsibilities", resolve: context => new { });
             Field<ExpenseMutation>("expenses", resolve: context => new { });
             Field<PeopleMutation>("peoples", resolve: context => new { });
+            Field<EmployeeMutation>("employees", resolve: context => new { });
         }
     }
 }
