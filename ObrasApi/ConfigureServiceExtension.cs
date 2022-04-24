@@ -16,6 +16,7 @@
     using Obras.Business.DocumentationDomain.Services;
     using Obras.Business.EmployeeDomain.Services;
     using Obras.Business.ExpenseDomain.Services;
+    using Obras.Business.OutsourcedDomain.Services;
     using Obras.Business.PeopleDomain.Services;
     using Obras.Business.ProductDomain.Services;
     using Obras.Business.ProviderDomain.Services;
@@ -50,6 +51,11 @@
     using Obras.GraphQLModels.ExpenseDomain.Mutations;
     using Obras.GraphQLModels.ExpenseDomain.Queries;
     using Obras.GraphQLModels.ExpenseDomain.Types;
+    using Obras.GraphQLModels.OutsourcedDomain.Enums;
+    using Obras.GraphQLModels.OutsourcedDomain.InputTypes;
+    using Obras.GraphQLModels.OutsourcedDomain.Mutations;
+    using Obras.GraphQLModels.OutsourcedDomain.Queries;
+    using Obras.GraphQLModels.OutsourcedDomain.Types;
     using Obras.GraphQLModels.PeopleDomain.Enums;
     using Obras.GraphQLModels.PeopleDomain.InputTypes;
     using Obras.GraphQLModels.PeopleDomain.Mutations;
@@ -149,6 +155,7 @@
             services.AddTransient<IExpenseService, ExpenseService>();
             services.AddTransient<IPeopleService, PeopleService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IOutsourcedService, OutsourcedService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -271,6 +278,17 @@
             services.AddSingleton<EmployeeQuery>();
         }
 
+        private static void AddOutsourced(IServiceCollection services)
+        {
+            services.AddSingleton<OutsourcedType>();
+            services.AddSingleton<OutsourcedSortingFieldsEnumType>();
+            services.AddSingleton<OutsourcedByInputType>();
+            services.AddSingleton<OutsourcedFilterByInputType>();
+            services.AddSingleton<OutsourcedInputType>();
+            services.AddSingleton<OutsourcedMutation>();
+            services.AddSingleton<OutsourcedQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -285,6 +303,7 @@
             AddExpense(services);
             AddPeople(services);
             AddEmployee(services);
+            AddOutsourced(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 

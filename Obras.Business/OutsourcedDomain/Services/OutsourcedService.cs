@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Obras.Business.PeopleDomain.Enums;
-using Obras.Business.PeopleDomain.Models;
+using Obras.Business.OutsourcedDomain.Models;
+using Obras.Business.OutsoursedDomain.Enums;
 using Obras.Business.SharedDomain.Enums;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
@@ -10,34 +10,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Obras.Business.PeopleDomain.Services
+namespace Obras.Business.OutsourcedDomain.Services
 {
-    public interface IPeopleService
+    public interface IOutsourcedService
     {
-        Task<People> CreateAsync(PeopleModel model);
-        Task<People> UpdatePeopleAsync(int id, PeopleModel model);
-        Task<PageResponse<People>> GetPeoplesAsync(PageRequest<PeopleFilter, PeopleSortingFields> pageRequest);
-        Task<People> GetPeopleId(int id);
+        Task<Outsourced> CreateAsync(OutsourcedModel model);
+        Task<Outsourced> UpdateOutsourcedAsync(int id, OutsourcedModel model);
+        Task<PageResponse<Outsourced>> GetOutsourcedsAsync(PageRequest<OutsourcedFilter, OutsourcedSortingFields> pageRequest);
+        Task<Outsourced> GetOutsourcedId(int id);
     }
 
-    public class PeopleService : IPeopleService
+    public class OutsourcedService : IOutsourcedService
     {
         private readonly ObrasDBContext _dbContext;
 
-        public PeopleService(ObrasDBContext dbContext)
+        public OutsourcedService(ObrasDBContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<People> CreateAsync(PeopleModel model)
+        public async Task<Outsourced> CreateAsync(OutsourcedModel model)
         {
-            var peo = new People
+            var outsou = new Outsourced
             {
                 Cpf = model.Cpf,
                 TypePeople = model.TypePeople,
-                Client = model.Client,
-                Constructor = model.Constructor,
-                Investor = model.Investor,
                 Cnpj = model.Cnpj,
                 CreationDate = DateTime.Now,
                 ChangeDate = DateTime.Now,
@@ -59,7 +56,7 @@ namespace Obras.Business.PeopleDomain.Services
                 CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId)
             };
 
-            _dbContext.Peoples.Add(peo);
+            _dbContext.Outsourseds.Add(outsou);
             try
             {
                 var retorno = await _dbContext.SaveChangesAsync();
@@ -68,56 +65,53 @@ namespace Obras.Business.PeopleDomain.Services
             {
                 throw e;
             }
-            return peo;
+            return outsou;
         }
 
-        public async Task<People> UpdatePeopleAsync(int id, PeopleModel model)
+        public async Task<Outsourced> UpdateOutsourcedAsync(int id, OutsourcedModel model)
         {
-            var peo = await _dbContext.Peoples.FindAsync(id);
+            var outsou = await _dbContext.Outsourseds.FindAsync(id);
 
-            if (peo != null)
+            if (outsou != null)
             {
-                peo.TypePeople = model.TypePeople;
-                peo.Active = model.Active;
-                peo.Address = model.Address;
-                peo.CellPhone = model.CellPhone;
-                peo.EMail = model.EMail;
-                peo.Cpf = model.Cpf;
-                peo.Cnpj = model.Cnpj;
-                peo.Constructor = model.Constructor;
-                peo.Client = model.Client;
-                peo.Investor = model.Investor;
-                peo.FantasyName = model.FantasyName;
-                peo.CorporateName = model.CorporateName;
-                peo.Neighbourhood = model.Neighbourhood;
-                peo.Number = model.Number;
-                peo.Complement = model.Complement;
-                peo.City = model.City;
-                peo.State = model.State;
-                peo.Telephone = model.Telephone;
-                peo.ZipCode = model.ZipCode;
-                peo.ChangeDate = DateTime.Now;
+                outsou.TypePeople = model.TypePeople;
+                outsou.Active = model.Active;
+                outsou.Address = model.Address;
+                outsou.CellPhone = model.CellPhone;
+                outsou.EMail = model.EMail;
+                outsou.Cpf = model.Cpf;
+                outsou.Cnpj = model.Cnpj;
+                outsou.FantasyName = model.FantasyName;
+                outsou.CorporateName = model.CorporateName;
+                outsou.Neighbourhood = model.Neighbourhood;
+                outsou.Number = model.Number;
+                outsou.Complement = model.Complement;
+                outsou.City = model.City;
+                outsou.State = model.State;
+                outsou.Telephone = model.Telephone;
+                outsou.ZipCode = model.ZipCode;
+                outsou.ChangeDate = DateTime.Now;
                 await _dbContext.SaveChangesAsync();
             }
 
-            return peo;
+            return outsou;
         }
 
-        public async Task<People> GetPeopleId(int id)
+        public async Task<Outsourced> GetOutsourcedId(int id)
         {
-            return await _dbContext.Peoples.FindAsync(id);
+            return await _dbContext.Outsourseds.FindAsync(id);
         }
 
-        public async Task<PageResponse<People>> GetPeoplesAsync(PageRequest<PeopleFilter, PeopleSortingFields> pageRequest)
+        public async Task<PageResponse<Outsourced>> GetOutsourcedsAsync(PageRequest<OutsourcedFilter, OutsourcedSortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.Peoples.Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
+            var filterQuery = _dbContext.Outsourseds.Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
             int totalCount = await dataQuery.CountAsync();
 
-            List<People> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)
+            List<Outsourced> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)
                    .Take(pageRequest.Pagination.PageSize).AsNoTracking().ToListAsync();
 
             #endregion
@@ -131,7 +125,7 @@ namespace Obras.Business.PeopleDomain.Services
 
             #endregion
 
-            return new PageResponse<People>
+            return new PageResponse<Outsourced>
             {
                 Nodes = nodes,
                 HasNextPage = hasNextPage,
@@ -140,75 +134,57 @@ namespace Obras.Business.PeopleDomain.Services
             };
         }
 
-        private static IQueryable<People> LoadOrder(PageRequest<PeopleFilter, PeopleSortingFields> pageRequest, IQueryable<People> dataQuery)
+        private static IQueryable<Outsourced> LoadOrder(PageRequest<OutsourcedFilter, OutsourcedSortingFields> pageRequest, IQueryable<Outsourced> dataQuery)
         {
-            if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.Cnpj)
+            if (pageRequest.OrderBy?.Field == OutsourcedSortingFields.Cnpj)
             {
                 dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
                     ? dataQuery.OrderByDescending(x => x.Cnpj)
                     : dataQuery.OrderBy(x => x.Cnpj);
             }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.CorporateName)
+            else if (pageRequest.OrderBy?.Field == OutsourcedSortingFields.CorporateName)
             {
                 dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
                     ? dataQuery.OrderByDescending(x => x.CorporateName)
                     : dataQuery.OrderBy(x => x.CorporateName);
             }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.FantasyName)
+            else if (pageRequest.OrderBy?.Field == OutsourcedSortingFields.FantasyName)
             {
                 dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
                     ? dataQuery.OrderByDescending(x => x.FantasyName)
                     : dataQuery.OrderBy(x => x.FantasyName);
             }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.Neighbourhood)
+            else if (pageRequest.OrderBy?.Field == OutsourcedSortingFields.Neighbourhood)
             {
                 dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
                     ? dataQuery.OrderByDescending(x => x.Neighbourhood)
                     : dataQuery.OrderBy(x => x.Neighbourhood);
             }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.State)
+            else if (pageRequest.OrderBy?.Field == OutsourcedSortingFields.State)
             {
                 dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
                     ? dataQuery.OrderByDescending(x => x.State)
                     : dataQuery.OrderBy(x => x.State);
             }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.City)
+            else if (pageRequest.OrderBy?.Field == OutsourcedSortingFields.City)
             {
                 dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
                     ? dataQuery.OrderByDescending(x => x.City)
                     : dataQuery.OrderBy(x => x.City);
             }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.Active)
+            else if (pageRequest.OrderBy?.Field == OutsourcedSortingFields.Active)
             {
                 dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
                     ? dataQuery.OrderByDescending(x => x.Active)
                     : dataQuery.OrderBy(x => x.Active);
             }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.Constructor)
-            {
-                dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
-                    ? dataQuery.OrderByDescending(x => x.Constructor)
-                    : dataQuery.OrderBy(x => x.Constructor);
-            }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.Investor)
-            {
-                dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
-                    ? dataQuery.OrderByDescending(x => x.Investor)
-                    : dataQuery.OrderBy(x => x.Investor);
-            }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.Client)
-            {
-                dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
-                    ? dataQuery.OrderByDescending(x => x.Client)
-                    : dataQuery.OrderBy(x => x.Client);
-            }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.Cpf)
+            else if (pageRequest.OrderBy?.Field == OutsourcedSortingFields.Cpf)
             {
                 dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
                     ? dataQuery.OrderByDescending(x => x.Cpf)
                     : dataQuery.OrderBy(x => x.Cpf);
             }
-            else if (pageRequest.OrderBy?.Field == Enums.PeopleSortingFields.TypePeople)
+            else if (pageRequest.OrderBy?.Field == OutsourcedSortingFields.TypePeople)
             {
                 dataQuery = (pageRequest.OrderBy.Direction == SortingDirection.DESC)
                     ? dataQuery.OrderByDescending(x => x.TypePeople)
@@ -218,7 +194,7 @@ namespace Obras.Business.PeopleDomain.Services
             return dataQuery;
         }
 
-        private static IQueryable<People> LoadFilterQuery(PeopleFilter filter, IQueryable<People> filterQuery)
+        private static IQueryable<Outsourced> LoadFilterQuery(OutsourcedFilter filter, IQueryable<Outsourced> filterQuery)
         {
             if (filter == null)
             {
@@ -256,18 +232,6 @@ namespace Obras.Business.PeopleDomain.Services
             if (filter.Active != null)
             {
                 filterQuery = filterQuery.Where(x => x.Active == filter.Active);
-            }
-            if (filter.Client != null)
-            {
-                filterQuery = filterQuery.Where(x => x.Client == filter.Client);
-            }
-            if (filter.Investor != null)
-            {
-                filterQuery = filterQuery.Where(x => x.Investor == filter.Investor);
-            }
-            if (filter.Constructor != null)
-            {
-                filterQuery = filterQuery.Where(x => x.Constructor == filter.Constructor);
             }
             if (!string.IsNullOrEmpty(filter.Cpf))
             {

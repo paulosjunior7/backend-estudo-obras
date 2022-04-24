@@ -4,6 +4,7 @@ using Obras.GraphQLModels.CompanyDomain.Queries;
 using Obras.GraphQLModels.DocumentationDomain.Queries;
 using Obras.GraphQLModels.EmployeeDomain.Queries;
 using Obras.GraphQLModels.ExpenseDomain.Queries;
+using Obras.GraphQLModels.OutsourcedDomain.Queries;
 using Obras.GraphQLModels.PeopleDomainQueries;
 using Obras.GraphQLModels.ProductDomain.Queries;
 using Obras.GraphQLModels.ProviderDomain.Queries;
@@ -25,6 +26,7 @@ namespace Obras.GraphQLModels.SharedDomain.Queries
             Field<ExpenseQuery>("expenses", resolve: context => new { });
             Field<PeopleQuery>("peoples", resolve: context => new { });
             Field<EmployeeQuery>("employees", resolve: context => new { });
+            Field<OutsourcedQuery>("outsourceds", resolve: context => new { });
         }
     }
 }

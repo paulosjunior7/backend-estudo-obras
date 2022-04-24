@@ -1,12 +1,12 @@
 ﻿using GraphQL.Types;
-using Obras.Business.PeopleDomain.Models;
+using Obras.Business.OutsourcedDomain.Models;
 using Obras.GraphQLModels.PeopleDomain.Enums;
 
-namespace Obras.GraphQLModels.PeopleDomain.InputTypes
+namespace Obras.GraphQLModels.OutsourcedDomain.InputTypes
 {
-    public class PeopleFilterByInputType : InputObjectGraphType<PeopleFilter>
+    public class OutsourcedFilterByInputType : InputObjectGraphType<OutsourcedFilter>
     {
-        public PeopleFilterByInputType()
+        public OutsourcedFilterByInputType()
         {
             Field(x => x.Id, nullable: true);
             Field(x => x.Cnpj, nullable: true);
@@ -17,9 +17,6 @@ namespace Obras.GraphQLModels.PeopleDomain.InputTypes
             Field(x => x.Neighbourhood, nullable: true);
             Field(x => x.State, nullable: true);
             Field(x => x.Cpf, nullable: true);
-            Field(x => x.Client, nullable: true);
-            Field(x => x.Investor, nullable: true);
-            Field(x => x.Constructor, nullable: true);
             Field(x => x.CompanyId, nullable: true);
 
             Field<TypePeopleEnumType>("typePeople");
