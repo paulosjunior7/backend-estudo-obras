@@ -9,6 +9,7 @@ using Obras.GraphQLModels.PeopleDomainQueries;
 using Obras.GraphQLModels.ProductDomain.Queries;
 using Obras.GraphQLModels.ProviderDomain.Queries;
 using Obras.GraphQLModels.ResponsibilityDomain.Queries;
+using Obras.GraphQLModels.ProductProviderDomain.Queries;
 
 namespace Obras.GraphQLModels.SharedDomain.Queries
 {
@@ -27,6 +28,7 @@ namespace Obras.GraphQLModels.SharedDomain.Queries
             Field<PeopleQuery>("peoples", resolve: context => new { });
             Field<EmployeeQuery>("employees", resolve: context => new { });
             Field<OutsourcedQuery>("outsourceds", resolve: context => new { });
+            Field<ProductProviderQuery>("productProviders", resolve: context => new { });
         }
     }
 }

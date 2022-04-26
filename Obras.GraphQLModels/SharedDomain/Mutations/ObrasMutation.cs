@@ -9,6 +9,7 @@
     using Obras.GraphQLModels.OutsourcedDomain.Mutations;
     using Obras.GraphQLModels.PeopleDomain.Mutations;
     using Obras.GraphQLModels.ProductDomain.Mutations;
+    using Obras.GraphQLModels.ProductProviderDomain.Mutations;
     using Obras.GraphQLModels.ProviderDomain.Mutations;
     using Obras.GraphQLModels.ResponsibilityDomain.Mutations;
 
@@ -27,6 +28,7 @@
             Field<PeopleMutation>("peoples", resolve: context => new { });
             Field<EmployeeMutation>("employees", resolve: context => new { });
             Field<OutsourcedMutation>("outsourceds", resolve: context => new { });
+            Field<ProductProviderMutation>("productProviders", resolve: context => new { });
         }
     }
 }
