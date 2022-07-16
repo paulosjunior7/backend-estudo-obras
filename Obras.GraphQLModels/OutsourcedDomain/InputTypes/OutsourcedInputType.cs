@@ -1,14 +1,14 @@
 ﻿using GraphQL.Types;
-using Obras.Business.PeopleDomain.Models;
+using Obras.Business.OutsourcedDomain.Models;
 using Obras.GraphQLModels.PeopleDomain.Enums;
 
-namespace Obras.GraphQLModels.PeopleDomain.InputTypes
+namespace Obras.GraphQLModels.OutsourcedDomain.InputTypes
 {
-    public class PeopleInputType : InputObjectGraphType<PeopleModel>
+    public class OutsourcedInputType : InputObjectGraphType<OutsourcedModel>
     {
-        public PeopleInputType()
+        public OutsourcedInputType()
         {
-            Name = nameof(PeopleInputType);
+            Name = nameof(OutsourcedInputType);
 
             Field(x => x.Cnpj, nullable: true);
             Field(x => x.CorporateName);
@@ -18,9 +18,6 @@ namespace Obras.GraphQLModels.PeopleDomain.InputTypes
             Field(x => x.CellPhone, nullable: true);
             Field(x => x.City, nullable: true);
             Field(x => x.Complement, nullable: true);
-            Field(x => x.Constructor, nullable: true);
-            Field(x => x.Client, nullable: true);
-            Field(x => x.Investor, nullable: true);
             Field(x => x.EMail, nullable: true);
             Field(x => x.Neighbourhood, nullable: true);
             Field(x => x.Number, nullable: true);

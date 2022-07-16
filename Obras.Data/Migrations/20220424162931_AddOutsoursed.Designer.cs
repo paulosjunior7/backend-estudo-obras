@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Obras.Data;
 
 namespace Obras.Data.Migrations
 {
     [DbContext(typeof(ObrasDBContext))]
-    partial class ObrasDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220424162931_AddOutsoursed")]
+    partial class AddOutsoursed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -771,52 +773,6 @@ namespace Obras.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Obras.Data.Entities.ProductProvider", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("AuxiliaryCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ChangeDate")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ChangeUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("CreationDate")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProviderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RegistrationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChangeUserId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ProviderId");
-
-                    b.HasIndex("RegistrationUserId");
-
-                    b.ToTable("ProductProviders");
-                });
-
             modelBuilder.Entity("Obras.Data.Entities.Provider", b =>
                 {
                     b.Property<int>("Id")
@@ -1182,37 +1138,6 @@ namespace Obras.Data.Migrations
                     b.Navigation("ChangeUser");
 
                     b.Navigation("Company");
-
-                    b.Navigation("RegistrationUser");
-                });
-
-            modelBuilder.Entity("Obras.Data.Entities.ProductProvider", b =>
-                {
-                    b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
-                        .HasForeignKey("ChangeUserId");
-
-                    b.HasOne("Obras.Data.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Obras.Data.Entities.Provider", "Provider")
-                        .WithMany()
-                        .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
-                        .HasForeignKey("RegistrationUserId");
-
-                    b.Navigation("ChangeUser");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Provider");
 
                     b.Navigation("RegistrationUser");
                 });

@@ -16,8 +16,10 @@
     using Obras.Business.DocumentationDomain.Services;
     using Obras.Business.EmployeeDomain.Services;
     using Obras.Business.ExpenseDomain.Services;
+    using Obras.Business.OutsourcedDomain.Services;
     using Obras.Business.PeopleDomain.Services;
     using Obras.Business.ProductDomain.Services;
+    using Obras.Business.ProductProviderDomain.Services;
     using Obras.Business.ProviderDomain.Services;
     using Obras.Business.ResponsibilityDomain.Services;
     using Obras.Business.SharedDomain.Helpers;
@@ -50,6 +52,11 @@
     using Obras.GraphQLModels.ExpenseDomain.Mutations;
     using Obras.GraphQLModels.ExpenseDomain.Queries;
     using Obras.GraphQLModels.ExpenseDomain.Types;
+    using Obras.GraphQLModels.OutsourcedDomain.Enums;
+    using Obras.GraphQLModels.OutsourcedDomain.InputTypes;
+    using Obras.GraphQLModels.OutsourcedDomain.Mutations;
+    using Obras.GraphQLModels.OutsourcedDomain.Queries;
+    using Obras.GraphQLModels.OutsourcedDomain.Types;
     using Obras.GraphQLModels.PeopleDomain.Enums;
     using Obras.GraphQLModels.PeopleDomain.InputTypes;
     using Obras.GraphQLModels.PeopleDomain.Mutations;
@@ -60,6 +67,11 @@
     using Obras.GraphQLModels.ProductDomain.Mutations;
     using Obras.GraphQLModels.ProductDomain.Queries;
     using Obras.GraphQLModels.ProductDomain.Types;
+    using Obras.GraphQLModels.ProductProviderDomain.Enums;
+    using Obras.GraphQLModels.ProductProviderDomain.InputTypes;
+    using Obras.GraphQLModels.ProductProviderDomain.Mutations;
+    using Obras.GraphQLModels.ProductProviderDomain.Types;
+    using Obras.GraphQLModels.ProductProviderDomain.Queries;
     using Obras.GraphQLModels.ProviderDomain.Enums;
     using Obras.GraphQLModels.ProviderDomain.InputTypes;
     using Obras.GraphQLModels.ProviderDomain.Mutations;
@@ -149,6 +161,8 @@
             services.AddTransient<IExpenseService, ExpenseService>();
             services.AddTransient<IPeopleService, PeopleService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IOutsourcedService, OutsourcedService>();
+            services.AddTransient<IProductProviderService, ProductProviderService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -271,6 +285,28 @@
             services.AddSingleton<EmployeeQuery>();
         }
 
+        private static void AddOutsourced(IServiceCollection services)
+        {
+            services.AddSingleton<OutsourcedType>();
+            services.AddSingleton<OutsourcedSortingFieldsEnumType>();
+            services.AddSingleton<OutsourcedByInputType>();
+            services.AddSingleton<OutsourcedFilterByInputType>();
+            services.AddSingleton<OutsourcedInputType>();
+            services.AddSingleton<OutsourcedMutation>();
+            services.AddSingleton<OutsourcedQuery>();
+        }
+
+        private static void AddProductProvider(IServiceCollection services)
+        {
+            services.AddSingleton<ProductProviderType>();
+            services.AddSingleton<ProductProviderSortingFieldsEnumType>();
+            services.AddSingleton<ProductProviderByInputType>();
+            services.AddSingleton<ProductProviderFilterByInputType>();
+            services.AddSingleton<ProductProviderInputType>();
+            services.AddSingleton<ProductProviderMutation>();
+            services.AddSingleton<ProductProviderQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -285,6 +321,8 @@
             AddExpense(services);
             AddPeople(services);
             AddEmployee(services);
+            AddOutsourced(services);
+            AddProductProvider(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 

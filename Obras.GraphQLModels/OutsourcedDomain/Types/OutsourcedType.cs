@@ -1,16 +1,17 @@
 ﻿using GraphQL.Types;
+using Obras.Business.PeopleDomain.Services;
 using Obras.Data;
 using Obras.Data.Entities;
 using Obras.GraphQLModels.CompanyDomain.Types;
 using Obras.GraphQLModels.SharedDomain.Types;
 
-namespace Obras.GraphQLModels.PeopleDomain.Types
+namespace Obras.GraphQLModels.OutsourcedDomain.Types
 {
-    public class PeopleType : ObjectGraphType<People>
+    public class OutsourcedType : ObjectGraphType<Outsourced>
     {
-        public PeopleType(ObrasDBContext dbContext)
+        public OutsourcedType(ObrasDBContext dbContext)
         {
-            Name = nameof(PeopleType);
+            Name = nameof(OutsourcedType);
 
             Field(x => x.Id);
             Field(x => x.Neighbourhood, nullable: true);
@@ -18,9 +19,6 @@ namespace Obras.GraphQLModels.PeopleDomain.Types
             Field(x => x.State, nullable: true);
             Field(x => x.Telephone, nullable: true);
             Field(x => x.ZipCode, nullable: true);
-            Field(x => x.Investor, nullable: true);
-            Field(x => x.Constructor, nullable: true);
-            Field(x => x.Client, nullable: true);
             Field(x => x.Active);
             Field(x => x.Address, nullable: true);
             Field(x => x.CellPhone, nullable: true);
