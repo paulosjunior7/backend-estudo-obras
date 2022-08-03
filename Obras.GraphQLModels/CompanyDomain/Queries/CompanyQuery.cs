@@ -58,6 +58,18 @@
 
                     return connection;
                 });
+
+            FieldAsync<CompanyType>(
+            name: "findById",
+            arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
+            resolve: async context =>
+            {
+                var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
+
+                var pageResponse = await companyService.GetCompanyId(context.GetArgument<int>("id"));
+
+                return pageResponse;
+            });
         }
     }
 }

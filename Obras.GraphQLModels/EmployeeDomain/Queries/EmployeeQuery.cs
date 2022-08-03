@@ -17,8 +17,9 @@ namespace Obras.GraphQLModels.EmployeeDomain.Queries
 {
     public class EmployeeQuery : ObjectGraphType
     {
-        
-        public EmployeeQuery(IEmployeeService employeeService, ObrasDBContext dBContext) => Connection<EmployeeType>()
+
+        public EmployeeQuery(IEmployeeService employeeService, ObrasDBContext dBContext) {
+            Connection<EmployeeType>()
                 .Name("findall")
                 .Unidirectional()
                 .AuthorizeWith("LoggedIn")
@@ -64,5 +65,20 @@ namespace Obras.GraphQLModels.EmployeeDomain.Queries
 
                     return connection;
                 });
+
+            FieldAsync<EmployeeType>(
+            name: "findById",
+            arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
+            resolve: async context =>
+            {
+                var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
+
+                var user = await dBContext.User.FindAsync(userId);
+
+                var pageResponse = await employeeService.GetEmployeeId(context.GetArgument<int>("id"));
+
+                return pageResponse;
+            });
+        }
     }
 }

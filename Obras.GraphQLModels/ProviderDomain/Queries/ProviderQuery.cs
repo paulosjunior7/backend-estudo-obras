@@ -66,6 +66,20 @@
 
                     return connection;
                 });
+
+            FieldAsync<ProviderType>(
+            name: "findById",
+            arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
+            resolve: async context =>
+            {
+                var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
+
+                var user = await dBContext.User.FindAsync(userId);
+
+                var pageResponse = await providerService.GetProviderId(context.GetArgument<int>("id"));
+
+                return pageResponse;
+            });
         }
     }
 }
