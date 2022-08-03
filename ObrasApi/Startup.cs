@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Obras.Api;
+using Obras.Business.Mappings;
 using Obras.Data;
 using Obras.GraphQLModels.SharedDomain.Schemas;
 
@@ -59,6 +60,8 @@ namespace ObrasApi
             services.AddCustomGraphQLAuth();
 
             services.AddCustomService();
+
+            services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
             services.AddCustomGraphQLServices();
 

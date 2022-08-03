@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Obras.Business.ResponsibilityDomain.Enums;
 using Obras.Business.ResponsibilityDomain.Models;
 using Obras.Business.SharedDomain.Models;
@@ -22,24 +23,20 @@ namespace Obras.Business.ResponsibilityDomain.Services
     public class ResponsibilityService : IResponsibilityService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public ResponsibilityService(ObrasDBContext dbContext)
+        public ResponsibilityService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<Responsibility> CreateAsync(ResponsibilityModel model)
         {
-            var res = new Responsibility
-            {
-                Description = model.Description,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = model.Active,
-                RegistrationUserId = model.RegistrationUserId,
-                ChangeUserId = model.ChangeUserId,
-                CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId)
-            };
+            var res = _mapper.Map<Responsibility>(model);
+            res.CreationDate = DateTime.Now;
+            res.ChangeDate = DateTime.Now;
+            res.CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId);
 
             _dbContext.Responsibilities.Add(res);
             try
@@ -80,6 +77,8 @@ namespace Obras.Business.ResponsibilityDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<Responsibility> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

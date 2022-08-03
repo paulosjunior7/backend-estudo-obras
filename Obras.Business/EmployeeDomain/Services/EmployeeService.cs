@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Obras.Business.EmployeeDomain.Enums;
 using Obras.Business.EmployeeDomain.Models;
 using Obras.Business.SharedDomain.Enums;
@@ -23,36 +24,20 @@ namespace Obras.Business.EmployeeDomain.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public EmployeeService(ObrasDBContext dbContext)
+        public EmployeeService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<Employee> CreateAsync(EmployeeModel model)
         {
-            var emp = new Employee
-            {
-                Cpf = model.Cpf,
-                Name = model.Name,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = model.Active,
-                Address = model.Address,
-                CellPhone = model.CellPhone,
-                EMail = model.EMail,
-                ResponsibilityId = model.ResponsibilityId,
-                Neighbourhood = model.Neighbourhood,
-                Number = model.Number,
-                State = model.State,
-                City = model.City,
-                Complement = model.Complement,
-                Telephone = model.Telephone,
-                ZipCode = model.ZipCode,
-                RegistrationUserId = model.RegistrationUserId,
-                ChangeUserId = model.ChangeUserId,
-                CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId)
-            };
+            var emp = _mapper.Map<Employee>(model);
+            emp.CreationDate = DateTime.Now;
+            emp.ChangeDate = DateTime.Now;
+            emp.CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId);
 
             _dbContext.Employees.Add(emp);
             try
@@ -104,6 +89,8 @@ namespace Obras.Business.EmployeeDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<Employee> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

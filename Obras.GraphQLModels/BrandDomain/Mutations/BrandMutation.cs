@@ -14,6 +14,8 @@ namespace Obras.GraphQLModels.BrandDomain.Mutations
         {
             Name = nameof(BrandMutation);
 
+            this.AuthorizeWith("LoggedIn");
+
             FieldAsync<BrandType>(
                 name: "createBrand",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<BrandInputType>> { Name = "brand" }),

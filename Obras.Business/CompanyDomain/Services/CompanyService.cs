@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Obras.Business.SharedDomain.Models;
 using Obras.Business.SharedDomain.Enums;
+using AutoMapper;
 
 namespace Obras.Business.CompanyDomain.Services
 {
@@ -23,33 +24,19 @@ namespace Obras.Business.CompanyDomain.Services
     public class CompanyService : ICompanyService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public CompanyService(ObrasDBContext dbContext)
+        public CompanyService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<Company> CreateAsync(CompanyModel company)
         {
-            var comp = new Company
-            {
-                Cnpj = company.Cnpj,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = company.Active,
-                Address = company.Address,
-                CellPhone = company.CellPhone,
-                EMail = company.EMail,
-                CorporateName = company.CorporateName,
-                FantasyName = company.FantasyName,
-                Neighbourhood = company.Neighbourhood,
-                Number = company.Number,
-                State = company.State,
-                City = company.City,
-                Complement = company.Complement,
-                Telephone = company.Telephone,
-                ZipCode = company.ZipCode
-            };
+            var comp = _mapper.Map<Company>(company);
+            comp.CreationDate = DateTime.Now;
+            comp.ChangeDate = DateTime.Now;
 
             _dbContext.Companies.Add(comp);
             try
@@ -99,7 +86,6 @@ namespace Obras.Business.CompanyDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
-
             dataQuery = LoadOrder(pageRequest, dataQuery);
 
             int totalCount = await dataQuery.CountAsync();

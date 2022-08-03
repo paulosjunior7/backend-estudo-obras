@@ -91,6 +91,12 @@
     using System.IdentityModel.Tokens.Jwt;
     using System.Net;
     using System.Security.Claims;
+    using Obras.Business.ConstructionDomain.Services;
+    using Obras.GraphQLModels.ConstructionDomain.Types;
+    using Obras.GraphQLModels.ConstructionDomain.Enums;
+    using Obras.GraphQLModels.ConstructionDomain.InputTypes;
+    using Obras.GraphQLModels.ConstructionDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionDomain.Queries;
 
     public static class ConfigureServiceExtension
     {
@@ -163,6 +169,7 @@
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IOutsourcedService, OutsourcedService>();
             services.AddTransient<IProductProviderService, ProductProviderService>();
+            services.AddTransient<IConstructionService, ConstructionService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -307,6 +314,18 @@
             services.AddSingleton<ProductProviderQuery>();
         }
 
+        private static void AddConstruction(IServiceCollection services)
+        {
+            services.AddSingleton<ConstructionType>();
+            services.AddSingleton<ConstructionSortingFieldsEnumType>();
+            services.AddSingleton<StatusConstructionEnumType>();
+            services.AddSingleton<ConstructionByInputType > ();
+            services.AddSingleton<ConstructionFilterByInputType>();
+            services.AddSingleton<ConstructionInputType>();
+            services.AddSingleton<ConstructionMutation>();
+            services.AddSingleton<ConstructionQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -323,6 +342,7 @@
             AddEmployee(services);
             AddOutsourced(services);
             AddProductProvider(services);
+            AddConstruction(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 

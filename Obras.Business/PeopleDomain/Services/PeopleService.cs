@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Obras.Business.PeopleDomain.Enums;
 using Obras.Business.PeopleDomain.Models;
 using Obras.Business.SharedDomain.Enums;
@@ -23,41 +24,20 @@ namespace Obras.Business.PeopleDomain.Services
     public class PeopleService : IPeopleService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public PeopleService(ObrasDBContext dbContext)
+        public PeopleService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<People> CreateAsync(PeopleModel model)
         {
-            var peo = new People
-            {
-                Cpf = model.Cpf,
-                TypePeople = model.TypePeople,
-                Client = model.Client,
-                Constructor = model.Constructor,
-                Investor = model.Investor,
-                Cnpj = model.Cnpj,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = model.Active,
-                Address = model.Address,
-                CellPhone = model.CellPhone,
-                EMail = model.EMail,
-                CorporateName = model.CorporateName,
-                FantasyName = model.FantasyName,
-                Neighbourhood = model.Neighbourhood,
-                Number = model.Number,
-                State = model.State,
-                City = model.City,
-                Complement = model.Complement,
-                Telephone = model.Telephone,
-                ZipCode = model.ZipCode,
-                RegistrationUserId = model.RegistrationUserId,
-                ChangeUserId = model.ChangeUserId,
-                CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId)
-            };
+            var peo = _mapper.Map<People>(model);
+            peo.CreationDate = DateTime.Now;
+            peo.ChangeDate = DateTime.Now;
+            peo.CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId);
 
             _dbContext.Peoples.Add(peo);
             try
@@ -115,6 +95,8 @@ namespace Obras.Business.PeopleDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<People> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Obras.Business.OutsourcedDomain.Models;
 using Obras.Business.OutsoursedDomain.Enums;
 using Obras.Business.SharedDomain.Enums;
@@ -23,38 +24,20 @@ namespace Obras.Business.OutsourcedDomain.Services
     public class OutsourcedService : IOutsourcedService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public OutsourcedService(ObrasDBContext dbContext)
+        public OutsourcedService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<Outsourced> CreateAsync(OutsourcedModel model)
         {
-            var outsou = new Outsourced
-            {
-                Cpf = model.Cpf,
-                TypePeople = model.TypePeople,
-                Cnpj = model.Cnpj,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = model.Active,
-                Address = model.Address,
-                CellPhone = model.CellPhone,
-                EMail = model.EMail,
-                CorporateName = model.CorporateName,
-                FantasyName = model.FantasyName,
-                Neighbourhood = model.Neighbourhood,
-                Number = model.Number,
-                State = model.State,
-                City = model.City,
-                Complement = model.Complement,
-                Telephone = model.Telephone,
-                ZipCode = model.ZipCode,
-                RegistrationUserId = model.RegistrationUserId,
-                ChangeUserId = model.ChangeUserId,
-                CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId)
-            };
+            var outsou = _mapper.Map<Outsourced>(model);
+            outsou.CreationDate = DateTime.Now;
+            outsou.ChangeDate = DateTime.Now;
+            outsou.CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId);
 
             _dbContext.Outsourseds.Add(outsou);
             try
@@ -109,6 +92,8 @@ namespace Obras.Business.OutsourcedDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<Outsourced> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

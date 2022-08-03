@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Obras.Business.BrandDomain.Enums;
 using Obras.Business.BrandDomain.Models;
 using Obras.Business.SharedDomain.Enums;
@@ -23,24 +24,20 @@ namespace Obras.Business.BrandDomain.Services
     public class BrandService : IBrandService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public BrandService(ObrasDBContext dbContext)
+        public BrandService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<Brand> CreateAsync(BrandModel brand)
         {
-            var bra = new Brand
-            {
-                Description = brand.Description,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = brand.Active,
-                RegistrationUserId = brand.RegistrationUserId,
-                ChangeUserId = brand.ChangeUserId,
-                CompanyId = (int)(brand.CompanyId == null ? 0 : brand.CompanyId)
-            };
+            var bra = _mapper.Map<Brand>(brand);
+            bra.CreationDate = DateTime.Now;
+            bra.ChangeDate = DateTime.Now;
+            bra.CompanyId = (int)(brand.CompanyId == null ? 0 : brand.CompanyId);
 
             _dbContext.Brands.Add(bra);
             try
@@ -81,6 +78,8 @@ namespace Obras.Business.BrandDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<Brand> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

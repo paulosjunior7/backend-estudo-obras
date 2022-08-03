@@ -14,6 +14,8 @@ namespace Obras.GraphQLModels.DocumentationDomain.Mutations
         {
             Name = nameof(DocumentationMutation);
 
+            this.AuthorizeWith("LoggedIn");
+
             FieldAsync<DocumentationType>(
                 name: "createDocumentation",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<DocumentationInputType>> { Name = "documentation" }),
