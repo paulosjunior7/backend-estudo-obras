@@ -11,6 +11,7 @@ using Obras.GraphQLModels.ProviderDomain.Queries;
 using Obras.GraphQLModels.ResponsibilityDomain.Queries;
 using Obras.GraphQLModels.ProductProviderDomain.Queries;
 using Obras.GraphQLModels.ConstructionDomain.Queries;
+using Obras.GraphQLModels.ConstructionInvestorDomain.Queries;
 
 namespace Obras.GraphQLModels.SharedDomain.Queries
 {
@@ -31,6 +32,7 @@ namespace Obras.GraphQLModels.SharedDomain.Queries
             Field<OutsourcedQuery>("outsourceds", resolve: context => new { });
             Field<ProductProviderQuery>("productProviders", resolve: context => new { });
             Field<ConstructionQuery>("constructions", resolve: context => new { });
+            Field<ConstructionInvestorQuery>("constructionInvestors", resolve: context => new { });
         }
     }
 }

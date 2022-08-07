@@ -2,6 +2,7 @@
 using Obras.Business.BrandDomain.Models;
 using Obras.Business.CompanyDomain.Models;
 using Obras.Business.ConstructionDomain.Models;
+using Obras.Business.ConstructionInvestorDomain.Models;
 using Obras.Business.DocumentationDomain.Models;
 using Obras.Business.EmployeeDomain.Models;
 using Obras.Business.ExpenseDomain.Models;
@@ -30,6 +31,7 @@ namespace Obras.Business.Mappings
             CreateMap<ProductProviderModel, ProductProvider>().ReverseMap();
             CreateMap<ResponsibilityModel, Responsibility>().ReverseMap();
             CreateMap<ConstructionModel, Construction>().ReverseMap();
+            CreateMap<ConstructionInvestorModel, ConstructionInvestor>().ReverseMap();
         }
     }
 }

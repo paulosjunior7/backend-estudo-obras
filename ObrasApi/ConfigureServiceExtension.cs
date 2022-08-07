@@ -97,6 +97,12 @@
     using Obras.GraphQLModels.ConstructionDomain.InputTypes;
     using Obras.GraphQLModels.ConstructionDomain.Mutations;
     using Obras.GraphQLModels.ConstructionDomain.Queries;
+    using Obras.GraphQLModels.ConstructionInvestorDomain.Types;
+    using Obras.GraphQLModels.ConstructionInvestorDomain.Enums;
+    using Obras.GraphQLModels.ConstructionInvestorDomain.InputTypes;
+    using Obras.GraphQLModels.ConstructionInvestorDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionInvestorDomain.Queries;
+    using Obras.Business.ConstructionInvestorDomain.Services;
 
     public static class ConfigureServiceExtension
     {
@@ -170,6 +176,7 @@
             services.AddTransient<IOutsourcedService, OutsourcedService>();
             services.AddTransient<IProductProviderService, ProductProviderService>();
             services.AddTransient<IConstructionService, ConstructionService>();
+            services.AddTransient<IConstructionInvestorService, ConstructionInvestorService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -326,6 +333,17 @@
             services.AddSingleton<ConstructionQuery>();
         }
 
+        private static void AddConstructionInvestor(IServiceCollection services)
+        {
+            services.AddSingleton<ConstructionInvestorType>();
+            services.AddSingleton<ConstructionInvestorSortingFieldsEnumType>();
+            services.AddSingleton<ConstructionInvestorByInputType>();
+            services.AddSingleton<ConstructionInvestorFilterByInputType>();
+            services.AddSingleton<ConstructionInvestorInputType>();
+            services.AddSingleton<ConstructionInvestorMutation>();
+            services.AddSingleton<ConstructionInvestorQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -343,6 +361,7 @@
             AddOutsourced(services);
             AddProductProvider(services);
             AddConstruction(services);
+            AddConstructionInvestor(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 

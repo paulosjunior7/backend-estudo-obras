@@ -32,6 +32,7 @@ namespace Obras.Data
         public DbSet<ProductProvider> ProductProviders { get; set; }
         public DbSet<Construction> Constructions { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<ConstructionInvestor> ConstructionInvestors { get; set; }
 
     }
 }
