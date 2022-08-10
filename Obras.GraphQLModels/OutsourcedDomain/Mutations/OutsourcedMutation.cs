@@ -14,6 +14,8 @@ namespace Obras.GraphQLModels.OutsourcedDomain.Mutations
         {
             Name = nameof(OutsourcedMutation);
 
+            this.AuthorizeWith("LoggedIn");
+
             FieldAsync<OutsourcedType>(
                 name: "createOutsourced",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<OutsourcedInputType>> { Name = "outsourced" }),

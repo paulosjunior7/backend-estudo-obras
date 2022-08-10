@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Obras.Business.ProductProviderDomain.Enums;
 using Obras.Business.ProductProviderDomain.Models;
 using Obras.Business.SharedDomain.Models;
@@ -22,25 +23,19 @@ namespace Obras.Business.ProductProviderDomain.Services
     public class ProductProviderService : IProductProviderService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public ProductProviderService(ObrasDBContext dbContext)
+        public ProductProviderService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<ProductProvider> CreateAsync(ProductProviderModel productProvider)
         {
-            var prod = new ProductProvider
-            {
-                AuxiliaryCode = productProvider.AuxiliaryCode,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = productProvider.Active,
-                ProviderId = productProvider.ProviderId,
-                ProductId = productProvider.ProductId,
-                ChangeUserId = productProvider.ChangeUserId,
-                RegistrationUserId = productProvider.RegistrationUserId
-            };
+            var prod = _mapper.Map<ProductProvider>(productProvider);
+            prod.CreationDate = DateTime.Now;
+            prod.ChangeDate = DateTime.Now;
 
             _dbContext.ProductProviders.Add(prod);
             try
@@ -84,6 +79,8 @@ namespace Obras.Business.ProductProviderDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<ProductProvider> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

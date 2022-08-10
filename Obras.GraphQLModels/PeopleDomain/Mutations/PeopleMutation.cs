@@ -14,6 +14,8 @@ namespace Obras.GraphQLModels.PeopleDomain.Mutations
         {
             Name = nameof(PeopleMutation);
 
+            this.AuthorizeWith("LoggedIn");
+
             FieldAsync<PeopleType>(
                 name: "createPeople",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<PeopleInputType>> { Name = "people" }),

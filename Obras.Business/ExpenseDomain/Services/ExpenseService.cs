@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Obras.Business.ExpenseDomain.Enums;
 using Obras.Business.ExpenseDomain.Models;
 using Obras.Business.SharedDomain.Enums;
@@ -23,25 +24,20 @@ namespace Obras.Business.ExpenseDomain.Services
     public class ExpenseService : IExpenseService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public ExpenseService(ObrasDBContext dbContext)
+        public ExpenseService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<Expense> CreateAsync(ExpenseModel model)
         {
-            var exp = new Expense
-            {
-                Description = model.Description,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = model.Active,
-                TypeExpense = model.TypeExpense,
-                RegistrationUserId = model.RegistrationUserId,
-                ChangeUserId = model.ChangeUserId,
-                CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId)
-            };
+            var exp = _mapper.Map<Expense>(model);
+            exp.CreationDate = DateTime.Now;
+            exp.ChangeDate = DateTime.Now;
+            exp.CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId);
 
             _dbContext.Expenses.Add(exp);
             try
@@ -83,6 +79,8 @@ namespace Obras.Business.ExpenseDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<Expense> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

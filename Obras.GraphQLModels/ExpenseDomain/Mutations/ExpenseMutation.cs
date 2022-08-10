@@ -14,6 +14,8 @@ namespace Obras.GraphQLModels.ExpenseDomain.Mutations
         {
             Name = nameof(ExpenseMutation);
 
+            this.AuthorizeWith("LoggedIn");
+
             FieldAsync<ExpenseType>(
                 name: "createExpense",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<ExpenseInputType>> { Name = "expense" }),

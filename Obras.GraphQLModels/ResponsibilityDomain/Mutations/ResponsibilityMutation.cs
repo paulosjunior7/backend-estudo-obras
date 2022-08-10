@@ -14,6 +14,8 @@ namespace Obras.GraphQLModels.ResponsibilityDomain.Mutations
         {
             Name = nameof(ResponsibilityMutation);
 
+            this.AuthorizeWith("LoggedIn");
+
             FieldAsync<ResponsibilityType>(
                 name: "createResponsibility",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<ResponsibilityInputType>> { Name = "responsibility" }),

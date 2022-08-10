@@ -65,6 +65,20 @@ namespace Obras.GraphQLModels.ExpenseDomain.Queries
 
                     return connection;
                 });
+
+            FieldAsync<ExpenseType>(
+            name: "findById",
+            arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
+            resolve: async context =>
+            {
+                var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
+
+                var user = await dBContext.User.FindAsync(userId);
+
+                var pageResponse = await expenseService.GetExpenseId(context.GetArgument<int>("id"));
+
+                return pageResponse;
+            });
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Obras.Business.ProviderDomain.Services
 {
+    using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using Obras.Business.ProviderDomain.Enums;
     using Obras.Business.ProviderDomain.Models;
@@ -23,33 +24,20 @@
     public class ProviderService : IProviderService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public ProviderService(ObrasDBContext dbContext)
+        public ProviderService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<Provider> CreateAsync(ProviderModel provider)
         {
-            var prov = new Provider
-            {
-                Cnpj = provider.Cnpj,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = provider.Active,
-                Address = provider.Address,
-                CellPhone = provider.CellPhone,
-                EMail = provider.EMail,
-                Name = provider.Name,
-                ChangeUserId = provider.ChangeUserId,
-                RegistrationUserId = provider.RegistrationUserId,
-                CompanyId = (int) (provider.CompanyId == null ? 0 : provider.CompanyId),
-                Neighbourhood = provider.Neighbourhood,
-                Number = provider.Number,
-                State = provider.State,
-                Telephone = provider.Telephone,
-                ZipCode = provider.ZipCode
-            };
+            var prov = _mapper.Map<Provider>(provider);
+            prov.CreationDate = DateTime.Now;
+            prov.ChangeDate = DateTime.Now;
+            prov.CompanyId = (int)(provider.CompanyId == null ? 0 : provider.CompanyId);
 
             _dbContext.Providers.Add(prov);
             try
@@ -100,6 +88,8 @@
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<Provider> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

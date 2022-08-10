@@ -339,6 +339,160 @@ namespace Obras.Data.Migrations
                     b.ToTable("Companies");
                 });
 
+            modelBuilder.Entity("Obras.Data.Entities.Construction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("Art")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BatchArea")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BuildingArea")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ChangeUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("Cno")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Complement")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateBegin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Identifier")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("License")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<string>("MotherEnrollment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("MunicipalRegistration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Neighbourhood")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Number")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("RegistrationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double?>("SaleValue")
+                        .HasColumnType("float");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.Property<int>("StatusConstruction")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UndergroundUse")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChangeUserId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("RegistrationUserId");
+
+                    b.ToTable("Constructions");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.ConstructionInvestor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ChangeDate")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ChangeUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ConstructionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreationDate")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PeopleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RegistrationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChangeUserId");
+
+                    b.HasIndex("ConstructionId");
+
+                    b.HasIndex("PeopleId");
+
+                    b.HasIndex("RegistrationUserId");
+
+                    b.ToTable("ConstructionInvestors");
+                });
+
             modelBuilder.Entity("Obras.Data.Entities.Documentation", b =>
                 {
                     b.Property<int>("Id")
@@ -724,6 +878,50 @@ namespace Obras.Data.Migrations
                     b.ToTable("Peoples");
                 });
 
+            modelBuilder.Entity("Obras.Data.Entities.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("ChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ChangeUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ConstrucationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ConstructionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("RegistrationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TypePhoto")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChangeUserId");
+
+                    b.HasIndex("ConstructionId");
+
+                    b.HasIndex("RegistrationUserId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("Obras.Data.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -1032,6 +1230,60 @@ namespace Obras.Data.Migrations
                     b.Navigation("RegistrationUser");
                 });
 
+            modelBuilder.Entity("Obras.Data.Entities.Construction", b =>
+                {
+                    b.HasOne("Obras.Data.Entities.User", "ChangeUser")
+                        .WithMany()
+                        .HasForeignKey("ChangeUserId");
+
+                    b.HasOne("Obras.Data.Entities.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
+                        .WithMany()
+                        .HasForeignKey("RegistrationUserId");
+
+                    b.Navigation("ChangeUser");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("RegistrationUser");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.ConstructionInvestor", b =>
+                {
+                    b.HasOne("Obras.Data.Entities.User", "ChangeUser")
+                        .WithMany()
+                        .HasForeignKey("ChangeUserId");
+
+                    b.HasOne("Obras.Data.Entities.Construction", "Construction")
+                        .WithMany()
+                        .HasForeignKey("ConstructionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Obras.Data.Entities.People", "People")
+                        .WithMany()
+                        .HasForeignKey("PeopleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
+                        .WithMany()
+                        .HasForeignKey("RegistrationUserId");
+
+                    b.Navigation("ChangeUser");
+
+                    b.Navigation("Construction");
+
+                    b.Navigation("People");
+
+                    b.Navigation("RegistrationUser");
+                });
+
             modelBuilder.Entity("Obras.Data.Entities.Documentation", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
@@ -1159,6 +1411,27 @@ namespace Obras.Data.Migrations
                     b.Navigation("ChangeUser");
 
                     b.Navigation("Company");
+
+                    b.Navigation("RegistrationUser");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Photo", b =>
+                {
+                    b.HasOne("Obras.Data.Entities.User", "ChangeUser")
+                        .WithMany()
+                        .HasForeignKey("ChangeUserId");
+
+                    b.HasOne("Obras.Data.Entities.Construction", "Construction")
+                        .WithMany()
+                        .HasForeignKey("ConstructionId");
+
+                    b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
+                        .WithMany()
+                        .HasForeignKey("RegistrationUserId");
+
+                    b.Navigation("ChangeUser");
+
+                    b.Navigation("Construction");
 
                     b.Navigation("RegistrationUser");
                 });

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Obras.Business.SharedDomain.Models;
 using Obras.Business.SharedDomain.Enums;
+using AutoMapper;
 
 namespace Obras.Business.ProductDomain.Services
 {
@@ -24,25 +25,20 @@ namespace Obras.Business.ProductDomain.Services
     public class ProductService : IProductService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public ProductService(ObrasDBContext dbContext)
+        public ProductService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<Product> CreateAsync(ProductModel product)
         {
-            var prod = new Product
-            {
-                Detail = product.Detail,
-                Description = product.Description,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = product.Active,
-                RegistrationUserId = product.RegistrationUserId,
-                ChangeUserId = product.ChangeUserId,
-                CompanyId = (int)(product.CompanyId == null ? 0 : product.CompanyId)
-            };
+            var prod = _mapper.Map<Product>(product);
+            prod.CreationDate = DateTime.Now;
+            prod.ChangeDate = DateTime.Now;
+            prod.CompanyId = (int)(product.CompanyId == null ? 0 : product.CompanyId);
 
             _dbContext.Products.Add(prod);
             try
@@ -83,6 +79,8 @@ namespace Obras.Business.ProductDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<Product> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Obras.Business.DocumentationDomain.Enums;
 using Obras.Business.DocumentationDomain.Models;
 using Obras.Business.SharedDomain.Enums;
@@ -23,24 +24,20 @@ namespace Obras.Business.DocumentationDomain.Services
     public class DocumentationService : IDocumentationService
     {
         private readonly ObrasDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public DocumentationService(ObrasDBContext dbContext)
+        public DocumentationService(ObrasDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<Documentation> CreateAsync(DocumentationModel documentation)
         {
-            var doc = new Documentation
-            {
-                Description = documentation.Description,
-                CreationDate = DateTime.Now,
-                ChangeDate = DateTime.Now,
-                Active = documentation.Active,
-                RegistrationUserId = documentation.RegistrationUserId,
-                ChangeUserId = documentation.ChangeUserId,
-                CompanyId = (int)(documentation.CompanyId == null ? 0 : documentation.CompanyId)
-            };
+            var doc = _mapper.Map<Documentation>(documentation);
+            doc.CreationDate = DateTime.Now;
+            doc.ChangeDate = DateTime.Now;
+            doc.CompanyId = (int)(documentation.CompanyId == null ? 0 : documentation.CompanyId);
 
             _dbContext.Documentations.Add(doc);
             try
@@ -81,6 +78,8 @@ namespace Obras.Business.DocumentationDomain.Services
             #region Obtain Nodes
 
             var dataQuery = filterQuery;
+            dataQuery = LoadOrder(pageRequest, dataQuery);
+
             int totalCount = await dataQuery.CountAsync();
 
             List<Documentation> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)

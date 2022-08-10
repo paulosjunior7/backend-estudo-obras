@@ -3,6 +3,8 @@
     using GraphQL.Types;
     using Obras.GraphQLModels.BrandDomain.Mutations;
     using Obras.GraphQLModels.CompanyDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionInvestorDomain.Mutations;
     using Obras.GraphQLModels.DocumentationDomain.Mutations;
     using Obras.GraphQLModels.EmployeeDomain.Mutations;
     using Obras.GraphQLModels.ExpenseDomain.Mutations;
@@ -29,6 +31,8 @@
             Field<EmployeeMutation>("employees", resolve: context => new { });
             Field<OutsourcedMutation>("outsourceds", resolve: context => new { });
             Field<ProductProviderMutation>("productProviders", resolve: context => new { });
+            Field<ConstructionMutation>("constructions", resolve: context => new { });
+            Field<ConstructionInvestorMutation>("constructionInvestors", resolve: context => new { });
         }
     }
 }
