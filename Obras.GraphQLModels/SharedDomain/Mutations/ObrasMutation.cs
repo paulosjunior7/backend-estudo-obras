@@ -3,6 +3,7 @@
     using GraphQL.Types;
     using Obras.GraphQLModels.BrandDomain.Mutations;
     using Obras.GraphQLModels.CompanyDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionBatchDomain.Mutations;
     using Obras.GraphQLModels.ConstructionDomain.Mutations;
     using Obras.GraphQLModels.ConstructionInvestorDomain.Mutations;
     using Obras.GraphQLModels.DocumentationDomain.Mutations;
@@ -33,6 +34,7 @@
             Field<ProductProviderMutation>("productProviders", resolve: context => new { });
             Field<ConstructionMutation>("constructions", resolve: context => new { });
             Field<ConstructionInvestorMutation>("constructionInvestors", resolve: context => new { });
+            Field<ConstructionBatchMutation>("constructionBatchs", resolve: context => new { });
         }
     }
 }

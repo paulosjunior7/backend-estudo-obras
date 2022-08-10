@@ -103,6 +103,12 @@
     using Obras.GraphQLModels.ConstructionInvestorDomain.Mutations;
     using Obras.GraphQLModels.ConstructionInvestorDomain.Queries;
     using Obras.Business.ConstructionInvestorDomain.Services;
+    using Obras.Business.ConstructionBatchDomain.Services;
+    using Obras.GraphQLModels.ConstructionBatchDomain.Types;
+    using Obras.GraphQLModels.ConstructionBatchDomain.Enums;
+    using Obras.GraphQLModels.ConstructionBatchDomain.InputTypes;
+    using Obras.GraphQLModels.ConstructionBatchDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionBatchDomain.Queries;
 
     public static class ConfigureServiceExtension
     {
@@ -177,6 +183,7 @@
             services.AddTransient<IProductProviderService, ProductProviderService>();
             services.AddTransient<IConstructionService, ConstructionService>();
             services.AddTransient<IConstructionInvestorService, ConstructionInvestorService>();
+            services.AddTransient<IConstructionBatchService, ConstructionBatchService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -344,6 +351,17 @@
             services.AddSingleton<ConstructionInvestorQuery>();
         }
 
+        private static void AddConstructionBatch(IServiceCollection services)
+        {
+            services.AddSingleton<ConstructionBatchType>();
+            services.AddSingleton<ConstructionBatchSortingFieldsEnumType>();
+            services.AddSingleton<ConstructionBatchByInputType>();
+            services.AddSingleton<ConstructionBatchFilterByInputType>();
+            services.AddSingleton<ConstructionBatchInputType>();
+            services.AddSingleton<ConstructionBatchMutation>();
+            services.AddSingleton<ConstructionBatchQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -362,6 +380,7 @@
             AddProductProvider(services);
             AddConstruction(services);
             AddConstructionInvestor(services);
+            AddConstructionBatch(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 
