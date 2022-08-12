@@ -12,6 +12,7 @@ namespace Obras.GraphQLModels.ConstructionDomain.Types
         {
             Name = nameof(ConstructionType);
 
+            Field(x => x.Id, nullable: true);
             Field(x => x.Address);
             Field(x => x.Art, nullable: true);
             Field(x => x.BatchArea, nullable: true);
