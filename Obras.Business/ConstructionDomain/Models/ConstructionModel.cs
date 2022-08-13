@@ -23,7 +23,7 @@ namespace Obras.Business.ConstructionDomain.Models
         public int? UndergroundUse { get; set; }
         public int Art { get; set; }
         public int Cno { get; set; }
-        public string MotherEnrollment { get; set; }
+        public double? MotherEnrollment { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double? SaleValue { get; set; }
