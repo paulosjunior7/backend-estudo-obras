@@ -34,6 +34,7 @@ namespace Obras.Data
         public DbSet<Photo> Photos { get; set; }
         public DbSet<ConstructionInvestor> ConstructionInvestors { get; set; }
         public DbSet<ConstructionBatch> ConstructionBatchs { get; set; }
+        public DbSet<ConstructionHouse> ConstructionHouses { get; set; }
 
     }
 }

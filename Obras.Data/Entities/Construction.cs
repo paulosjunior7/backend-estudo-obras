@@ -57,7 +57,7 @@ namespace Obras.Data.Entities
 
         public int? Cno { get; set; }
 
-        public string MotherEnrollment { get; set; }
+        public double? MotherEnrollment { get; set; }
 
         public double? Latitude { get; set; }
 

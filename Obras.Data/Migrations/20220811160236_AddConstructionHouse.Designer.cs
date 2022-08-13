@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Obras.Data;
 
 namespace Obras.Data.Migrations
 {
     [DbContext(typeof(ObrasDBContext))]
-    partial class ObrasDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220811160236_AddConstructionHouse")]
+    partial class AddConstructionHouse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -405,8 +407,8 @@ namespace Obras.Data.Migrations
                     b.Property<double?>("Longitude")
                         .HasColumnType("float");
 
-                    b.Property<double?>("MotherEnrollment")
-                        .HasColumnType("float");
+                    b.Property<string>("MotherEnrollment")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MunicipalRegistration")
                         .HasColumnType("int");
