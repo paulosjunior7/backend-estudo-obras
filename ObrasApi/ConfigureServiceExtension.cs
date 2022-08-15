@@ -115,6 +115,12 @@
     using Obras.GraphQLModels.ConstructionHouseDomain.Mutations;
     using Obras.GraphQLModels.ConstructionHouseDomain.Queries;
     using Obras.Business.ConstructionHouseDomain.Services;
+    using Obras.GraphQLModels.UnityDomain.Types;
+    using Obras.GraphQLModels.UnityDomain.Enums;
+    using Obras.GraphQLModels.UnityDomain.InputTypes;
+    using Obras.GraphQLModels.UnityDomain.Mutations;
+    using Obras.GraphQLModels.UnityDomain.Queries;
+    using Obras.Business.UnitDomain.Services;
 
     public static class ConfigureServiceExtension
     {
@@ -191,6 +197,7 @@
             services.AddTransient<IConstructionInvestorService, ConstructionInvestorService>();
             services.AddTransient<IConstructionBatchService, ConstructionBatchService>();
             services.AddTransient<IConstructionHouseService, ConstructionHouseService>();
+            services.AddTransient<IUnityService, UnityService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -380,6 +387,17 @@
             services.AddSingleton<ConstructionBatchQuery>();
         }
 
+        private static void AddUnity(IServiceCollection services)
+        {
+            services.AddSingleton<UnityType>();
+            services.AddSingleton<UnitySortingFieldsEnumType>();
+            services.AddSingleton<UnityByInputType>();
+            services.AddSingleton<UnityFilterByInputType>();
+            services.AddSingleton<UnityInputType>();
+            services.AddSingleton<UnityMutation>();
+            services.AddSingleton<UnityQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -400,6 +418,7 @@
             AddConstructionInvestor(services);
             AddConstructionBatch(services);
             AddConstructionHouse(services);
+            AddUnity(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 

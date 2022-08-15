@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Obras.Business\Obras.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PhotoDomain\Mutations\" />
+  </ItemGroup>
+
 </Project>
