@@ -36,6 +36,6 @@ namespace Obras.Data
         public DbSet<ConstructionBatch> ConstructionBatchs { get; set; }
         public DbSet<ConstructionHouse> ConstructionHouses { get; set; }
         public DbSet<Unity> Unities { get; set; }
-
+        public DbSet<Group> Groups { get; set; }
     }
 }

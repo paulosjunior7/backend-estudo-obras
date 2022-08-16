@@ -8,6 +8,7 @@ using Obras.Business.ConstructionInvestorDomain.Models;
 using Obras.Business.DocumentationDomain.Models;
 using Obras.Business.EmployeeDomain.Models;
 using Obras.Business.ExpenseDomain.Models;
+using Obras.Business.GroupDomain.Models;
 using Obras.Business.OutsourcedDomain.Models;
 using Obras.Business.PeopleDomain.Models;
 using Obras.Business.ProductDomain.Models;
@@ -37,6 +38,7 @@ namespace Obras.Business.Mappings
             CreateMap<ConstructionBatchModel, ConstructionBatch>().ReverseMap();
             CreateMap<ConstructionHouseModel, ConstructionHouse>().ReverseMap();
             CreateMap<UnityModel, Unity>().ReverseMap();
+            CreateMap<GroupModel, Group>().ReverseMap();
         }
     }
 }
