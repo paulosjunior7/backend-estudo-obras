@@ -115,6 +115,18 @@
     using Obras.GraphQLModels.ConstructionHouseDomain.Mutations;
     using Obras.GraphQLModels.ConstructionHouseDomain.Queries;
     using Obras.Business.ConstructionHouseDomain.Services;
+    using Obras.GraphQLModels.UnityDomain.Types;
+    using Obras.GraphQLModels.UnityDomain.Enums;
+    using Obras.GraphQLModels.UnityDomain.InputTypes;
+    using Obras.GraphQLModels.UnityDomain.Mutations;
+    using Obras.GraphQLModels.UnityDomain.Queries;
+    using Obras.Business.UnitDomain.Services;
+    using Obras.GraphQLModels.GroupDomain.Types;
+    using Obras.GraphQLModels.GroupDomain.Enums;
+    using Obras.GraphQLModels.GroupDomain.InputTypes;
+    using Obras.GraphQLModels.GroupDomain.Mutations;
+    using Obras.GraphQLModels.GroupDomain.Queries;
+    using Obras.Business.GroupDomain.Services;
 
     public static class ConfigureServiceExtension
     {
@@ -191,6 +203,8 @@
             services.AddTransient<IConstructionInvestorService, ConstructionInvestorService>();
             services.AddTransient<IConstructionBatchService, ConstructionBatchService>();
             services.AddTransient<IConstructionHouseService, ConstructionHouseService>();
+            services.AddTransient<IUnityService, UnityService>();
+            services.AddTransient<IGroupService, GroupService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -380,6 +394,28 @@
             services.AddSingleton<ConstructionBatchQuery>();
         }
 
+        private static void AddUnity(IServiceCollection services)
+        {
+            services.AddSingleton<UnityType>();
+            services.AddSingleton<UnitySortingFieldsEnumType>();
+            services.AddSingleton<UnityByInputType>();
+            services.AddSingleton<UnityFilterByInputType>();
+            services.AddSingleton<UnityInputType>();
+            services.AddSingleton<UnityMutation>();
+            services.AddSingleton<UnityQuery>();
+        }
+
+        private static void AddGroup(IServiceCollection services)
+        {
+            services.AddSingleton<GroupType>();
+            services.AddSingleton<GroupSortingFieldsEnumType>();
+            services.AddSingleton<GroupByInputType>();
+            services.AddSingleton<GroupFilterByInputType>();
+            services.AddSingleton<GroupInputType>();
+            services.AddSingleton<GroupMutation>();
+            services.AddSingleton<GroupQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -400,6 +436,8 @@
             AddConstructionInvestor(services);
             AddConstructionBatch(services);
             AddConstructionHouse(services);
+            AddUnity(services);
+            AddGroup(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 

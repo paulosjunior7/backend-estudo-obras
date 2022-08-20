@@ -14,6 +14,8 @@ using Obras.GraphQLModels.ConstructionDomain.Queries;
 using Obras.GraphQLModels.ConstructionInvestorDomain.Queries;
 using Obras.GraphQLModels.ConstructionBatchDomain.Queries;
 using Obras.GraphQLModels.ConstructionHouseDomain.Queries;
+using Obras.GraphQLModels.UnityDomain.Queries;
+using Obras.GraphQLModels.GroupDomain.Queries;
 
 namespace Obras.GraphQLModels.SharedDomain.Queries
 {
@@ -37,6 +39,8 @@ namespace Obras.GraphQLModels.SharedDomain.Queries
             Field<ConstructionInvestorQuery>("constructionInvestors", resolve: context => new { });
             Field<ConstructionBatchQuery>("constructionBatchs", resolve: context => new { });
             Field<ConstructionHouseQuery>("constructionHouses", resolve: context => new { });
+            Field<UnityQuery>("unity", resolve: context => new { });
+            Field<GroupQuery>("group", resolve: context => new { });
         }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Obras.Data;
 
 namespace Obras.Data.Migrations
 {
     [DbContext(typeof(ObrasDBContext))]
-    partial class ObrasDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220815230746_AddUnity")]
+    partial class AddUnity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -778,49 +780,6 @@ namespace Obras.Data.Migrations
                     b.HasIndex("RegistrationUserId");
 
                     b.ToTable("Expenses");
-                });
-
-            modelBuilder.Entity("Obras.Data.Entities.Group", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ChangeDate")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ChangeUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreationDate")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("RegistrationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChangeUserId");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("RegistrationUserId");
-
-                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("Obras.Data.Entities.Outsourced", b =>
@@ -1590,29 +1549,6 @@ namespace Obras.Data.Migrations
                 });
 
             modelBuilder.Entity("Obras.Data.Entities.Expense", b =>
-                {
-                    b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
-                        .HasForeignKey("ChangeUserId");
-
-                    b.HasOne("Obras.Data.Entities.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
-                        .HasForeignKey("RegistrationUserId");
-
-                    b.Navigation("ChangeUser");
-
-                    b.Navigation("Company");
-
-                    b.Navigation("RegistrationUser");
-                });
-
-            modelBuilder.Entity("Obras.Data.Entities.Group", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
                         .WithMany()

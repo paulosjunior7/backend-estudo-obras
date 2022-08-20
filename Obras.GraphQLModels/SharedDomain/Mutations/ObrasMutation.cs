@@ -10,12 +10,14 @@
     using Obras.GraphQLModels.DocumentationDomain.Mutations;
     using Obras.GraphQLModels.EmployeeDomain.Mutations;
     using Obras.GraphQLModels.ExpenseDomain.Mutations;
+    using Obras.GraphQLModels.GroupDomain.Mutations;
     using Obras.GraphQLModels.OutsourcedDomain.Mutations;
     using Obras.GraphQLModels.PeopleDomain.Mutations;
     using Obras.GraphQLModels.ProductDomain.Mutations;
     using Obras.GraphQLModels.ProductProviderDomain.Mutations;
     using Obras.GraphQLModels.ProviderDomain.Mutations;
     using Obras.GraphQLModels.ResponsibilityDomain.Mutations;
+    using Obras.GraphQLModels.UnityDomain.Mutations;
 
     public class ObrasMutation : ObjectGraphType
     {
@@ -37,6 +39,8 @@
             Field<ConstructionInvestorMutation>("constructionInvestors", resolve: context => new { });
             Field<ConstructionBatchMutation>("constructionBatchs", resolve: context => new { });
             Field<ConstructionHouseMutation>("constructionHouse", resolve: context => new { });
+            Field<UnityMutation>("unity", resolve: context => new { });
+            Field<GroupMutation>("group", resolve: context => new { });
         }
     }
 }
