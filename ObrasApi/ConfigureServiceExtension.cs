@@ -127,6 +127,12 @@
     using Obras.GraphQLModels.GroupDomain.Mutations;
     using Obras.GraphQLModels.GroupDomain.Queries;
     using Obras.Business.GroupDomain.Services;
+    using Obras.GraphQLModels.ConstructionMaterialDomain.Types;
+    using Obras.GraphQLModels.ConstructionMaterialDomain.Enums;
+    using Obras.GraphQLModels.ConstructionMaterialDomain.InputTypes;
+    using Obras.GraphQLModels.ConstructionMaterialDomain.Queries;
+    using Obras.GraphQLModels.ConstructionMaterialDomain.Mutations;
+    using Obras.Business.ConstructionMaterialDomain.Services;
 
     public static class ConfigureServiceExtension
     {
@@ -205,6 +211,7 @@
             services.AddTransient<IConstructionHouseService, ConstructionHouseService>();
             services.AddTransient<IUnityService, UnityService>();
             services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IConstructionMaterialService, ConstructionMaterialService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -416,6 +423,17 @@
             services.AddSingleton<GroupQuery>();
         }
 
+        private static void AddConstructionMaterial(IServiceCollection services)
+        {
+            services.AddSingleton<ConstructionMaterialType>();
+            services.AddSingleton<ConstructionMaterialSortingFieldsEnumType>();
+            services.AddSingleton<ConstructionMaterialByInputType>();
+            services.AddSingleton<ConstructionMaterialFilterByInputType>();
+            services.AddSingleton<ConstructionMaterialInputType>();
+            services.AddSingleton<ConstructionMaterialMutation>();
+            services.AddSingleton<ConstructionMaterialQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -438,6 +456,7 @@
             AddConstructionHouse(services);
             AddUnity(services);
             AddGroup(services);
+            AddConstructionMaterial(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 

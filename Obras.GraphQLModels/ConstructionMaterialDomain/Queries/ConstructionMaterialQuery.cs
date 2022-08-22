@@ -1,56 +1,55 @@
 ﻿using GraphQL;
 using GraphQL.Types;
 using GraphQL.Types.Relay.DataObjects;
-using Obras.Business.PeopleDomain.Enums;
-using Obras.Business.PeopleDomain.Models;
-using Obras.Business.PeopleDomain.Services;
+using Obras.Business.ConstructionInvestorDomain.Models;
+using Obras.Business.ConstructionMaterialDomain.Enums;
+using Obras.Business.ConstructionMaterialDomain.Models;
+using Obras.Business.ConstructionMaterialDomain.Services;
 using Obras.Business.SharedDomain.Helpers;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
 using Obras.Data.Entities;
-using Obras.GraphQLModels.PeopleDomain.InputTypes;
-using Obras.GraphQLModels.PeopleDomain.Types;
+using Obras.GraphQLModels.ConstructionMaterialDomain.InputTypes;
+using Obras.GraphQLModels.ConstructionMaterialDomain.Types;
 using Obras.GraphQLModels.SharedDomain.InputTypes;
 using System.Linq;
 
-namespace Obras.GraphQLModels.PeopleDomainQueries
+namespace Obras.GraphQLModels.ConstructionMaterialDomain.Queries
 {
-    public class PeopleQuery : ObjectGraphType
+    public class ConstructionMaterialQuery : ObjectGraphType
     {
-        public PeopleQuery(IPeopleService peopleService, ObrasDBContext dBContext)
+        public ConstructionMaterialQuery(IConstructionMaterialService service, ObrasDBContext dBContext)
         {
-            Connection<PeopleType>()
+            Connection<ConstructionMaterialType>()
                 .Name("findall")
                 .Unidirectional()
                 .AuthorizeWith("LoggedIn")
                 .Argument<PaginationDetailsType>("pagination", "Paginarion")
-                .Argument<PeopleByInputType>("sort", "Pass field & direction on which you want to sort data")
-                .Argument<PeopleFilterByInputType>("filter", "filter on which you want to sort data")
+                .Argument<ConstructionMaterialByInputType>("sort", "Pass field & direction on which you want to sort data")
+                .Argument<ConstructionMaterialFilterByInputType>("filter", "filter on which you want to sort data")
                 .ResolveAsync(async context =>
                 {
                     var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
 
                     var user = await dBContext.User.FindAsync(userId);
-                    var pageRequest = new PageRequest<PeopleFilter, PeopleSortingFields>
+                    var pageRequest = new PageRequest<ConstructionMaterialFilter, ConstructionMaterialSortingFields>
                     {
                         Pagination = context.GetArgument<PaginationDetails>("pagination") ?? new PaginationDetails(),
-                        Filter = context.GetArgument<PeopleFilter>("filter") ?? new PeopleFilter(),
-                        OrderBy = context.GetArgument<SortingDetails<PeopleSortingFields>>("sort")
+                        Filter = context.GetArgument<ConstructionMaterialFilter>("filter") ?? new ConstructionMaterialFilter(),
+                        OrderBy = context.GetArgument<SortingDetails<ConstructionMaterialSortingFields>>("sort")
                     };
 
-                    pageRequest.Filter.CompanyId = (int)(pageRequest.Filter.CompanyId == null ? user.CompanyId : pageRequest.Filter.CompanyId);
-
-                    var pageResponse = await peopleService.GetPeoplesAsync(pageRequest);
+                    var pageResponse = await service.GetAsync(pageRequest);
 
                     (string startCursor, string endCursor) = CursorHelper.GetFirstAndLastCursor(pageResponse.Nodes.Select(x => x.Id));
 
-                    var edge = pageResponse.Nodes.Select(x => new Edge<People>
+                    var edge = pageResponse.Nodes.Select(x => new Edge<ConstructionMaterial>
                     {
                         Cursor = CursorHelper.ToCursor(x.Id),
                         Node = x
                     }).ToList();
 
-                    var connection = new Connection<People>()
+                    var connection = new Connection<ConstructionMaterial>()
                     {
                         Edges = edge,
                         TotalCount = pageResponse.TotalCount,
@@ -66,7 +65,7 @@ namespace Obras.GraphQLModels.PeopleDomainQueries
                     return connection;
                 });
 
-            FieldAsync<PeopleType>(
+            FieldAsync<ConstructionMaterialType>(
             name: "findById",
             arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
             resolve: async context =>
@@ -75,7 +74,7 @@ namespace Obras.GraphQLModels.PeopleDomainQueries
 
                 var user = await dBContext.User.FindAsync(userId);
 
-                var pageResponse = await peopleService.GetPeopleId(context.GetArgument<int>("id"));
+                var pageResponse = await service.GetId(context.GetArgument<int>("id"));
 
                 return pageResponse;
             });

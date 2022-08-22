@@ -64,6 +64,8 @@
                 prov.EMail = provider.EMail;
                 prov.Name = provider.Name;
                 prov.Neighbourhood = provider.Neighbourhood;
+                prov.City = provider.City;
+                prov.Complement = provider.Complement;
                 prov.Number = provider.Number;
                 prov.State = provider.State;
                 prov.Telephone = provider.Telephone;
