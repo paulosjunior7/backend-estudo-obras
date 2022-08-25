@@ -38,5 +38,7 @@ namespace Obras.Data
         public DbSet<Unity> Unities { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<ConstructionMaterial> ConstructionMaterials { get; set; }
+        public DbSet<ConstructionManpower> ConstructionManpowers { get; set; }
+        public DbSet<ConstructionDocumentation> ConstructionDocumentations { get; set; }
     }
 }

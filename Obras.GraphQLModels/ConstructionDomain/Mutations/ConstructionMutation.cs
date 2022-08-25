@@ -47,7 +47,7 @@ namespace Obras.GraphQLModels.ConstructionDomain.Mutations
 
                     var user = await dBContext.User.FindAsync(userId);
 
-                    model.CompanyId = (int)(model.CompanyId == null ? user.CompanyId != null ? user.CompanyId : 0 : model.CompanyId);
+                    model.CompanyId = (int)(model.CompanyId == null || model.CompanyId == 0 ? user.CompanyId != null ? user.CompanyId : 0 : model.CompanyId);
                     model.ChangeUserId = userId;
 
                     return await service.UpdateAsync(id, model);

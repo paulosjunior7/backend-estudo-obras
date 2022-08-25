@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Obras.Data;
 
 namespace Obras.Data.Migrations
 {
     [DbContext(typeof(ObrasDBContext))]
-    partial class ObrasDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220825015113_AddConstructionManpower")]
+    partial class AddConstructionManpower
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -494,60 +496,6 @@ namespace Obras.Data.Migrations
                     b.HasIndex("RegistrationUserId");
 
                     b.ToTable("ConstructionBatchs");
-                });
-
-            modelBuilder.Entity("Obras.Data.Entities.ConstructionDocumentation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ChangeDate")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ChangeUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ConstructionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ConstructionInvestorId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreationDate")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DocumentationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RegistrationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChangeUserId");
-
-                    b.HasIndex("ConstructionId");
-
-                    b.HasIndex("ConstructionInvestorId");
-
-                    b.HasIndex("DocumentationId");
-
-                    b.HasIndex("RegistrationUserId");
-
-                    b.ToTable("ConstructionDocumentations");
                 });
 
             modelBuilder.Entity("Obras.Data.Entities.ConstructionHouse", b =>
@@ -1667,45 +1615,6 @@ namespace Obras.Data.Migrations
                     b.Navigation("Construction");
 
                     b.Navigation("People");
-
-                    b.Navigation("RegistrationUser");
-                });
-
-            modelBuilder.Entity("Obras.Data.Entities.ConstructionDocumentation", b =>
-                {
-                    b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
-                        .HasForeignKey("ChangeUserId");
-
-                    b.HasOne("Obras.Data.Entities.Construction", "Construction")
-                        .WithMany()
-                        .HasForeignKey("ConstructionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Obras.Data.Entities.ConstructionInvestor", "ConstructionInvestor")
-                        .WithMany()
-                        .HasForeignKey("ConstructionInvestorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Obras.Data.Entities.Documentation", "Documentation")
-                        .WithMany()
-                        .HasForeignKey("DocumentationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
-                        .HasForeignKey("RegistrationUserId");
-
-                    b.Navigation("ChangeUser");
-
-                    b.Navigation("Construction");
-
-                    b.Navigation("ConstructionInvestor");
-
-                    b.Navigation("Documentation");
 
                     b.Navigation("RegistrationUser");
                 });
