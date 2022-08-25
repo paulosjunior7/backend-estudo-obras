@@ -4,6 +4,7 @@
     using Obras.GraphQLModels.BrandDomain.Mutations;
     using Obras.GraphQLModels.CompanyDomain.Mutations;
     using Obras.GraphQLModels.ConstructionBatchDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionDocumentationDomain.Mutations;
     using Obras.GraphQLModels.ConstructionDomain.Mutations;
     using Obras.GraphQLModels.ConstructionHouseDomain.Mutations;
     using Obras.GraphQLModels.ConstructionInvestorDomain.Mutations;
@@ -45,6 +46,7 @@
             Field<GroupMutation>("group", resolve: context => new { });
             Field<ConstructionMaterialMutation>("constructionMaterials", resolve: context => new { });
             Field<ConstructionManpowerMutation>("constructionManpowers", resolve: context => new { });
+            Field<ConstructionDocumentationMutation>("constructionDocumentations", resolve: context => new { });
         }
     }
 }

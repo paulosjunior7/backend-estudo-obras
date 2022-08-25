@@ -18,6 +18,7 @@ using Obras.GraphQLModels.UnityDomain.Queries;
 using Obras.GraphQLModels.GroupDomain.Queries;
 using Obras.GraphQLModels.ConstructionMaterialDomain.Queries;
 using Obras.GraphQLModels.ConstructionManpowerDomain.Queries;
+using Obras.GraphQLModels.ConstructionDocumentationDomain.Queries;
 
 namespace Obras.GraphQLModels.SharedDomain.Queries
 {
@@ -45,6 +46,7 @@ namespace Obras.GraphQLModels.SharedDomain.Queries
             Field<GroupQuery>("group", resolve: context => new { });
             Field<ConstructionMaterialQuery>("constructionMaterials", resolve: context => new { });
             Field<ConstructionManpowerQuery>("constructionManpowers", resolve: context => new { });
+            Field<ConstructionDocumentationQuery>("constructionDocumentations", resolve: context => new { });
         }
     }
 }
