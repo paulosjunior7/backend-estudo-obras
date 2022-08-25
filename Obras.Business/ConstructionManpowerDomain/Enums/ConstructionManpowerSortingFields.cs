@@ -1,4 +1,4 @@
-﻿namespace Obras.Business.ConstructionManpower.Enums
+﻿namespace Obras.Business.ConstructionManpowerDomain.Enums
 {
     public enum ConstructionManpowerSortingFields
     {

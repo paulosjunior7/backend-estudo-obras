@@ -14,9 +14,4 @@
     <ProjectReference Include="..\Obras.Data\Obras.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ConstructionManpower\Models\" />
-    <Folder Include="ConstructionManpower\Services\" />
-  </ItemGroup>
-
 </Project>

@@ -133,6 +133,12 @@
     using Obras.GraphQLModels.ConstructionMaterialDomain.Queries;
     using Obras.GraphQLModels.ConstructionMaterialDomain.Mutations;
     using Obras.Business.ConstructionMaterialDomain.Services;
+    using Obras.GraphQLModels.ConstructionManpowerDomain.Enums;
+    using Obras.GraphQLModels.ConstructionManpowerDomain.Types;
+    using Obras.GraphQLModels.ConstructionManpowerDomain.InputTypes;
+    using Obras.GraphQLModels.ConstructionManpowerDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionManpowerDomain.Queries;
+    using Obras.Business.ConstructionManpowerDomain.Services;
 
     public static class ConfigureServiceExtension
     {
@@ -212,6 +218,7 @@
             services.AddTransient<IUnityService, UnityService>();
             services.AddTransient<IGroupService, GroupService>();
             services.AddTransient<IConstructionMaterialService, ConstructionMaterialService>();
+            services.AddTransient<IConstructionManpowerService, ConstructionManpowerService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -434,6 +441,17 @@
             services.AddSingleton<ConstructionMaterialQuery>();
         }
 
+        private static void AddConstructionManpower(IServiceCollection services)
+        {
+            services.AddSingleton<ConstructionManpowerType>();
+            services.AddSingleton<ConstructionManpowerSortingFieldsEnumType>();
+            services.AddSingleton<ConstructionManpowerByInputType>();
+            services.AddSingleton<ConstructionManpowerFilterByInputType>();
+            services.AddSingleton<ConstructionManpowerInputType>();
+            services.AddSingleton<ConstructionManpowerMutation>();
+            services.AddSingleton<ConstructionManpowerQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -457,6 +475,7 @@
             AddUnity(services);
             AddGroup(services);
             AddConstructionMaterial(services);
+            AddConstructionManpower(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 
