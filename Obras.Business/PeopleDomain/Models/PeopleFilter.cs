@@ -8,9 +8,9 @@ namespace Obras.Business.PeopleDomain.Models
         public string Cnpj { get; set; }
         public string Cpf { get; set; }
         public TypePeople? TypePeople { get; set; }
-        public bool? Constructor { get; set; }
-        public bool? Investor { get; set; }
-        public bool? Client { get; set; }
+        public bool? isConstructor { get; set; }
+        public bool? isInvestor { get; set; }
+        public bool? isClient { get; set; }
         public string CorporateName { get; set; }
         public string FantasyName { get; set; }
         public string Neighbourhood { get; set; }

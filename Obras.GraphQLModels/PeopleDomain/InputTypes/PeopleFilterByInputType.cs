@@ -17,9 +17,9 @@ namespace Obras.GraphQLModels.PeopleDomain.InputTypes
             Field(x => x.Neighbourhood, nullable: true);
             Field(x => x.State, nullable: true);
             Field(x => x.Cpf, nullable: true);
-            Field(x => x.Client, nullable: true);
-            Field(x => x.Investor, nullable: true);
-            Field(x => x.Constructor, nullable: true);
+            Field(x => x.isClient, nullable: true);
+            Field(x => x.isInvestor, nullable: true);
+            Field(x => x.isConstructor, nullable: true);
             Field(x => x.CompanyId, nullable: true);
 
             Field<TypePeopleEnumType>("typePeople");

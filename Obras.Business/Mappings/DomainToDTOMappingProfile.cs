@@ -16,6 +16,7 @@ using Obras.Business.OutsourcedDomain.Models;
 using Obras.Business.PeopleDomain.Models;
 using Obras.Business.ProductDomain.Models;
 using Obras.Business.ProductProviderDomain.Models;
+using Obras.Business.ProviderDomain.Models;
 using Obras.Business.ResponsibilityDomain.Models;
 using Obras.Business.UnitDomain.Models;
 using Obras.Data.Entities;
@@ -30,6 +31,7 @@ namespace Obras.Business.Mappings
             CreateMap<CompanyModel, Company>().ReverseMap();
             CreateMap<DocumentationModel, Documentation>().ReverseMap();
             CreateMap<EmployeeModel, Employee>().ReverseMap();
+            CreateMap<ProviderModel, Provider>().ReverseMap();
             CreateMap<ExpenseModel, Expense>().ReverseMap();
             CreateMap<OutsourcedModel, Outsourced>().ReverseMap();
             CreateMap<PeopleModel, People>().ReverseMap();

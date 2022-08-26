@@ -239,17 +239,17 @@ namespace Obras.Business.PeopleDomain.Services
             {
                 filterQuery = filterQuery.Where(x => x.Active == filter.Active);
             }
-            if (filter.Client != null)
+            if (filter.isClient != null)
             {
-                filterQuery = filterQuery.Where(x => x.Client == filter.Client);
+                filterQuery = filterQuery.Where(x => x.Client == filter.isClient);
             }
-            if (filter.Investor != null)
+            if (filter.isInvestor != null)
             {
-                filterQuery = filterQuery.Where(x => x.Investor == filter.Investor);
+                filterQuery = filterQuery.Where(x => x.Investor == filter.isInvestor);
             }
-            if (filter.Constructor != null)
+            if (filter.isConstructor != null)
             {
-                filterQuery = filterQuery.Where(x => x.Constructor == filter.Constructor);
+                filterQuery = filterQuery.Where(x => x.Constructor == filter.isConstructor);
             }
             if (!string.IsNullOrEmpty(filter.Cpf))
             {
