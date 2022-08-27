@@ -145,6 +145,12 @@
     using Obras.GraphQLModels.ConstructionDocumentationDomain.Mutations;
     using Obras.GraphQLModels.ConstructionDocumentationDomain.Queries;
     using Obras.Business.ConstructionDocumentationDomain.Services;
+    using Obras.GraphQLModels.ConstructionExpenseDomain.Types;
+    using Obras.GraphQLModels.ConstructionExpenseDomain.Enums;
+    using Obras.GraphQLModels.ConstructionExpenseDomain.InputTypes;
+    using Obras.GraphQLModels.ConstructionExpenseDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionExpenseDomain.Queries;
+    using Obras.Business.ConstructionExpenseDomain.Services;
 
     public static class ConfigureServiceExtension
     {
@@ -226,6 +232,7 @@
             services.AddTransient<IConstructionMaterialService, ConstructionMaterialService>();
             services.AddTransient<IConstructionManpowerService, ConstructionManpowerService>();
             services.AddTransient<IConstructionDocumentationService, ConstructionDocumentationService>();
+            services.AddTransient<IConstructionExpenseService, ConstructionExpenseService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -470,6 +477,17 @@
             services.AddSingleton<ConstructionDocumentationQuery>();
         }
 
+        private static void AddConstructionExpense(IServiceCollection services)
+        {
+            services.AddSingleton<ConstructionExpenseType>();
+            services.AddSingleton<ConstructionExpenseSortingFieldsEnumType>();
+            services.AddSingleton<ConstructionExpenseByInputType>();
+            services.AddSingleton<ConstructionExpenseFilterByInputType>();
+            services.AddSingleton<ConstructionExpenseInputType>();
+            services.AddSingleton<ConstructionExpenseMutation>();
+            services.AddSingleton<ConstructionExpenseQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -495,6 +513,7 @@
             AddConstructionMaterial(services);
             AddConstructionManpower(services);
             AddConstructionDocumentation(services);
+            AddConstructionExpense(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 
