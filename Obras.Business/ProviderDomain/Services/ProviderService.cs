@@ -58,6 +58,7 @@
             if (prov != null)
             {
                 prov.Active = provider.Active;
+                prov.Cnpj = provider.Cnpj;
                 prov.Address = provider.Address;
                 prov.CellPhone = provider.CellPhone;
                 prov.ChangeDate = DateTime.Now;

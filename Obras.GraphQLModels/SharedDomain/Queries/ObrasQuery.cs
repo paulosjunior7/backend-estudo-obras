@@ -20,6 +20,7 @@ using Obras.GraphQLModels.ConstructionMaterialDomain.Queries;
 using Obras.GraphQLModels.ConstructionManpowerDomain.Queries;
 using Obras.GraphQLModels.ConstructionDocumentationDomain.Queries;
 using Obras.GraphQLModels.ConstructionExpenseDomain.Queries;
+using Obras.GraphQLModels.ConstructionAdvanceMoneyDomain.Queries;
 
 namespace Obras.GraphQLModels.SharedDomain.Queries
 {
@@ -49,6 +50,7 @@ namespace Obras.GraphQLModels.SharedDomain.Queries
             Field<ConstructionManpowerQuery>("constructionManpowers", resolve: context => new { });
             Field<ConstructionDocumentationQuery>("constructionDocumentations", resolve: context => new { });
             Field<ConstructionExpenseQuery>("constructionExpenses", resolve: context => new { });
+            Field<ConstructionAdvanceMoneyQuery>("constructionAdvancesMoney", resolve: context => new { });
         }
     }
 }

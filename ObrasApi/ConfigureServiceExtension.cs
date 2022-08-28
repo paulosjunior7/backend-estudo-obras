@@ -151,6 +151,12 @@
     using Obras.GraphQLModels.ConstructionExpenseDomain.Mutations;
     using Obras.GraphQLModels.ConstructionExpenseDomain.Queries;
     using Obras.Business.ConstructionExpenseDomain.Services;
+    using Obras.GraphQLModels.ConstructionAdvanceMoneyDomain.Types;
+    using Obras.GraphQLModels.ConstructionAdvanceMoneyDomain.Enums;
+    using Obras.GraphQLModels.ConstructionAdvanceMoneyDomain.InputTypes;
+    using Obras.GraphQLModels.ConstructionAdvanceMoneyDomain.Mutations;
+    using Obras.GraphQLModels.ConstructionAdvanceMoneyDomain.Queries;
+    using Obras.Business.ConstructionAdvanceMoneyDomain.Services;
 
     public static class ConfigureServiceExtension
     {
@@ -233,6 +239,7 @@
             services.AddTransient<IConstructionManpowerService, ConstructionManpowerService>();
             services.AddTransient<IConstructionDocumentationService, ConstructionDocumentationService>();
             services.AddTransient<IConstructionExpenseService, ConstructionExpenseService>();
+            services.AddTransient<IConstructionAdvanceMoneyService, ConstructionAdvanceMoneyService>();
         }
 
         public static void AddCustomGraphQLServices(this IServiceCollection services)
@@ -488,6 +495,17 @@
             services.AddSingleton<ConstructionExpenseQuery>();
         }
 
+        private static void AddConstructionAdvanceMoney(IServiceCollection services)
+        {
+            services.AddSingleton<ConstructionAdvanceMoneyType>();
+            services.AddSingleton<ConstructionAdvanceMoneySortingFieldsEnumType>();
+            services.AddSingleton<ConstructionAdvanceMoneyByInputType>();
+            services.AddSingleton<ConstructionAdvanceMoneyFilterByInputType>();
+            services.AddSingleton<ConstructionAdvanceMoneyInputType>();
+            services.AddSingleton<ConstructionAdvanceMoneyMutation>();
+            services.AddSingleton<ConstructionAdvanceMoneyQuery>();
+        }
+
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
             AddCompany(services);
@@ -514,6 +532,7 @@
             AddConstructionManpower(services);
             AddConstructionDocumentation(services);
             AddConstructionExpense(services);
+            AddConstructionAdvanceMoney(services);
 
             services.AddSingleton<SortingDirectionEnumType>();
 
