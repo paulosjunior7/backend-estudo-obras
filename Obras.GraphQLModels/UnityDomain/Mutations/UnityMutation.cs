@@ -39,7 +39,7 @@ namespace Obras.GraphQLModels.UnityDomain.Mutations
                 name: "updateUnity",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" },
-                    new QueryArgument<NonNullGraphType<ResponsibilityInputType>> { Name = "unity" }),
+                    new QueryArgument<NonNullGraphType<UnityInputType>> { Name = "unity" }),
                 resolve: async context =>
                 {
                     int id = context.GetArgument<int>("id");

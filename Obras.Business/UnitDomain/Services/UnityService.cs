@@ -57,6 +57,7 @@ namespace Obras.Business.UnitDomain.Services
             {
                 doc.Active = model.Active;
                 doc.Description = model.Description;
+                doc.Multiplier = model.Multiplier;
                 doc.ChangeDate = DateTime.Now;
                 await _dbContext.SaveChangesAsync();
             }
@@ -135,6 +136,10 @@ namespace Obras.Business.UnitDomain.Services
             if (!string.IsNullOrEmpty(filter.Description))
             {
                 filterQuery = filterQuery.Where(x => x.Description.ToLower().Contains(filter.Description.ToLower()));
+            }
+            if (filter.Active != null)
+            {
+                filterQuery = filterQuery.Where(x => x.Active == filter.Active);
             }
 
             return filterQuery;
