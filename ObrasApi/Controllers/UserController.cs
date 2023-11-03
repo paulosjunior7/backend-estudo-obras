@@ -94,16 +94,16 @@
             var userDetails =  new User {
                         Email = model.Email,
                         UserName = model.UserName,
-                        EmailConfirmed = model.EmailConfirmed,
                         PhoneNumber = model.PhoneNumber,
-                        PhoneNumberConfirmed = model.PhoneNumberConfirmed,
-                        TwoFactorEnabled = model.TwoFactorEnabled,
                         CompanyId = model.CompanyId,
                         NormalizedUserName = model.UserName.ToUpper(),
                         NormalizedEmail = model.Email.ToLower(),
+                        EmailConfirmed = true,
+                        PhoneNumberConfirmed = false,
+                        TwoFactorEnabled = false,
                         LockoutEnabled = false,
                         AccessFailedCount = 0
-                    };
+            };
 
             try
             {
@@ -116,7 +116,14 @@
                         var resultPassword = await _userManager.AddPasswordAsync(userDetails, model.Password);
                         if (resultPassword.Succeeded)
                         {
-                            await _userManager.AddToRoleAsync(userDetails, model.Roles);
+                            try
+                            {
+                                await _userManager.AddToRoleAsync(userDetails, model.Roles);
+                            } catch (Exception e)
+                            {
+                                await _userManager.DeleteAsync(userDetails);
+                                return BadRequest(new { message = "Verifique nome da Roles" });
+                            }
                         }
                         else
                         {
@@ -125,6 +132,7 @@
                         }
                     } else
                     {
+                        await _userManager.DeleteAsync(userDetails);
                         return BadRequest(new { message = resultUser.Errors });
                     }
                 } else

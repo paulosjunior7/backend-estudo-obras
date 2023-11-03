@@ -1,15 +1,21 @@
-﻿<Properties StartupConfiguration="{1B4ACEAB-64E2-420E-8B9F-53EC1E017978}|ObrasApi">
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{1B4ACEAB-64E2-420E-8B9F-53EC1E017978}|ObrasApi">
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Obras.GraphQLModels/ClaimsPrincipalExtensions.cs">
+    <Files>
+      <File FileName="Obras.GraphQLModels/ClaimsPrincipalExtensions.cs" Line="10" Column="60" IsPinned="True" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Obras" expanded="True">
-            <Node name="Obras.GraphQLModels" selected="True" />
+          <Node name="Obras" selected="True">
+            <Node name="Obras.GraphQLModels" expanded="True" />
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
