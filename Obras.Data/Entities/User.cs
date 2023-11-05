@@ -43,5 +43,7 @@ namespace Obras.Data.Entities
         public ICollection<People> ChangePeoples { get; set; }
         public ICollection<Photo> RegistrationPhotos { get; set; }
         public ICollection<Photo> ChangePhotos { get; set; }
+        public ICollection<Product> RegistrationProducts { get; set; }
+        public ICollection<Product> ChangeProducts { get; set; }
     }
 }

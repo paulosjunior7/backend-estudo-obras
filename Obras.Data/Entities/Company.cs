@@ -33,6 +33,7 @@ namespace Obras.Data.Entities
         public ICollection<Group> Groups { get; set; }
         public ICollection<Outsourced> Outsourceds { get; set; }
         public ICollection<People> Peoples { get; set; }
+        public ICollection<Product> Products { get; set; }
 
         #endregion
 
