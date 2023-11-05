@@ -1,26 +1,34 @@
-﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{1B4ACEAB-64E2-420E-8B9F-53EC1E017978}|ObrasApi">
+﻿<Properties StartupConfiguration="{1B4ACEAB-64E2-420E-8B9F-53EC1E017978}|ObrasApi" GitUserInfo="UsingMD">
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Obras.GraphQLModels/ClaimsPrincipalExtensions.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ObrasApi/Startup.cs">
     <Files>
-      <File FileName="Obras.GraphQLModels/ClaimsPrincipalExtensions.cs" Line="10" Column="60" IsPinned="True" />
+      <File FileName="Obras.Data/Entities/ConstructionInvestor.cs" />
+      <File FileName="Obras.Data/Obras.Data.csproj" />
+      <File FileName="Obras.Business/Obras.Business.csproj" />
+      <File FileName="ObrasApi/Obras.Api.csproj" />
+      <File FileName="Obras.Data/ObrasDBContext.cs" />
+      <File FileName="ObrasApi/Program.cs" />
+      <File FileName="ObrasApi/Startup.cs" Line="52" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Obras" selected="True">
-            <Node name="Obras.GraphQLModels" expanded="True" />
+          <Node name="Obras" expanded="True">
+            <Node name="Obras.Api" expanded="True">
+              <Node name="Startup.cs" selected="True" />
+            </Node>
+            <Node name="Obras.Data" expanded="True">
+              <Node name="Entities" expanded="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Obras.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Obras.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>

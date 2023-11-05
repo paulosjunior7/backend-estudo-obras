@@ -42,6 +42,8 @@
         [Required]
         public DateTime? CreationDate { get; set; }
 
+        public ICollection<ConstructionMaterial> ConstructionMaterials { get; set; }
+
         #endregion
 
         #region Ctor

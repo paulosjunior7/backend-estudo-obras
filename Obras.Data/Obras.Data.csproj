@@ -7,7 +7,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="EntitiesConfiguration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntitiesConfiguration\" />
+  </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -38,6 +39,8 @@ namespace Obras.Data.Entities
 
         [Required]
         public DateTime? CreationDate { get; set; }
+
+        public ICollection<ConstructionMaterial> ConstructionMaterials { get; set; }
 
         #endregion
     }

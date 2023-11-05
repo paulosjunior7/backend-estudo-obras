@@ -11,6 +11,7 @@ namespace Obras.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ObrasDBContext).Assembly);
         }
 
         public ObrasDBContext(DbContextOptions<ObrasDBContext> options)

@@ -68,6 +68,8 @@
         public DateTime? ChangeDate { get; set; }
         public DateTime? CreationDate { get; set; }
 
+        public ICollection<ConstructionMaterial> ConstructionMaterials { get; set; }
+
         #endregion
 
     }

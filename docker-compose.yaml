@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    container_name: controle-obras-api
+    #    entrypoint: /docker/entrypoint.sh
+    volumes:
+      - .:/home/dotnet/app

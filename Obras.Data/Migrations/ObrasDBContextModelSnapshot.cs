@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Obras.Data;
 
+#nullable disable
+
 namespace Obras.Data.Migrations
 {
     [DbContext(typeof(ObrasDBContext))]
@@ -15,9 +17,10 @@ namespace Obras.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.9")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -43,15 +46,16 @@ namespace Obras.Data.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -67,7 +71,7 @@ namespace Obras.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
@@ -136,17 +140,20 @@ namespace Obras.Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("AspNetUsers", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -162,7 +169,7 @@ namespace Obras.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -184,7 +191,7 @@ namespace Obras.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -199,7 +206,7 @@ namespace Obras.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -218,15 +225,16 @@ namespace Obras.Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Obras.Data.Entities.Brand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -242,7 +250,6 @@ namespace Obras.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreationDate")
-                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -268,8 +275,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -283,6 +291,7 @@ namespace Obras.Data.Migrations
                         .HasColumnType("nvarchar(18)");
 
                     b.Property<DateTime?>("ChangeDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("City")
@@ -343,8 +352,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -363,6 +373,7 @@ namespace Obras.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ChangeDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ChangeUserId")
@@ -383,6 +394,7 @@ namespace Obras.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("CreationDate")
+                        .HasMaxLength(11)
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateBegin")
@@ -454,8 +466,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -474,7 +487,6 @@ namespace Obras.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreationDate")
-                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Date")
@@ -503,8 +515,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -549,8 +562,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -603,8 +617,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -657,8 +672,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -681,10 +697,13 @@ namespace Obras.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("EnergyConsumptionUnit")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<double?>("FractionBatch")
                         .HasColumnType("float");
@@ -693,7 +712,8 @@ namespace Obras.Data.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Registration")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("RegistrationUserId")
                         .HasColumnType("nvarchar(450)");
@@ -702,7 +722,8 @@ namespace Obras.Data.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("WaterConsumptionUnit")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -719,8 +740,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -762,8 +784,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -821,8 +844,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -898,8 +922,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -941,8 +966,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1031,8 +1057,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1077,8 +1104,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1120,8 +1148,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1221,8 +1250,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1326,8 +1356,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("ChangeDate")
                         .HasColumnType("datetime2");
@@ -1370,8 +1401,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1417,8 +1449,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1463,8 +1496,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1549,8 +1583,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1592,8 +1627,9 @@ namespace Obras.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -1700,17 +1736,17 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.Brand", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeBrands")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Company", "Company")
-                        .WithMany()
+                        .WithMany("Brands")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationBrands")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -1723,17 +1759,17 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.Construction", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeConstructions")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Company", "Company")
-                        .WithMany()
+                        .WithMany("Constructions")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationConstructions")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -1746,23 +1782,23 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.ConstructionAdvanceMoney", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeConstructionAdvanceMoneys")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Construction", "Construction")
-                        .WithMany()
+                        .WithMany("ConstructionAdvanceMoneys")
                         .HasForeignKey("ConstructionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.ConstructionInvestor", "ConstructionInvestor")
-                        .WithMany()
+                        .WithMany("ConstructionAdvanceMoneys")
                         .HasForeignKey("ConstructionInvestorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationConstructionAdvanceMoneys")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -1777,23 +1813,23 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.ConstructionBatch", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeConstructionBatchs")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Construction", "Construction")
-                        .WithMany()
+                        .WithMany("ConstructionBatchs")
                         .HasForeignKey("ConstructionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.People", "People")
-                        .WithMany()
+                        .WithMany("ConstructionBatchs")
                         .HasForeignKey("PeopleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationConstructionBatchs")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -1808,29 +1844,29 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.ConstructionDocumentation", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeConstructionDocumentations")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Construction", "Construction")
-                        .WithMany()
+                        .WithMany("ConstructionDocumentations")
                         .HasForeignKey("ConstructionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.ConstructionInvestor", "ConstructionInvestor")
-                        .WithMany()
+                        .WithMany("ConstructionDocumentations")
                         .HasForeignKey("ConstructionInvestorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.Documentation", "Documentation")
-                        .WithMany()
+                        .WithMany("ConstructionDocumentations")
                         .HasForeignKey("DocumentationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationConstructionDocumentations")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -1847,29 +1883,29 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.ConstructionExpense", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeConstructionExpenses")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Construction", "Construction")
-                        .WithMany()
+                        .WithMany("ConstructionExpenses")
                         .HasForeignKey("ConstructionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.ConstructionInvestor", "ConstructionInvestor")
-                        .WithMany()
+                        .WithMany("ConstructionExpenses")
                         .HasForeignKey("ConstructionInvestorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.Expense", "Expense")
-                        .WithMany()
+                        .WithMany("ConstructionExpenses")
                         .HasForeignKey("ExpenseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationConstructionExpenses")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -1886,17 +1922,17 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.ConstructionHouse", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeConstructionHouses")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Construction", "Construction")
-                        .WithMany()
+                        .WithMany("ConstructionHouses")
                         .HasForeignKey("ConstructionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationConstructionHouses")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -1909,23 +1945,23 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.ConstructionInvestor", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeConstructionInvestors")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Construction", "Construction")
-                        .WithMany()
+                        .WithMany("ConstructionInvestors")
                         .HasForeignKey("ConstructionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.People", "People")
-                        .WithMany()
+                        .WithMany("ConstructionInvestors")
                         .HasForeignKey("PeopleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationConstructionInvestors")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -1940,11 +1976,11 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.ConstructionManpower", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeConstructionManpowers")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Construction", "Construction")
-                        .WithMany()
+                        .WithMany("ConstructionManpowers")
                         .HasForeignKey("ConstructionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1956,19 +1992,19 @@ namespace Obras.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("ConstructionManpowers")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.Outsourced", "Outsourced")
-                        .WithMany()
+                        .WithMany("ConstructionManpowers")
                         .HasForeignKey("OutsourcedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationConstructionManpowers")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -1987,51 +2023,51 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.ConstructionMaterial", b =>
                 {
                     b.HasOne("Obras.Data.Entities.Brand", "Brand")
-                        .WithMany()
+                        .WithMany("ConstructionMaterials")
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeConstructionMaterials")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Construction", "Construction")
-                        .WithMany()
+                        .WithMany("ConstructionMaterials")
                         .HasForeignKey("ConstructionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.ConstructionInvestor", "ConstructionInvestor")
-                        .WithMany()
+                        .WithMany("ConstructionMaterials")
                         .HasForeignKey("ConstructionInvestorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.Group", "Group")
-                        .WithMany()
+                        .WithMany("ConstructionMaterials")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("ConstructionMaterials")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.Provider", "Provider")
-                        .WithMany()
+                        .WithMany("ConstructionMaterials")
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationConstructionMaterials")
                         .HasForeignKey("RegistrationUserId");
 
                     b.HasOne("Obras.Data.Entities.Unity", "Unity")
-                        .WithMany()
+                        .WithMany("ConstructionMaterials")
                         .HasForeignKey("UnityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2058,17 +2094,17 @@ namespace Obras.Data.Migrations
             modelBuilder.Entity("Obras.Data.Entities.Documentation", b =>
                 {
                     b.HasOne("Obras.Data.Entities.User", "ChangeUser")
-                        .WithMany()
+                        .WithMany("ChangeDocumentations")
                         .HasForeignKey("ChangeUserId");
 
                     b.HasOne("Obras.Data.Entities.Company", "Company")
-                        .WithMany()
+                        .WithMany("Documentations")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Obras.Data.Entities.User", "RegistrationUser")
-                        .WithMany()
+                        .WithMany("RegistrationDocumentations")
                         .HasForeignKey("RegistrationUserId");
 
                     b.Navigation("ChangeUser");
@@ -2360,6 +2396,144 @@ namespace Obras.Data.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Brand", b =>
+                {
+                    b.Navigation("ConstructionMaterials");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Company", b =>
+                {
+                    b.Navigation("Brands");
+
+                    b.Navigation("Constructions");
+
+                    b.Navigation("Documentations");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Construction", b =>
+                {
+                    b.Navigation("ConstructionAdvanceMoneys");
+
+                    b.Navigation("ConstructionBatchs");
+
+                    b.Navigation("ConstructionDocumentations");
+
+                    b.Navigation("ConstructionExpenses");
+
+                    b.Navigation("ConstructionHouses");
+
+                    b.Navigation("ConstructionInvestors");
+
+                    b.Navigation("ConstructionManpowers");
+
+                    b.Navigation("ConstructionMaterials");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.ConstructionInvestor", b =>
+                {
+                    b.Navigation("ConstructionAdvanceMoneys");
+
+                    b.Navigation("ConstructionDocumentations");
+
+                    b.Navigation("ConstructionExpenses");
+
+                    b.Navigation("ConstructionMaterials");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Documentation", b =>
+                {
+                    b.Navigation("ConstructionDocumentations");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Employee", b =>
+                {
+                    b.Navigation("ConstructionManpowers");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Expense", b =>
+                {
+                    b.Navigation("ConstructionExpenses");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Group", b =>
+                {
+                    b.Navigation("ConstructionMaterials");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Outsourced", b =>
+                {
+                    b.Navigation("ConstructionManpowers");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.People", b =>
+                {
+                    b.Navigation("ConstructionBatchs");
+
+                    b.Navigation("ConstructionInvestors");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Product", b =>
+                {
+                    b.Navigation("ConstructionMaterials");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Provider", b =>
+                {
+                    b.Navigation("ConstructionMaterials");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.Unity", b =>
+                {
+                    b.Navigation("ConstructionMaterials");
+                });
+
+            modelBuilder.Entity("Obras.Data.Entities.User", b =>
+                {
+                    b.Navigation("ChangeBrands");
+
+                    b.Navigation("ChangeConstructionAdvanceMoneys");
+
+                    b.Navigation("ChangeConstructionBatchs");
+
+                    b.Navigation("ChangeConstructionDocumentations");
+
+                    b.Navigation("ChangeConstructionExpenses");
+
+                    b.Navigation("ChangeConstructionHouses");
+
+                    b.Navigation("ChangeConstructionInvestors");
+
+                    b.Navigation("ChangeConstructionManpowers");
+
+                    b.Navigation("ChangeConstructionMaterials");
+
+                    b.Navigation("ChangeConstructions");
+
+                    b.Navigation("ChangeDocumentations");
+
+                    b.Navigation("RegistrationBrands");
+
+                    b.Navigation("RegistrationConstructionAdvanceMoneys");
+
+                    b.Navigation("RegistrationConstructionBatchs");
+
+                    b.Navigation("RegistrationConstructionDocumentations");
+
+                    b.Navigation("RegistrationConstructionExpenses");
+
+                    b.Navigation("RegistrationConstructionHouses");
+
+                    b.Navigation("RegistrationConstructionInvestors");
+
+                    b.Navigation("RegistrationConstructionManpowers");
+
+                    b.Navigation("RegistrationConstructionMaterials");
+
+                    b.Navigation("RegistrationConstructions");
+
+                    b.Navigation("RegistrationDocumentations");
                 });
 #pragma warning restore 612, 618
         }
