@@ -45,5 +45,13 @@ namespace Obras.Data.Entities
         public ICollection<Photo> ChangePhotos { get; set; }
         public ICollection<Product> RegistrationProducts { get; set; }
         public ICollection<Product> ChangeProducts { get; set; }
+        public ICollection<ProductProvider> RegistrationProductProviders { get; set; }
+        public ICollection<ProductProvider> ChangeProductProviders { get; set; }
+        public ICollection<Provider> RegistrationProviders { get; set; }
+        public ICollection<Provider> ChangeProviders { get; set; }
+        public ICollection<Responsibility> RegistrationResponsibilities { get; set; }
+        public ICollection<Responsibility> ChangeResponsibilities { get; set; }
+        public ICollection<Unity> RegistrationUnities { get; set; }
+        public ICollection<Unity> ChangeUnities { get; set; }
     }
 }

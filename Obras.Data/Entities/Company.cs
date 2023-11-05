@@ -34,6 +34,9 @@ namespace Obras.Data.Entities
         public ICollection<Outsourced> Outsourceds { get; set; }
         public ICollection<People> Peoples { get; set; }
         public ICollection<Product> Products { get; set; }
+        public ICollection<Provider> Providers { get; set; }
+        public ICollection<Responsibility> Responsibilities { get; set; }
+        public ICollection<Unity> Unities { get; set; }
 
         #endregion
 

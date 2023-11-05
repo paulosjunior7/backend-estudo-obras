@@ -23,6 +23,7 @@
         public DateTime? CreationDate { get; set; }
 
         public ICollection<ConstructionMaterial> ConstructionMaterials { get; set; }
+        public ICollection<ProductProvider> ProductProviders { get; set; }
 
         #endregion
 
