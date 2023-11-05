@@ -7,6 +7,8 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using Obras.Api.Models;
+    using Obras.Business.CompanyDomain.Services;
+
     using Obras.Business.SharedDomain.Helpers;
     using Obras.Data;
     using Obras.Data.Entities;
@@ -26,16 +28,21 @@
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly ICompanyService _companyService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserController(IConfiguration configuration, SignInManager<User> signInManager,
+        public UserController(IConfiguration configuration, 
+            SignInManager<User> signInManager,
             RoleManager<IdentityRole> roleManager,
-            IHttpContextAccessor httpContextAccessor, UserManager<User> userManager)
+            IHttpContextAccessor httpContextAccessor, 
+            ICompanyService companyService,
+            UserManager<User> userManager)
         {
             _configuration = configuration;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _httpContextAccessor = httpContextAccessor;
+            _companyService = companyService;
             _userManager = userManager;
         }
 
@@ -110,6 +117,12 @@
                 var existingUserDetails = await _userManager.FindByEmailAsync(model.Email);
                 if (existingUserDetails == null)
                 {
+                    if (model.CompanyId != null) {
+                        var companyExist = await _companyService.GetCompanyId((int) model.CompanyId);
+                        if (companyExist == null) {
+                            return BadRequest(new { message = "Empresa não encontrada!" });
+                        } 
+                    }
                     var resultUser = await _userManager.CreateAsync(userDetails);
                     if (resultUser.Succeeded)
                     {

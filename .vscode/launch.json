@@ -2,19 +2,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      // Use IntelliSense to find out which attributes exist for C# debugging
-      // Use hover for the description of the existing attributes
-      // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+      // Usar o IntelliSense para descobrir quais atributos existem para a depuração de C#
+      // Passe o mouse sobre a tela para ver a descrição dos atributos existentes
+      // Para obter mais informações, visite https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md.
       "name": ".NET Core Launch (web)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/ObrasApi/bin/Debug/net5.0/ObrasApi.dll",
+      "console": "externalTerminal",
+      // Se tiver alterado as estruturas de destino, certifique-se de atualizar o caminho do programa.
+      "program": "${workspaceFolder}/ObrasApi/bin/Debug/net7.0/Obras.Api.dll",
       "args": [],
       "cwd": "${workspaceFolder}/ObrasApi",
       "stopAtEntry": false,
-      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+      // Habilitar a inicialização de um navegador da web quando o ASP.NET Core for iniciado. Para obter mais informações: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
       "serverReadyAction": {
         "action": "openExternally",
         "pattern": "\\bNow listening on:\\s+(https?://\\S+)"

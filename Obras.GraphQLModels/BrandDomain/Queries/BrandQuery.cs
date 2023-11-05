@@ -31,7 +31,13 @@ namespace Obras.GraphQLModels.BrandDomain.Queries
                 {
                     var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
 
+                    if (userId == null)
+                    throw new ExecutionError("Verifique o token!");
+
                     var user = await dBContext.User.FindAsync(userId);
+                    if (user == null || user.CompanyId == null)
+                    throw new ExecutionError("Usuário não exite ou não possui empresa vinculada!");
+                    
                     var pageRequest = new PageRequest<BrandFilter, BrandSortingFields>
                     {
                         Pagination = context.GetArgument<PaginationDetails>("pagination") ?? new PaginationDetails(),

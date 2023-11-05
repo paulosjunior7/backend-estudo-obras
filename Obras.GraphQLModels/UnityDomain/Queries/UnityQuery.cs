@@ -30,7 +30,13 @@ namespace Obras.GraphQLModels.UnityDomain.Queries
                 {
                     var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
 
+                    if (userId == null)
+                        throw new ExecutionError("Verifique o token!");
+
                     var user = await dBContext.User.FindAsync(userId);
+                    if (user == null || user.CompanyId == null)
+                        throw new ExecutionError("Usuário não exite ou não possui empresa vinculada!");
+
                     var pageRequest = new PageRequest<UnityFilter, UnitySortingFields>
                     {
                         Pagination = context.GetArgument<PaginationDetails>("pagination") ?? new PaginationDetails(),
@@ -73,9 +79,20 @@ namespace Obras.GraphQLModels.UnityDomain.Queries
             {
                 var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
 
+                if (userId == null)
+                    throw new ExecutionError("Verifique o token!");
+
                 var user = await dBContext.User.FindAsync(userId);
+                if (user == null || user.CompanyId == null)
+                    throw new ExecutionError("Usuário não exite ou não possui empresa vinculada!");
+
 
                 var pageResponse = await service.GetId(context.GetArgument<int>("id"));
+
+                if (pageResponse != null && pageResponse.CompanyId != user.CompanyId)
+                {
+                    return null;
+                }
 
                 return pageResponse;
             });

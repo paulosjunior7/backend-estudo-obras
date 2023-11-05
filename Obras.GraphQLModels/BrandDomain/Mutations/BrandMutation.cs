@@ -24,7 +24,12 @@ namespace Obras.GraphQLModels.BrandDomain.Mutations
                     var brandModel = context.GetArgument<BrandModel>("brand");
                     var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
 
+                    if (userId == null)
+                    throw new ExecutionError("Verifique o token!");
+
                     var user = await dBContext.User.FindAsync(userId);
+                    if (user == null || user.CompanyId == null)
+                    throw new ExecutionError("Usuário não exite ou não possui empresa vinculada!");
 
                     brandModel.CompanyId = (int)(brandModel.CompanyId == null ? user.CompanyId != null ? user.CompanyId : 0 : brandModel.CompanyId);
                     brandModel.ChangeUserId = userId;
@@ -45,7 +50,12 @@ namespace Obras.GraphQLModels.BrandDomain.Mutations
                     var brandModel = context.GetArgument<BrandModel>("brand");
                     var userId = (context.UserContext as GraphQLUserContext).User.GetUserId();
 
+                    if (userId == null)
+                    throw new ExecutionError("Verifique o token!");
+
                     var user = await dBContext.User.FindAsync(userId);
+                    if (user == null || user.CompanyId == null)
+                    throw new ExecutionError("Usuário não exite ou não possui empresa vinculada!");
 
                     brandModel.CompanyId = (int)(brandModel.CompanyId == null ? user.CompanyId != null ? user.CompanyId : 0 : brandModel.CompanyId);
                     brandModel.ChangeUserId = userId;
