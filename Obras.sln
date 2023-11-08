@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Obras.Data", "Obras.Data\Ob
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Obras.GraphQLModels", "Obras.GraphQLModels\Obras.GraphQLModels.csproj", "{2D3410D8-7D56-4A78-8A58-C6AA228E76BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Obras.Business.Test", "Obras.Business.Test\Obras.Business.Test.csproj", "{EBD298B8-A5EE-4399-871B-349773898FF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{2D3410D8-7D56-4A78-8A58-C6AA228E76BD}.Release|x64.Build.0 = Release|Any CPU
 		{2D3410D8-7D56-4A78-8A58-C6AA228E76BD}.Release|x86.ActiveCfg = Release|Any CPU
 		{2D3410D8-7D56-4A78-8A58-C6AA228E76BD}.Release|x86.Build.0 = Release|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Debug|x64.Build.0 = Debug|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Debug|x86.Build.0 = Debug|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Release|x64.ActiveCfg = Release|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Release|x64.Build.0 = Release|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Release|x86.ActiveCfg = Release|Any CPU
+		{EBD298B8-A5EE-4399-871B-349773898FF9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

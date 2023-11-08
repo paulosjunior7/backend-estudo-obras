@@ -21,8 +21,8 @@
     "ms-dotnettools.csharp",
     "jchannon.csharpextensions",
     "dotnettools.csdevkit",
-    "ms-dotnettools.csdevkit"
-  ],
+    "ms-dotnettools.csdevkit",
+    "jmrog.vscode-nuget-package-manager",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},

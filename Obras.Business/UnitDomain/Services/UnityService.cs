@@ -15,11 +15,11 @@ namespace Obras.Business.UnitDomain.Services
     public interface IUnityService
     {
         Task<Unity> CreateAsync(UnityModel model);
-        Task<Unity> UpdateAsync(int id, UnityModel model);
+        Task<Unity> UpdateAsync(int CompanyId, int id, UnityModel model);
         Task<PageResponse<Unity>> GetAsync(PageRequest<UnityFilter, UnitySortingFields> pageRequest);
-        Task<Unity> GetId(int id);
+        Task<Unity> GetId(int CompanyId, int id);
     }
-    public class UnityService: IUnityService
+    public class UnityService : IUnityService
     {
         private readonly ObrasDBContext _dbContext;
         private readonly IMapper _mapper;
@@ -37,6 +37,18 @@ namespace Obras.Business.UnitDomain.Services
             res.ChangeDate = DateTime.Now;
             res.CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId);
 
+            if (model.CompanyId == null)
+            {
+                throw new Exception("O campo CompanyId não pode ser nulo.");
+            }
+
+            var unityExists = _dbContext.Unities.Where(u => u.Active == true && u.Description == res.Description && u.Multiplier == res.Multiplier && u.CompanyId == res.CompanyId).ToListAsync();
+
+            if (unityExists.Result.Count > 0)
+            {
+                throw new Exception("Já existe uma Unidade com esta descrição e multiplicador");
+            }
+
             _dbContext.Unities.Add(res);
             try
             {
@@ -49,25 +61,35 @@ namespace Obras.Business.UnitDomain.Services
             return res;
         }
 
-        public async Task<Unity> UpdateAsync(int id, UnityModel model)
+        public async Task<Unity> UpdateAsync(int CompanyId, int id, UnityModel model)
         {
-            var doc = await _dbContext.Unities.FindAsync(id);
+            var unity = await _dbContext.Unities.FindAsync(id);
 
-            if (doc != null)
+            if (unity.CompanyId != CompanyId)
             {
-                doc.Active = model.Active;
-                doc.Description = model.Description;
-                doc.Multiplier = model.Multiplier;
-                doc.ChangeDate = DateTime.Now;
+                throw new Exception("Unidade não encontrada.");
+            }
+
+            if (unity != null)
+            {
+                unity.Active = model.Active;
+                unity.Description = model.Description;
+                unity.Multiplier = model.Multiplier;
+                unity.ChangeDate = DateTime.Now;
                 await _dbContext.SaveChangesAsync();
             }
 
-            return doc;
+            return unity;
         }
 
-        public async Task<Unity> GetId(int id)
+        public async Task<Unity> GetId(int CompanyId, int id)
         {
-            return await _dbContext.Unities.FindAsync(id);
+            var result = await _dbContext.Unities.FindAsync(id);
+            if (result != null && result.CompanyId != CompanyId)
+            {
+                return null;
+            }
+            return result;
         }
 
         public async Task<PageResponse<Unity>> GetAsync(PageRequest<UnityFilter, UnitySortingFields> pageRequest)
@@ -81,8 +103,8 @@ namespace Obras.Business.UnitDomain.Services
 
             int totalCount = await dataQuery.CountAsync();
 
-            List<Unity> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)
-                   .Take(pageRequest.Pagination.PageSize).AsNoTracking().ToListAsync();
+            List<Unity> nodes = pageRequest.Pagination != null ? await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)
+                   .Take(pageRequest.Pagination.PageSize).AsNoTracking().ToListAsync() : await dataQuery.ToListAsync();
 
             #endregion
 
@@ -90,8 +112,8 @@ namespace Obras.Business.UnitDomain.Services
 
             int maxId = nodes.Count > 0 ? nodes.Max(x => x.Id) : 0;
             int minId = nodes.Count > 0 ? nodes.Min(x => x.Id) : 0;
-            bool hasNextPage = (totalCount - 1) >= ((pageRequest.Pagination.PageNumber) * pageRequest.Pagination.PageSize);
-            bool hasPrevPage = pageRequest.Pagination.PageNumber > 1;
+            bool hasNextPage = (totalCount - 1) >= ((pageRequest.Pagination != null ? pageRequest.Pagination.PageNumber : 0) * (pageRequest.Pagination != null ? pageRequest.Pagination.PageSize : 0));
+            bool hasPrevPage = pageRequest.Pagination != null ? pageRequest.Pagination.PageNumber > 1 : false;
 
             #endregion
 
