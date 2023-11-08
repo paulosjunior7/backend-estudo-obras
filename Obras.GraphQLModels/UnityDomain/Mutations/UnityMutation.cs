@@ -63,7 +63,7 @@ namespace Obras.GraphQLModels.UnityDomain.Mutations
                     model.CompanyId = (int)(model.CompanyId == null ? user.CompanyId != null ? user.CompanyId : 0 : model.CompanyId);
                     model.ChangeUserId = userId;
 
-                    return await service.UpdateAsync(user.CompanyId, id, model);
+                    return await service.UpdateAsync(user.CompanyId != null ? (int)user.CompanyId : 0, id, model);
                 });
         }
     }

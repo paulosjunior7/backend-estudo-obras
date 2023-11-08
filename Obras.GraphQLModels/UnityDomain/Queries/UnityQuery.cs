@@ -87,7 +87,7 @@ namespace Obras.GraphQLModels.UnityDomain.Queries
                     throw new ExecutionError("Usuário não exite ou não possui empresa vinculada!");
 
 
-                var pageResponse = await service.GetId(user.CompanyId, context.GetArgument<int>("id"));
+                var pageResponse = await service.GetId(user.CompanyId != null ? (int)user.CompanyId : 0, context.GetArgument<int>("id"));
 
                 if (pageResponse != null && pageResponse.CompanyId != user.CompanyId)
                 {
