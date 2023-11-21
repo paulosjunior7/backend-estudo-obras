@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using Obras.Data.Entities;
 using System;
 
@@ -7,11 +9,21 @@ namespace Obras.Data
 {
     public class ObrasDBContext : IdentityDbContext
     {
+        private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
+    {
+        builder.AddConsole(); // Você pode adicionar outros provedores de log, se necessário
+    });
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ObrasDBContext).Assembly);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
+            base.OnConfiguring(optionsBuilder);
         }
 
         public ObrasDBContext(DbContextOptions<ObrasDBContext> options)

@@ -1,9 +1,13 @@
 ﻿namespace Obras.Business.ProviderDomain.Models
 {
+    using Obras.Data.Enums;
+
 
     public class ProviderModel
     {
         public string Cnpj { get; set; }
+        public string Cpf { get; set; }
+        public TypePeople TypePeople { get; set; }
         public string Name { get; set; }
         public string ZipCode { get; set; }
         public string Address { get; set; }

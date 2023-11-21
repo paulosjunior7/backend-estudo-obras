@@ -2,6 +2,8 @@
 {
     using GraphQL.Types;
     using Obras.Business.ProviderDomain.Models;
+    using Obras.GraphQLModels.PeopleDomain.Enums;
+
 
     public class ProviderInputType : InputObjectGraphType<ProviderModel>
     {
@@ -10,6 +12,8 @@
             Name = nameof(ProviderInputType);
 
             Field(x => x.Cnpj);
+            Field(x => x.Cpf, nullable: true);
+            Field<TypePeopleEnumType>("typePeople");
             Field(x => x.Name);
             Field(x => x.CompanyId, nullable: true);
             Field(x => x.Active);

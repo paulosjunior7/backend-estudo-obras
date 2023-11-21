@@ -24,10 +24,15 @@
             Field(x => x.ChangeDate, nullable: true);
             Field(x => x.City, nullable: true);
             Field(x => x.Cnpj, nullable: true);
+            Field(x => x.Cpf, nullable: true);
             Field(x => x.Complement, nullable: true);
             Field(x => x.Name, nullable: true);
             Field(x => x.CreationDate, nullable: true);
             Field(x => x.EMail, nullable: true);
+
+            Field<StringGraphType>(
+                name: "typePeople",
+                resolve: context => context.Source.TypePeople.ToString());
 
             FieldAsync<UserType>(
                 name: "changeUser",

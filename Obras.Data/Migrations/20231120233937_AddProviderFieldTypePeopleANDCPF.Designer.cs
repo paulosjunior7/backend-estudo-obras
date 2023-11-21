@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Obras.Data;
 
@@ -11,9 +12,11 @@ using Obras.Data;
 namespace Obras.Data.Migrations
 {
     [DbContext(typeof(ObrasDBContext))]
-    partial class ObrasDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231120233937_AddProviderFieldTypePeopleANDCPF")]
+    partial class AddProviderFieldTypePeopleANDCPF
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

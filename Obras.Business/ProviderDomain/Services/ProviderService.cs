@@ -68,6 +68,8 @@
                 prov.City = provider.City;
                 prov.Complement = provider.Complement;
                 prov.Number = provider.Number;
+                prov.Cpf = provider.Cpf;
+                prov.TypePeople = provider.TypePeople;
                 prov.State = provider.State;
                 prov.Telephone = provider.Telephone;
                 prov.ZipCode = provider.ZipCode;

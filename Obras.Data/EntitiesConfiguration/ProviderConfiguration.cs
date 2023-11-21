@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Obras.Data.Entities;
+using Obras.Data.Enums;
 using System;
 namespace Obras.Data.EntitiesConfiguration
 {
@@ -10,6 +11,8 @@ namespace Obras.Data.EntitiesConfiguration
         {
             builder.HasKey(t => t.Id);
             builder.Property(p => p.Id).UseIdentityColumn();
+            builder.Property(p => p.TypePeople).HasDefaultValue(TypePeople.JURIDICA).IsRequired();
+            builder.Property(p => p.Cpf).HasMaxLength(14);
             builder.Property(p => p.Cnpj).HasMaxLength(18).IsRequired();
             builder.Property(p => p.Name).HasMaxLength(100).IsRequired();
             builder.Property(p => p.ZipCode).HasMaxLength(10);

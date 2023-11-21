@@ -11,7 +11,7 @@ WORKDIR /home/dotnet/app
 
 RUN echo 'HISTFILE=//home/dotnet/zsh/.zsh_history' >> ~/.bashrc
 
-RUN echo 'eval "$(pdm --pep582)"' >> ~/.bashrc && dotnet tool install --global dotnet-ef  && dotnet dev-certs https
+RUN echo 'eval "$(pdm --pep582)"' >> ~/.bashrc && dotnet tool install --global dotnet-ef --version 7   && dotnet dev-certs https
 ENV PATH $PATH:/home/dotnet/.dotnet/tools/
 
 CMD ["tail", "-f", "/dev/null"]
