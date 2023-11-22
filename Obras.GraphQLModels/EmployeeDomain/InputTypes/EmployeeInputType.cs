@@ -10,6 +10,9 @@ namespace Obras.GraphQLModels.EmployeeDomain.InputTypes
             Name = nameof(EmployeeInputType);
 
             Field(x => x.Cpf, nullable: true);
+            Field(x => x.Cnpj, nullable: true);
+            Field(x => x.Outsourced, nullable: true);
+            Field(x => x.Employed, nullable: true);
             Field(x => x.Name);
             Field(x => x.Active);
             Field(x => x.Address, nullable: true);
@@ -23,6 +26,10 @@ namespace Obras.GraphQLModels.EmployeeDomain.InputTypes
             Field(x => x.Telephone, nullable: true);
             Field(x => x.ZipCode, nullable: true);
             Field(x => x.ResponsibilityId, nullable: false);
+
+            Field<StringGraphType>(
+                name: "typePeople",
+                resolve: context => context.Source.TypePeople.ToString());
         }
     }
 }

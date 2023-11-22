@@ -62,6 +62,9 @@ namespace Obras.Business.EmployeeDomain.Services
                 emp.CellPhone = model.CellPhone;
                 emp.EMail = model.EMail;
                 emp.Cpf = model.Cpf;
+                emp.Cnpj = model.Cnpj;
+                emp.Outsourced = model.Outsourced;
+                emp.Employed = model.Employed;
                 emp.ResponsibilityId = model.ResponsibilityId;
                 emp.Neighbourhood = model.Neighbourhood;
                 emp.Number = model.Number;

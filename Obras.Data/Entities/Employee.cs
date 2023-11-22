@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Obras.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +10,10 @@ namespace Obras.Data.Entities
     {
         #region Fields
         public int Id { get; set; }
+        public TypePeople TypePeople { get; set; }
+        public string Cnpj { get; set; }
+        public bool Outsourced { get; set; }
+        public bool Employed { get; set; }
         public string Name { get; set; }
         public string Cpf { get; set; }
         public string ZipCode { get; set; }

@@ -10,8 +10,12 @@ namespace Obras.Data.EntitiesConfiguration
         {
             builder.HasKey(t => t.Id);
             builder.Property(p => p.Id).UseIdentityColumn();
+            builder.Property(p => p.TypePeople).IsRequired();
             builder.Property(p => p.Name).HasMaxLength(100).IsRequired();
-            builder.Property(p => p.Cpf).HasMaxLength(14).IsRequired();
+            builder.Property(p => p.Cpf).HasMaxLength(14);
+            builder.Property(p => p.Cnpj).HasMaxLength(18);
+            builder.Property(p => p.Outsourced);
+            builder.Property(p => p.Employed);
             builder.Property(p => p.ZipCode).HasMaxLength(10);
             builder.Property(p => p.Address).HasMaxLength(100);
             builder.Property(p => p.Number).HasMaxLength(15);

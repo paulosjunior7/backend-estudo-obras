@@ -1,7 +1,14 @@
 ﻿namespace Obras.Business.EmployeeDomain.Models
 {
+    using Obras.Data.Enums;
+
+
     public class EmployeeModel
     {
+        public TypePeople TypePeople { get; set; }
+        public string Cnpj { get; set; }
+        public bool Outsourced { get; set; }
+        public bool Employed { get; set; }
         public string Cpf { get; set; }
         public string Name { get; set; }
         public string ZipCode { get; set; }
