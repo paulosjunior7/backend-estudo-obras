@@ -51,6 +51,7 @@ namespace Obras.GraphQLModels.SharedDomain.Queries
             Field<ConstructionDocumentationQuery>("constructionDocumentations", resolve: context => new { });
             Field<ConstructionExpenseQuery>("constructionExpenses", resolve: context => new { });
             Field<ConstructionAdvanceMoneyQuery>("constructionAdvancesMoney", resolve: context => new { });
+            Field<UserQuery>("user", resolve: context => new { });
         }
     }
 }
