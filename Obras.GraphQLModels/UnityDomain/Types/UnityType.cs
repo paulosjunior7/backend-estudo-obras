@@ -1,7 +1,6 @@
 ﻿using GraphQL.Types;
 using Obras.Data;
 using Obras.Data.Entities;
-using Obras.GraphQLModels.CompanyDomain.Types;
 using Obras.GraphQLModels.SharedDomain.Types;
 
 namespace Obras.GraphQLModels.UnityDomain.Types
@@ -26,10 +25,6 @@ namespace Obras.GraphQLModels.UnityDomain.Types
             FieldAsync<UserType>(
                 name: "registrationUser",
                 resolve: async context => await dbContext.User.FindAsync(context.Source.RegistrationUserId));
-
-            FieldAsync<CompanyType>(
-                name: "company",
-                resolve: async context => await dbContext.Companies.FindAsync(context.Source.CompanyId));
         }
     }
 }

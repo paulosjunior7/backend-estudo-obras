@@ -1,20 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="4.6.0" />
-    <PackageReference Include="GraphQL.Authorization" Version="4.0.0" />
+    <PackageReference Include="GraphQL" Version="4.6.0"/>
+    <PackageReference Include="GraphQL.Authorization" Version="4.0.0"/>
+    <PackageReference Include="HotChocolate.Data" Version="13.9.0"/>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Obras.Business\Obras.Business.csproj" />
+    <ProjectReference Include="..\Obras.Business\Obras.Business.csproj"/>
   </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="PhotoDomain\Mutations\" />
+    <Folder Include="PhotoDomain\Mutations\"/>
   </ItemGroup>
-
 </Project>

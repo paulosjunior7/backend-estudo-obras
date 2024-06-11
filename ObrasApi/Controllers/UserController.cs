@@ -20,7 +20,7 @@
     using System.Threading.Tasks;
 
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
@@ -47,6 +47,7 @@
         }
 
         [AllowAnonymous]
+        [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] LoginDetails model)
         {
             // Check user exist in system or not
@@ -70,6 +71,7 @@
             }
         }
 
+        [HttpDelete]
         public async Task<IActionResult> DeleteUser([FromQuery] string id)
         {
             try
@@ -94,6 +96,7 @@
         }
 
         [AllowAnonymous]
+        [HttpPost("create-user")]
         public async Task<IActionResult> CreateUser([FromBody] UserModel model)
         {
             #region Users
@@ -165,6 +168,7 @@
         }
 
         [AllowAnonymous]
+        [HttpPost("create-default-users")]
         public async Task<IActionResult> CreateDefaultUsers()
         {
             #region Roles
@@ -226,14 +230,6 @@
             return Ok("Default User has been created");
         }
 
-        public async Task<IActionResult> ProtectedPage()
-        {
-            // Obtain MailId from token
-            ClaimsIdentity identity = _httpContextAccessor?.HttpContext?.User?.Identity as ClaimsIdentity;
-            var userName = identity?.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-            var user = await _userManager.FindByNameAsync(userName);
-            return Ok(user);
-        }
 
         private async Task<TokenDetails> GetJwtSecurityTokenAsync(User user)
         {

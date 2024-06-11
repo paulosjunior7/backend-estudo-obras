@@ -2,7 +2,6 @@
 {
     using GraphQL;
     using GraphQL.Authorization;
-    using GraphQL.Server;
     using GraphQL.Validation;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Http;
@@ -32,11 +31,8 @@
     using Obras.GraphQLModels.BrandDomain.Queries;
     using Obras.GraphQLModels.BrandDomain.Types;
     using Obras.GraphQLModels.BrandDomainInputTypes;
-    using Obras.GraphQLModels.CompanyDomain.Enums;
-    using Obras.GraphQLModels.CompanyDomain.InputTypes;
     using Obras.GraphQLModels.CompanyDomain.Mutations;
     using Obras.GraphQLModels.CompanyDomain.Queries;
-    using Obras.GraphQLModels.CompanyDomain.Types;
     using Obras.GraphQLModels.DocumentationDomain.Enums;
     using Obras.GraphQLModels.DocumentationDomain.InputTypes;
     using Obras.GraphQLModels.DocumentationDomain.Mutations;
@@ -157,6 +153,8 @@
     using Obras.GraphQLModels.ConstructionAdvanceMoneyDomain.Mutations;
     using Obras.GraphQLModels.ConstructionAdvanceMoneyDomain.Queries;
     using Obras.Business.ConstructionAdvanceMoneyDomain.Services;
+    using System.Reflection;
+    using Microsoft.OpenApi.Models;
 
     public static class ConfigureServiceExtension
     {
@@ -245,31 +243,11 @@
         public static void AddCustomGraphQLServices(this IServiceCollection services)
         {
             // GraphQL services
-            services.AddScoped<IServiceProvider>(c => new FuncServiceProvider(type => c.GetRequiredService(type)));
-            services.AddGraphQL(options =>
-            {
-                options.EnableMetrics = true;
-                options.UnhandledExceptionDelegate = context =>
-                {
-                    Console.WriteLine("Error: " + context.OriginalException.Message);
-                };
-            })
-            .AddUserContextBuilder(httpContext => new GraphQLUserContext { User = httpContext.User })
-            .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { })
-            .AddWebSockets()
-            .AddDataLoader()
-            .AddGraphTypes(typeof(ObrasSchema));
-        }
-
-        private static void AddCompany(IServiceCollection services)
-        {
-            services.AddSingleton<CompanyType>();
-            services.AddSingleton<CompanySortingFieldsEnumType>();
-            services.AddSingleton<CompanyByInputType>();
-            services.AddSingleton<CompanyFilterByInputType>();
-            services.AddSingleton<CompanyInputType>();
-            services.AddSingleton<CompanyMutation>();
-            services.AddSingleton<CompanyQuery>();
+            services.AddGraphQLServer()
+            .AddQueryType<CompanyQuery>()
+            .AddMutationType<CompanyMutation>()
+                .AddFiltering()
+                .AddSorting();
         }
 
         private static void AddProduct(IServiceCollection services)
@@ -389,7 +367,7 @@
             services.AddSingleton<ConstructionType>();
             services.AddSingleton<ConstructionSortingFieldsEnumType>();
             services.AddSingleton<StatusConstructionEnumType>();
-            services.AddSingleton<ConstructionByInputType > ();
+            services.AddSingleton<ConstructionByInputType>();
             services.AddSingleton<ConstructionFilterByInputType>();
             services.AddSingleton<ConstructionInputType>();
             services.AddSingleton<ConstructionMutation>();
@@ -508,10 +486,9 @@
 
         public static void AddCustomGraphQLTypes(this IServiceCollection services)
         {
-            AddCompany(services);
 
             services.AddSingleton<UserType>();
-            
+
             AddProduct(services);
             AddProvider(services);
             AddBrand(services);
@@ -541,6 +518,32 @@
             services.AddSingleton<ObrasSchema>();
         }
 
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "ToDo API",
+                    Description = "An ASP.NET Core Web API for managing ToDo items",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Example Contact",
+                        Url = new Uri("https://example.com/contact")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Example License",
+                        Url = new Uri("https://example.com/license")
+                    }
+                });
+            });
+
+            return services;
+        }
+
         public static void AddCustomGraphQLAuth(this IServiceCollection services)
         {
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -564,7 +567,7 @@
                 authSettings.AddPolicy(
                     Constants.AuthPolicy.AdminPolicy,
                     policy => policy.RequireClaim(ClaimTypes.Role, Constants.Roles.Customer, Constants.Roles.Engineer, Constants.Roles.Admin));
-                
+
                 return authSettings;
             });
         }

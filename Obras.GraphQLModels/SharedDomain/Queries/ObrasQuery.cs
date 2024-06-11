@@ -29,7 +29,6 @@ namespace Obras.GraphQLModels.SharedDomain.Queries
         public ObrasQuery()
         {
             Name = nameof(ObrasQuery);
-            Field<CompanyQuery>("companies", resolve: context => new { });
             Field<ProductQuery>("products", resolve: context => new { });
             Field<ProviderQuery>("providers", resolve: context => new { });
             Field<BrandQuery>("brands", resolve: context => new { });
