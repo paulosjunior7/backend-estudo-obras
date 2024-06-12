@@ -14,4 +14,16 @@
     <ProjectReference Include="..\Obras.Data\Obras.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="BrandDomain\Request\" />
+    <None Remove="DocumentationDomain\Request\" />
+    <None Remove="EmployeeDomain\Request\" />
+    <None Remove="ResponsibilityDomain\Request\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BrandDomain\Request\" />
+    <Folder Include="DocumentationDomain\Request\" />
+    <Folder Include="EmployeeDomain\Request\" />
+    <Folder Include="ResponsibilityDomain\Request\" />
+  </ItemGroup>
 </Project>

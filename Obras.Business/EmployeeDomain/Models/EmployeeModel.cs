@@ -5,6 +5,7 @@
 
     public class EmployeeModel
     {
+        public int? Id { get; set; }
         public TypePeople TypePeople { get; set; }
         public string Cnpj { get; set; }
         public bool Outsourced { get; set; }

@@ -9,6 +9,7 @@ using Obras.Api;
 using Obras.Business.Mappings;
 using Obras.Data;
 using Obras.GraphQLModels.SharedDomain.Schemas;
+using System.Text.Json.Serialization;
 
 namespace ObrasApi
 {

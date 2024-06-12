@@ -1,34 +1,71 @@
-﻿<Properties StartupConfiguration="{1B4ACEAB-64E2-420E-8B9F-53EC1E017978}|ObrasApi" GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{1B4ACEAB-64E2-420E-8B9F-53EC1E017978}|ObrasApi">
+  <MonoDevelop.Ide.ItemProperties.Obras.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ObrasApi/Startup.cs">
     <Files>
-      <File FileName="Obras.Data/Entities/ConstructionInvestor.cs" />
-      <File FileName="Obras.Data/Obras.Data.csproj" />
-      <File FileName="Obras.Business/Obras.Business.csproj" />
-      <File FileName="ObrasApi/Obras.Api.csproj" />
-      <File FileName="Obras.Data/ObrasDBContext.cs" />
-      <File FileName="ObrasApi/Program.cs" />
-      <File FileName="ObrasApi/Startup.cs" Line="52" Column="1" />
+      <File FileName="ObrasApi/Controllers/DocumentacaoController.cs" Line="61" Column="59" />
+      <File FileName="ObrasApi/Controllers/EmpresaController.cs" Line="17" Column="10" />
+      <File FileName="ObrasApi/Controllers/MarcaController.cs" Line="30" Column="10" />
+      <File FileName="Obras.Business/DocumentationDomain/Request/DocumentationInput.cs" Line="7" Column="41" />
+      <File FileName="Obras.Business/DocumentationDomain/Models/DocumentationFilter.cs" Line="1" Column="1" />
+      <File FileName="Obras.Business/BrandDomain/Request/BrandInput.cs" Line="1" Column="1" />
+      <File FileName="ObrasApi/Startup.cs" Line="45" Column="38" />
+      <File FileName="Obras.Business/Mappings/DomainToDTOMappingProfile.cs" Line="50" Column="27" />
+      <File FileName="ObrasApi/Controllers/UserController.cs" Line="1" Column="1" />
+      <File FileName="ObrasApi/Controllers/FuncionarioController.cs" Line="89" Column="58" />
+      <File FileName="Obras.Business/EmployeeDomain/Models/EmployeeModel.cs" Line="29" Column="49" />
+      <File FileName="Obras.Business/EmployeeDomain/Request/EmployeeInput.cs" Line="24" Column="41" />
+      <File FileName="Obras.Business/ResponsibilityDomain/Request/ResponsibilityInput.cs" Line="7" Column="41" />
+      <File FileName="Obras.Business/ResponsibilityDomain/Models/ResponsibilityModel.cs" Line="10" Column="49" />
+      <File FileName="ObrasApi/Controllers/CargoController.cs" Line="87" Column="80" />
+      <File FileName="Obras.Business/EmployeeDomain/Models/EmployeeFilter.cs" Line="9" Column="23" />
+      <File FileName="ObrasApi/Program.cs" Line="1" Column="1" />
+      <File FileName="Obras.Business/EmployeeDomain/Services/EmployeeService.cs" Line="88" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Obras" expanded="True">
-            <Node name="Obras.Api" expanded="True">
+            <Node name="Obras.Api">
+              <Node name="Models" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
               <Node name="Startup.cs" selected="True" />
             </Node>
+            <Node name="Obras.Business">
+              <Node name="EmployeeDomain" expanded="True">
+                <Node name="Models" expanded="True" />
+                <Node name="Request" expanded="True" />
+              </Node>
+            </Node>
             <Node name="Obras.Data" expanded="True">
-              <Node name="Entities" expanded="True" />
+              <Node name="EntitiesConfiguration" expanded="True" />
+            </Node>
+            <Node name="Obras.GraphQLModels" expanded="True">
+              <Node name="BrandDomain" expanded="True">
+                <Node name="Mutations" expanded="True" />
+              </Node>
+              <Node name="EmployeeDomain" expanded="True">
+                <Node name="Mutations" expanded="True" />
+                <Node name="Queries" expanded="True" />
+              </Node>
+              <Node name="UserDomain" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="Obras" expanded="True" selected="True" />
+        </State>
+      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Volumes/Dados/Projetos/controle-obras-api/ObrasApi/Controllers/CargoController.cs" relfile="ObrasApi/Controllers/CargoController.cs" line="87" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Obras.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>

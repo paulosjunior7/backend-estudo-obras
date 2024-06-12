@@ -112,7 +112,7 @@ namespace Obras.Business.EmployeeDomain.Services
 
             return new PageResponse<Employee>
             {
-                Nodes = nodes,
+                Nodes = nodes.ToList<Employee>(),
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount
