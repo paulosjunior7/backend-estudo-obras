@@ -2,6 +2,7 @@
 {
     public class UnityModel
     {
+        public int? Id { get; set; }
         public string Description { get; set; }
         public double Multiplier { get; set; }
         public int? CompanyId { get; set; }

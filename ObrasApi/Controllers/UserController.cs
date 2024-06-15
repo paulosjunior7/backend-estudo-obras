@@ -51,7 +51,7 @@
         public async Task<IActionResult> Authenticate([FromBody] LoginDetails model)
         {
             // Check user exist in system or not
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 return NotFound();

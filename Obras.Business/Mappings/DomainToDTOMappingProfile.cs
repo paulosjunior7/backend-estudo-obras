@@ -24,9 +24,11 @@ using Obras.Business.PeopleDomain.Models;
 using Obras.Business.ProductDomain.Models;
 using Obras.Business.ProductProviderDomain.Models;
 using Obras.Business.ProviderDomain.Models;
+using Obras.Business.ProviderDomain.Request;
 using Obras.Business.ResponsibilityDomain.Models;
 using Obras.Business.ResponsibilityDomain.Request;
 using Obras.Business.UnitDomain.Models;
+using Obras.Business.UnitDomain.Request;
 using Obras.Data.Entities;
 
 namespace Obras.Business.Mappings
@@ -43,6 +45,7 @@ namespace Obras.Business.Mappings
             CreateMap<EmployeeModel, Employee>().ReverseMap();
             CreateMap<EmployeeInput, EmployeeModel>().ReverseMap();
             CreateMap<ProviderModel, Provider>().ReverseMap();
+            CreateMap<ProviderInput, ProviderModel>().ReverseMap();
             CreateMap<ExpenseModel, Expense>().ReverseMap();
             CreateMap<OutsourcedModel, Outsourced>().ReverseMap();
             CreateMap<OutsourcedInput, OutsourcedModel>().ReverseMap();
@@ -56,6 +59,7 @@ namespace Obras.Business.Mappings
             CreateMap<ConstructionBatchModel, ConstructionBatch>().ReverseMap();
             CreateMap<ConstructionHouseModel, ConstructionHouse>().ReverseMap();
             CreateMap<UnityModel, Unity>().ReverseMap();
+            CreateMap<UnityInput, UnityModel>().ReverseMap();
             CreateMap<GroupModel, Group>().ReverseMap();
             CreateMap<GroupInput, GroupModel>().ReverseMap();
             CreateMap<ConstructionMaterialModel, ConstructionMaterial>().ReverseMap();

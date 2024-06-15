@@ -17,7 +17,7 @@ namespace Obras.Business.UnitDomain.Services
         Task<Unity> CreateAsync(UnityModel model);
         Task<Unity> UpdateAsync(int CompanyId, int id, UnityModel model);
         Task<PageResponse<Unity>> GetAsync(PageRequest<UnityFilter, UnitySortingFields> pageRequest);
-        Task<Unity> GetId(int CompanyId, int id);
+        Task<UnityModel> GetId(int CompanyId, int id);
     }
     public class UnityService : IUnityService
     {
@@ -82,14 +82,14 @@ namespace Obras.Business.UnitDomain.Services
             return unity;
         }
 
-        public async Task<Unity> GetId(int CompanyId, int id)
+        public async Task<UnityModel> GetId(int CompanyId, int id)
         {
             var result = await _dbContext.Unities.FindAsync(id);
             if (result != null && result.CompanyId != CompanyId)
             {
                 return null;
             }
-            return result;
+            return this._mapper.Map<UnityModel>(result);
         }
 
         public async Task<PageResponse<Unity>> GetAsync(PageRequest<UnityFilter, UnitySortingFields> pageRequest)

@@ -5,6 +5,7 @@
 
     public class ProviderModel
     {
+        public int? Id { get; set; }
         public string Cnpj { get; set; }
         public string Cpf { get; set; }
         public TypePeople TypePeople { get; set; }
