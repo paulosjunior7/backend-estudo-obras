@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
     <PackageReference Include="System.IO.Abstractions" Version="17.0.24" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,11 +19,17 @@
     <None Remove="DocumentationDomain\Request\" />
     <None Remove="EmployeeDomain\Request\" />
     <None Remove="ResponsibilityDomain\Request\" />
+    <None Remove="ExpenseDomain\Request\" />
+    <None Remove="GroupDomain\Request\" />
+    <None Remove="OutsourcedDomain\Request\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BrandDomain\Request\" />
     <Folder Include="DocumentationDomain\Request\" />
     <Folder Include="EmployeeDomain\Request\" />
     <Folder Include="ResponsibilityDomain\Request\" />
+    <Folder Include="ExpenseDomain\Request\" />
+    <Folder Include="GroupDomain\Request\" />
+    <Folder Include="OutsourcedDomain\Request\" />
   </ItemGroup>
 </Project>

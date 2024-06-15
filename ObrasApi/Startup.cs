@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Obras.Api;
 using Obras.Business.Mappings;
 using Obras.Data;
-using Obras.GraphQLModels.SharedDomain.Schemas;
 using System.Text.Json.Serialization;
 
 namespace ObrasApi
@@ -55,17 +54,11 @@ namespace ObrasApi
 
             services.AddCustomJWT(Configuration);
 
-            services.AddCustomGraphQLAuth();
-
             services.AddCustomService();
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
             services.AddSwagger();
-
-            services.AddCustomGraphQLServices();
-
-            services.AddCustomGraphQLTypes();
 
 
         }
@@ -103,7 +96,6 @@ namespace ObrasApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGraphQL();
             });
 
             //dbContext.EnsureDataSeeding();

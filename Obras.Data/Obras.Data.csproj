@@ -3,14 +3,14 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13"/>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="EntitiesConfiguration\"/>
+    <None Remove="EntitiesConfiguration\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EntitiesConfiguration\"/>
+    <Folder Include="EntitiesConfiguration\" />
   </ItemGroup>
 </Project>

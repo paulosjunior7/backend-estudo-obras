@@ -1,38 +1,48 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Obras.Business.BrandDomain.Enums;
-using Obras.Business.BrandDomain.Models;
-using Obras.Business.BrandDomain.Request;
-using Obras.Business.BrandDomain.Services;
+using Obras.Business.ExpenseDomain.Enums;
+using Obras.Business.ExpenseDomain.Models;
+using Obras.Business.ExpenseDomain.Request;
+using Obras.Business.ExpenseDomain.Services;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
 using Obras.Data.Entities;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Obras.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MarcaController : Controller
+    public class DespesaController : Controller
     {
-        private readonly IBrandService brandService;
+        private readonly IExpenseService expenseService;
         private readonly IMapper mapper;
         private readonly DbSet<User> userRepository;
 
-        public MarcaController(IBrandService brandService, IMapper mapper, ObrasDBContext dBContext)
+        public DespesaController(IExpenseService expenseService, IMapper mapper, ObrasDBContext dBContext)
         {
-            this.brandService = brandService;
+            this.expenseService = expenseService;
             this.mapper = mapper;
             this.userRepository = dBContext.User;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] BrandInput input)
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
         {
-            var model = this.mapper.Map<BrandModel>(input);
+            var response = await expenseService.GetExpenseId(id);
+
+            return Ok(this.mapper.Map<ExpenseModel>(response));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] ExpenseInput input)
+        {
+            var model = this.mapper.Map<ExpenseModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;
             if (userId == null) return Unauthorized();
@@ -45,24 +55,16 @@ namespace Obras.Api.Controllers
             model.ChangeUserId = user.Id;
             model.CompanyId = user.CompanyId;
 
-            var response = await brandService.CreateAsync(model);
+            var response = await expenseService.CreateAsync(model);
             model.Id = response.Id;
 
             return Ok(model);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var response = await brandService.GetBrandId(id);
-
-            return Ok(response);
-        }
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] BrandInput input)
+        public async Task<IActionResult> Update(int id, [FromBody] ExpenseInput input)
         {
-            var model = this.mapper.Map<BrandModel>(input);
+            var model = this.mapper.Map<ExpenseModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;
             if (userId == null) return Unauthorized();
@@ -74,16 +76,15 @@ namespace Obras.Api.Controllers
             model.ChangeUserId = user.Id;
             model.CompanyId = user.CompanyId;
 
-            var response = await brandService.UpdateBrandAsync(id, model);
+            var response = await expenseService.UpdateExpenseAsync(id, model);
             model.Id = id;
-
             return Ok(model);
         }
 
         [HttpPost("get-all")]
-        public async Task<IActionResult> GetAll([FromBody] PageRequest<BrandFilter, BrandSortingFields> pageRequest)
+        public async Task<IActionResult> GetAll([FromBody] PageRequest<ExpenseFilter, ExpenseSortingFields> pageRequest)
         {
-            var response = await brandService.GetBrandsAsync(pageRequest);
+            var response = await expenseService.GetExpensesAsync(pageRequest);
 
             return Ok(response);
         }

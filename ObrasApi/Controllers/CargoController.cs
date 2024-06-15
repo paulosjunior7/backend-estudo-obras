@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using GraphQL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Obras.Business.ResponsibilityDomain.Enums;
@@ -41,7 +41,7 @@ namespace Obras.Api.Controllers
 
             var user = await userRepository.FindAsync(userId);
             if (user == null || user.CompanyId == null)
-                throw new ExecutionError("Usuário não exite ou não possui empresa vinculada!");
+                throw new Exception("Usuário não exite ou não possui empresa vinculada!");
 
             model.RegistrationUserId = user.Id;
             model.ChangeUserId = user.Id;
@@ -71,7 +71,7 @@ namespace Obras.Api.Controllers
 
             var user = await userRepository.FindAsync(userId);
             if (user == null || user.CompanyId == null)
-                throw new ExecutionError("Usuário não exite ou não possui empresa vinculada!");
+                throw new Exception("Usuário não exite ou não possui empresa vinculada!");
 
             model.ChangeUserId = user.Id;
             model.CompanyId = user.CompanyId;

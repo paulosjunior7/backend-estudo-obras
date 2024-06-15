@@ -4,7 +4,6 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'ObrasApi' " />
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
@@ -27,6 +26,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Obras.Business\Obras.Business.csproj" />
     <ProjectReference Include="..\Obras.Data\Obras.Data.csproj" />
-    <ProjectReference Include="..\Obras.GraphQLModels\Obras.GraphQLModels.csproj" />
   </ItemGroup>
 </Project>

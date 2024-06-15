@@ -3,15 +3,15 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10"/>
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.10"/>
-    <PackageReference Include="coverlet.collector" Version="3.2.0"/>
-    <PackageReference Include="Moq" Version="4.20.69"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.13"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="coverlet.collector" Version="3.2.0" />
+    <PackageReference Include="Moq" Version="4.20.69" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.13" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Obras.Data\Obras.Data.csproj"/>
-    <ProjectReference Include="..\Obras.Business\Obras.Business.csproj"/>
+    <ProjectReference Include="..\Obras.Data\Obras.Data.csproj" />
+    <ProjectReference Include="..\Obras.Business\Obras.Business.csproj" />
   </ItemGroup>
 </Project>

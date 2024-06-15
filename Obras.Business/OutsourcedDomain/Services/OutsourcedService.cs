@@ -186,7 +186,7 @@ namespace Obras.Business.OutsourcedDomain.Services
                 return filterQuery;
             }
 
-            if (filter.Id != null)
+            if (filter.Id != null && filter.Id != 0)
             {
                 filterQuery = filterQuery.Where(x => x.Id == filter.Id);
             }

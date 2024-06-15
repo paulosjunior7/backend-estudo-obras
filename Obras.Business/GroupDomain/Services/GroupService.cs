@@ -18,7 +18,7 @@ namespace Obras.Business.GroupDomain.Services
         Task<Group> CreateAsync(GroupModel model);
         Task<Group> UpdateAsync(int id, GroupModel model);
         Task<PageResponse<Group>> GetAsync(PageRequest<GroupFilter, GroupSortingFields> pageRequest);
-        Task<Group> GetId(int id);
+        Task<GroupModel> GetId(int id);
     }
     public class GroupService : IGroupService
     {
@@ -65,9 +65,11 @@ namespace Obras.Business.GroupDomain.Services
             return mod;
         }
 
-        public async Task<Group> GetId(int id)
+        public async Task<GroupModel> GetId(int id)
         {
-            return await _dbContext.Groups.FindAsync(id);
+            var group =  await _dbContext.Groups.FindAsync(id);
+
+            return _mapper.Map<GroupModel>(group);
         }
 
         public async Task<PageResponse<Group>> GetAsync(PageRequest<GroupFilter, GroupSortingFields> pageRequest)

@@ -17,7 +17,7 @@ namespace Obras.Business.EmployeeDomain.Services
     {
         Task<Employee> CreateAsync(EmployeeModel model);
         Task<Employee> UpdateEmployeeAsync(int id, EmployeeModel model);
-        Task<PageResponse<Employee>> GetEmployeesAsync(PageRequest<EmployeeFilter, EmployeeSortingFields> pageRequest);
+        Task<PageResponse<EmployeeModel>> GetEmployeesAsync(PageRequest<EmployeeFilter, EmployeeSortingFields> pageRequest);
         Task<Employee> GetEmployeeId(int id);
     }
 
@@ -85,7 +85,7 @@ namespace Obras.Business.EmployeeDomain.Services
             return await _dbContext.Employees.FindAsync(id);
         }
 
-        public async Task<PageResponse<Employee>> GetEmployeesAsync(PageRequest<EmployeeFilter, EmployeeSortingFields> pageRequest)
+        public async Task<PageResponse<EmployeeModel>> GetEmployeesAsync(PageRequest<EmployeeFilter, EmployeeSortingFields> pageRequest)
         {
             var filterQuery = _dbContext.Employees.Include(x => x.Responsibility).Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
@@ -110,9 +110,11 @@ namespace Obras.Business.EmployeeDomain.Services
 
             #endregion
 
-            return new PageResponse<Employee>
+            var itens = this._mapper.Map<List<EmployeeModel>>(nodes);
+
+            return new PageResponse<EmployeeModel>
             {
-                Nodes = nodes.ToList<Employee>(),
+                Nodes = itens,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount

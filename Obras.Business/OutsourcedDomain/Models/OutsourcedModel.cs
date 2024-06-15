@@ -4,6 +4,7 @@ namespace Obras.Business.OutsourcedDomain.Models
 {
     public class OutsourcedModel
     {
+        public int? Id { get; set; }
         public TypePeople TypePeople { get; set; }
         public string Cpf { get; set; }
         public string Cnpj { get; set; }
