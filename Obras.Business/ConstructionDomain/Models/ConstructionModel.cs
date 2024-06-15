@@ -5,6 +5,7 @@ namespace Obras.Business.ConstructionDomain.Models
 {
     public class ConstructionModel
     {
+        public int? Id { get; set; }
         public string Identifier { get; set; }
         public StatusConstruction StatusConstruction { get; set; }
         public DateTime DateBegin { get; set; }

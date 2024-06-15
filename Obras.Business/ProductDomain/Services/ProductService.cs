@@ -19,7 +19,7 @@ namespace Obras.Business.ProductDomain.Services
         Task<Product> CreateAsync(ProductModel product);
         Task<Product> UpdateProductAsync(int productId, ProductModel product);
         Task<PageResponse<Product>> GetProductsAsync(PageRequest<ProductFilter, ProductSortingFields> pageRequest);
-        Task<Product> GetProductId(int id);
+        Task<ProductModel> GetProductId(int id);
     }
 
     public class ProductService : IProductService
@@ -67,9 +67,10 @@ namespace Obras.Business.ProductDomain.Services
             return prod;
         }
 
-        public async Task<Product> GetProductId(int id)
+        public async Task<ProductModel> GetProductId(int id)
         {
-            return await _dbContext.Products.FindAsync(id);
+            var resultado =  await _dbContext.Products.FindAsync(id);
+            return this._mapper.Map<ProductModel>(resultado);
         }
 
         public async Task<PageResponse<Product>> GetProductsAsync(PageRequest<ProductFilter, ProductSortingFields> pageRequest)

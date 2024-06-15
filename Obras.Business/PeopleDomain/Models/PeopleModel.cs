@@ -4,6 +4,7 @@ namespace Obras.Business.PeopleDomain.Models
 {
     public class PeopleModel
     {
+        public int? Id { get; set; }
         public TypePeople TypePeople { get; set; }
         public bool Constructor { get; set; }
         public bool Investor { get; set; }

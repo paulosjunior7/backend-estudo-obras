@@ -24,6 +24,9 @@
     <None Remove="OutsourcedDomain\Request\" />
     <None Remove="UnitDomain\Request\" />
     <None Remove="ProviderDomain\Request\" />
+    <None Remove="ProductDomain\Request\" />
+    <None Remove="PeopleDomain\Request\" />
+    <None Remove="ConstructionDomain\Request\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BrandDomain\Request\" />
@@ -35,5 +38,8 @@
     <Folder Include="OutsourcedDomain\Request\" />
     <Folder Include="UnitDomain\Request\" />
     <Folder Include="ProviderDomain\Request\" />
+    <Folder Include="ProductDomain\Request\" />
+    <Folder Include="PeopleDomain\Request\" />
+    <Folder Include="ConstructionDomain\Request\" />
   </ItemGroup>
 </Project>

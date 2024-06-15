@@ -2,6 +2,7 @@
 {
     public class ProductModel
     {
+        public int? Id { get; set; }
         public string Description { get; set; }
         public string Detail { get; set; }
         public bool Active { get; set; }
