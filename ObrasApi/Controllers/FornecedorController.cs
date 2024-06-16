@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Obras.Business.OutsourcedDomain.Models;
-using Obras.Business.OutsourcedDomain.Request;
-using Obras.Business.OutsourcedDomain.Services;
-using Obras.Business.OutsoursedDomain.Enums;
+using Obras.Api.Validators;
 using Obras.Business.ProviderDomain.Enums;
 using Obras.Business.ProviderDomain.Models;
 using Obras.Business.ProviderDomain.Request;
@@ -27,17 +25,26 @@ namespace Obras.Api.Controllers
         private readonly IProviderService providerService;
         private readonly IMapper mapper;
         private readonly DbSet<User> userRepository;
+        private readonly IValidator<ProviderInput> _providerValidator;
 
-        public FornecedorController(IProviderService providerService, IMapper mapper, ObrasDBContext dBContext)
+        public FornecedorController(IValidator<ProviderInput> providerValidator, IProviderService providerService, IMapper mapper, ObrasDBContext dBContext)
         {
             this.providerService = providerService;
             this.mapper = mapper;
             this.userRepository = dBContext.User;
+            this._providerValidator = providerValidator;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProviderInput input)
         {
+            var validationResult = _providerValidator.Validate(input);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var model = this.mapper.Map<ProviderModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;
@@ -68,6 +75,13 @@ namespace Obras.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ProviderInput input)
         {
+            var validationResult = _providerValidator.Validate(input);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var model = this.mapper.Map<ProviderModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;

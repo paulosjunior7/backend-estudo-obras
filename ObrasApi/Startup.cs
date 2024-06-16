@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -6,8 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Obras.Api;
+using Obras.Api.Validators;
 using Obras.Business.Mappings;
+using Obras.Business.PeopleDomain.Request;
+using Obras.Business.ProviderDomain.Request;
 using Obras.Data;
+using System;
 using System.Text.Json.Serialization;
 
 namespace ObrasApi
@@ -41,7 +47,17 @@ namespace ObrasApi
                        .AllowAnyHeader();
             }));
 
-            services.AddControllers();
+            services.AddControllers()
+                    .AddJsonOptions(options =>
+                    {
+                        options.JsonSerializerOptions.Converters.Add(new Obras.Data.Enums.TypePeopleConverter());
+                        options.JsonSerializerOptions.Converters.Add(new Obras.Data.Enums.TypeExpenseConverter());
+                        options.JsonSerializerOptions.Converters.Add(new Obras.Data.Enums.TypePhotoConverter());
+                        options.JsonSerializerOptions.Converters.Add(new Obras.Data.Enums.StatusConstructionConverter());
+                    });
+
+            services.AddScoped<IValidator<PeopleInput>, PeopleValidator>();
+            services.AddScoped<IValidator<ProviderInput>, ProviderValidator>();
 
             //IServiceCollection serviceCollection = services.AddDbContext<ObrasDBContext>(options => options
             //            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);

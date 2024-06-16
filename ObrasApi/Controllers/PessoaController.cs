@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Obras.Business.PeopleDomain.Enums;
@@ -22,17 +23,26 @@ namespace Obras.Api.Controllers
         private readonly IPeopleService peopleService;
         private readonly IMapper mapper;
         private readonly DbSet<User> userRepository;
+        private readonly IValidator<PeopleInput> _peopleValidator;
 
-        public PessoaController(IPeopleService peopleService, IMapper mapper, ObrasDBContext dBContext)
+        public PessoaController(IValidator<PeopleInput> peopleValidator, IPeopleService peopleService, IMapper mapper, ObrasDBContext dBContext)
         {
             this.peopleService = peopleService;
             this.mapper = mapper;
             this.userRepository = dBContext.User;
+            this._peopleValidator = peopleValidator;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PeopleInput input)
         {
+            var validationResult = _peopleValidator.Validate(input);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var model = this.mapper.Map<PeopleModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;
@@ -63,6 +73,13 @@ namespace Obras.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] PeopleInput input)
         {
+            var validationResult = _peopleValidator.Validate(input);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var model = this.mapper.Map<PeopleModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;

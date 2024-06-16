@@ -22,9 +22,16 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.6.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.6.2" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Obras.Business\Obras.Business.csproj" />
     <ProjectReference Include="..\Obras.Data\Obras.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Validators\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Validators\" />
   </ItemGroup>
 </Project>
