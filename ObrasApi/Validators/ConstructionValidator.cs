@@ -1,27 +1,18 @@
 ﻿using FluentValidation;
+using Obras.Business.ConstructionDomain.Request;
+using Obras.Business.EmployeeDomain.Request;
 using Obras.Business.PeopleDomain.Request;
-using Obras.Business.ProviderDomain.Request;
 using Obras.Data.Enums;
 using System;
 namespace Obras.Api.Validators
 {
-    public class ProviderValidator : AbstractValidator<ProviderInput>
+    public class ConstructionValidator : AbstractValidator<ConstructionInput>
     {
-        public ProviderValidator()
+        public ConstructionValidator()
         {
-            RuleFor(user => user.TypePeople)
-                .NotEmpty().WithMessage("TypePeople é obrigatório.")
-                .IsInEnum().WithMessage("Tipo de Pessoa invalida.");
-
-            RuleFor(user => user.Cpf)
-                .MaximumLength(14).WithMessage("Tamanho máximo permitido é de 14 caracteres.");
-
-            RuleFor(user => user.Cnpj)
-                .MaximumLength(18).WithMessage("Tamanho máximo permitido é de 18 caracteres.");
-
-            RuleFor(user => user.Name)
-                .NotEmpty().WithMessage("Name é obrigatório.")
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
+            RuleFor(user => user.Identifier)
+                .NotEmpty().WithMessage("Identifier é obrigatório.")
+                .MaximumLength(50).WithMessage("Tamanho máximo permitido é de 50 caracteres.");
 
             RuleFor(user => user.ZipCode)
                 .MaximumLength(10).WithMessage("Tamanho máximo permitido é de 10 caracteres.");
@@ -42,15 +33,6 @@ namespace Obras.Api.Validators
                 .MaximumLength(2).WithMessage("Tamanho máximo permitido é de 2 caracteres.");
 
             RuleFor(user => user.Complement)
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
-
-            RuleFor(user => user.Telephone)
-                .MaximumLength(18).WithMessage("Tamanho máximo permitido é de 18 caracteres.");
-
-            RuleFor(user => user.CellPhone)
-                .MaximumLength(18).WithMessage("Tamanho máximo permitido é de 18 caracteres.");
-
-            RuleFor(user => user.EMail)
                 .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
 
             RuleFor(user => user.Active)

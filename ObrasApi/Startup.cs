@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Obras.Api;
 using Obras.Api.Validators;
+using Obras.Business.ConstructionDomain.Request;
+using Obras.Business.EmployeeDomain.Request;
 using Obras.Business.Mappings;
 using Obras.Business.PeopleDomain.Request;
 using Obras.Business.ProviderDomain.Request;
@@ -58,6 +60,8 @@ namespace ObrasApi
 
             services.AddScoped<IValidator<PeopleInput>, PeopleValidator>();
             services.AddScoped<IValidator<ProviderInput>, ProviderValidator>();
+            services.AddScoped<IValidator<EmployeeInput>, EmployeeValidator>();
+            services.AddScoped<IValidator<ConstructionInput>, ConstructionValidator>();
 
             //IServiceCollection serviceCollection = services.AddDbContext<ObrasDBContext>(options => options
             //            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);

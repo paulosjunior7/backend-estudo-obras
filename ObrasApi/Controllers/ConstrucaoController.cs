@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Obras.Api.Validators;
 using Obras.Business.ConstructionDomain.Enums;
 using Obras.Business.ConstructionDomain.Models;
 using Obras.Business.ConstructionDomain.Request;
 using Obras.Business.ConstructionDomain.Services;
+using Obras.Business.EmployeeDomain.Request;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
 using Obras.Data.Entities;
@@ -23,12 +26,14 @@ namespace Obras.Api.Controllers
         private readonly IConstructionService constructionService;
         private readonly IMapper mapper;
         private readonly DbSet<User> userRepository;
+        private readonly IValidator<ConstructionInput> _constructionValidator;
 
-        public ConstrucaoController(IConstructionService constructionService, IMapper mapper, ObrasDBContext dBContext)
+        public ConstrucaoController(IValidator<ConstructionInput> constructionValidator, IConstructionService constructionService, IMapper mapper, ObrasDBContext dBContext)
         {
             this.constructionService = constructionService;
             this.mapper = mapper;
             this.userRepository = dBContext.User;
+            this._constructionValidator = constructionValidator;
         }
 
         [HttpGet("{id}")]
@@ -42,6 +47,13 @@ namespace Obras.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ConstructionInput input)
         {
+            var validationResult = _constructionValidator.Validate(input);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var model = this.mapper.Map<ConstructionModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;
@@ -64,6 +76,13 @@ namespace Obras.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ConstructionInput input)
         {
+            var validationResult = _constructionValidator.Validate(input);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var model = this.mapper.Map<ConstructionModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;

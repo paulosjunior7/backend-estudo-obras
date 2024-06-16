@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Obras.Business.DocumentationDomain.Request;
+using Obras.Api.Validators;
 using Obras.Business.EmployeeDomain.Enums;
 using Obras.Business.EmployeeDomain.Models;
 using Obras.Business.EmployeeDomain.Request;
 using Obras.Business.EmployeeDomain.Services;
+using Obras.Business.ProviderDomain.Request;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
 using Obras.Data.Entities;
@@ -24,17 +26,26 @@ namespace Obras.Api.Controllers
         private readonly IEmployeeService employeeService;
         private readonly IMapper mapper;
         private readonly DbSet<User> userRepository;
+        private readonly IValidator<EmployeeInput> _employeeValidator;
 
-        public FuncionarioController(IEmployeeService employeeService, IMapper mapper, ObrasDBContext dBContext)
+        public FuncionarioController(IValidator<EmployeeInput> employeeValidator, IEmployeeService employeeService, IMapper mapper, ObrasDBContext dBContext)
         {
             this.employeeService = employeeService;
             this.mapper = mapper;
             this.userRepository = dBContext.User;
+            this._employeeValidator = employeeValidator;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] EmployeeInput input)
         {
+            var validationResult = _employeeValidator.Validate(input);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var model = this.mapper.Map<EmployeeModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;
@@ -65,6 +76,13 @@ namespace Obras.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] EmployeeInput input)
         {
+            var validationResult = _employeeValidator.Validate(input);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             var model = this.mapper.Map<EmployeeModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;
