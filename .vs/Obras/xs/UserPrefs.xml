@@ -1,39 +1,25 @@
-﻿<Properties StartupConfiguration="{1B4ACEAB-64E2-420E-8B9F-53EC1E017978}|ObrasApi" GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="ObrasApi/Program.cs">
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{1B4ACEAB-64E2-420E-8B9F-53EC1E017978}|ObrasApi">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Obras.Business/ConstructionExpenseDomain/Response/ConstructionExpenseResponse.cs">
     <Files>
-      <File FileName="ObrasApi/Controllers/DocumentacaoController.cs" Line="73" Column="36" />
-      <File FileName="ObrasApi/Controllers/EmpresaController.cs" Line="17" Column="10" />
-      <File FileName="ObrasApi/Controllers/MarcaController.cs" Line="72" Column="36" />
-      <File FileName="Obras.Business/DocumentationDomain/Request/DocumentationInput.cs" />
-      <File FileName="Obras.Business/DocumentationDomain/Models/DocumentationFilter.cs" />
-      <File FileName="Obras.Business/BrandDomain/Request/BrandInput.cs" />
-      <File FileName="ObrasApi/Controllers/UserController.cs" Line="1" Column="1" />
-      <File FileName="Obras.Business/ExpenseDomain/Request/ExpenseInput.cs" Line="9" Column="53" />
-      <File FileName="Obras.Business/ExpenseDomain/Models/ExpenseModel.cs" Line="7" Column="37" />
-      <File FileName="Obras.Business/ExpenseDomain/Services/ExpenseService.cs" Line="1" Column="1" />
-      <File FileName="ObrasApi/Controllers/DespesaController.cs" Line="52" Column="27" />
-      <File FileName="ObrasApi/Controllers/CargoController.cs" Line="74" Column="36" />
-      <File FileName="Obras.Business/GroupDomain/Models/GroupFilter.cs" Line="1" Column="1" />
-      <File FileName="Obras.Business/GroupDomain/Models/GroupModel.cs" Line="5" Column="37" />
-      <File FileName="Obras.Business/GroupDomain/Services/GroupService.cs" Line="1" Column="1" />
-      <File FileName="ObrasApi/Controllers/GrupoController.cs" Line="78" Column="36" />
-      <File FileName="Obras.Business/Mappings/DomainToDTOMappingProfile.cs" Line="20" Column="1" />
-      <File FileName="ObrasApi/Program.cs" Line="10" Column="1" />
-      <File FileName="ObrasApi/ConfigureServiceExtension.cs" Line="99" Column="28" />
-      <File FileName="ObrasApi/appsettings.json" Line="1" Column="1" />
-      <File FileName="ObrasApi/Controllers/FuncionarioController.cs" Line="5" Column="18" />
-      <File FileName="ObrasApi/Obras.Api.csproj" Line="26" Column="1" />
-      <File FileName="Obras.Business/Obras.Business.csproj" Line="7" Column="14" />
-      <File FileName=".vs/Obras/xs/project-cache/Obras.Business-Debug.json" Line="1" Column="1" />
-      <File FileName=".vs/Obras/xs/project-cache/Obras.Api-Debug.json" Line="1" Column="1" />
-      <File FileName=".vs/Obras/xs/project-cache/Obras.GraphQLModels-Debug.json" Line="1" Column="1" />
-      <File FileName=".vs/Obras/xs/UserPrefs.xml" Line="1" Column="1" />
-      <File FileName="Obras.Data/Obras.Data.csproj" Line="1" Column="1" />
-      <File FileName="Obras.GraphQLModels/SharedDomain/Queries/ObrasQuery.cs" Line="1" Column="1" />
-      <File FileName="ObrasApi/Startup.cs" Line="59" Column="15" />
+      <File FileName="ObrasApi/Controllers/DocumentacaoController.cs" Line="1" Column="1" />
+      <File FileName="ObrasApi/Controllers/EmpresaController.cs" Line="1" Column="1" />
+      <File FileName="ObrasApi/Controllers/ConstrucaoController.cs" Line="1" Column="1" />
+      <File FileName="ObrasApi/Controllers/DocumentacaoConstrucaoController.cs" Line="117" Column="6" />
+      <File FileName="ObrasApi/Controllers/LoteController.cs" Line="1" Column="1" />
+      <File FileName="Obras.Business/ConstructionDocumentationDomain/Services/ConstructionDocumentationService.cs" Line="76" Column="185" />
+      <File FileName="Obras.Business/ConstructionBatchDomain/Services/ConstructionBatchService.cs" Line="73" Column="139" />
+      <File FileName="ObrasApi/Controllers/UserController.cs" Line="54" Column="1" />
+      <File FileName="ObrasApi/Validators/ConstructionExpenseValidator.cs" Line="16" Column="1" />
+      <File FileName="ObrasApi/Validators/ConstructionDocumentationValidator.cs" Line="15" Column="49" />
+      <File FileName="ObrasApi/Validators/ConstructionValidator.cs" Line="1" Column="1" />
+      <File FileName="Obras.Business/ConstructionExpenseDomain/Request/ConstructionExpenseInput.cs" Line="11" Column="6" />
+      <File FileName="Obras.Business/ConstructionExpenseDomain/Models/ConstructionExpenseModel.cs" Line="13" Column="41" />
+      <File FileName="Obras.Business/ConstructionExpenseDomain/Models/ConstructionExpenseFilter.cs" Line="5" Column="37" />
+      <File FileName="ObrasApi/Controllers/DespesaConstrucaoController.cs" Line="45" Column="52" />
+      <File FileName="Obras.Business/ConstructionExpenseDomain/Services/ConstructionExpenseService.cs" Line="21" Column="47" />
+      <File FileName="Obras.Business/ConstructionExpenseDomain/Response/ConstructionExpenseResponse.cs" Line="8" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -41,25 +27,22 @@
           <Node name="Obras" expanded="True">
             <Node name="Obras.Api">
               <Node name="Controllers" expanded="True" />
-              <Node name="Program.cs" selected="True" />
             </Node>
-            <Node name="Obras.Business">
-              <Node name="ExpenseDomain" expanded="True">
-                <Node name="Models" expanded="True" />
-              </Node>
-              <Node name="GroupDomain" expanded="True">
-                <Node name="Models" expanded="True" />
-                <Node name="Request" expanded="True" />
-                <Node name="Services" expanded="True" />
-              </Node>
+            <Node name="Obras.Data">
+              <Node name="Entities" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Obras.Api PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Obras.Api PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Volumes/Dados/Projetos/controle-obras-api/Obras.Business/OutsourcedDomain/Services/OutsourcedService.cs" relfile="Obras.Business/OutsourcedDomain/Services/OutsourcedService.cs" line="40" column="1" />
+      <Breakpoint file="/Volumes/Dados/Projetos/controle-obras-api/Obras.Business/ProductDomain/Services/ProductService.cs" relfile="Obras.Business/ProductDomain/Services/ProductService.cs" line="46" column="1" />
+      <Breakpoint file="/Volumes/Dados/Projetos/controle-obras-api/ObrasApi/Controllers/LoteController.cs" relfile="ObrasApi/Controllers/LoteController.cs" line="112" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

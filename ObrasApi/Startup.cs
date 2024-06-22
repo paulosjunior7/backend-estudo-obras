@@ -58,10 +58,7 @@ namespace ObrasApi
                         options.JsonSerializerOptions.Converters.Add(new Obras.Data.Enums.StatusConstructionConverter());
                     });
 
-            services.AddScoped<IValidator<PeopleInput>, PeopleValidator>();
-            services.AddScoped<IValidator<ProviderInput>, ProviderValidator>();
-            services.AddScoped<IValidator<EmployeeInput>, EmployeeValidator>();
-            services.AddScoped<IValidator<ConstructionInput>, ConstructionValidator>();
+            services.AddValidatorsFromAssemblyContaining<Startup>();
 
             //IServiceCollection serviceCollection = services.AddDbContext<ObrasDBContext>(options => options
             //            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);
@@ -107,10 +104,9 @@ namespace ObrasApi
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
             app.UseAuthentication();
-
+            app.UseAuthorization();
             
 
             app.UseEndpoints(endpoints =>

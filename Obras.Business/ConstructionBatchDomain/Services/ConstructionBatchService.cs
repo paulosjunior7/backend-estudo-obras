@@ -18,7 +18,7 @@ namespace Obras.Business.ConstructionBatchDomain.Services
         Task<ConstructionBatch> CreateAsync(ConstructionBatchModel model);
         Task<ConstructionBatch> UpdateAsync(int id, ConstructionBatchModel model);
         Task<PageResponse<ConstructionBatch>> GetAsync(PageRequest<ConstructionBatchFilter, ConstructionBatchSortingFields> pageRequest);
-        Task<ConstructionBatch> GetId(int id);
+        Task<ConstructionBatch> GetId(int constructionId, int id);
     }
     public class ConstructionBatchService : IConstructionBatchService
     {
@@ -68,9 +68,9 @@ namespace Obras.Business.ConstructionBatchDomain.Services
             return constructionBatch;
         }
 
-        public async Task<ConstructionBatch> GetId(int id)
+        public async Task<ConstructionBatch> GetId(int constructionId, int id)
         {
-            return await _dbContext.ConstructionBatchs.FindAsync(id);
+            return await _dbContext.ConstructionBatchs.Where(c => c.Id == id && c.ConstructionId == constructionId).FirstOrDefaultAsync();
         }
 
         public async Task<PageResponse<ConstructionBatch>> GetAsync(PageRequest<ConstructionBatchFilter, ConstructionBatchSortingFields> pageRequest)

@@ -27,6 +27,14 @@
     <None Remove="ProductDomain\Request\" />
     <None Remove="PeopleDomain\Request\" />
     <None Remove="ConstructionDomain\Request\" />
+    <None Remove="ConstructionAdvanceMoneyDomain\Request\" />
+    <None Remove="ConstructionBatchDomain\Request\" />
+    <None Remove="ConstructionDocumentationDomain\Request\" />
+    <None Remove="ConstructionDocumentationDomain\Response\" />
+    <None Remove="ConstructionExpenseDomain\Request\" />
+    <None Remove="ConstructionExpenseDomain\Response\" />
+    <None Remove="ConstructionHouseDomain\Request\" />
+    <None Remove="ConstructionHouseDomain\Response\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BrandDomain\Request\" />
@@ -41,5 +49,13 @@
     <Folder Include="ProductDomain\Request\" />
     <Folder Include="PeopleDomain\Request\" />
     <Folder Include="ConstructionDomain\Request\" />
+    <Folder Include="ConstructionAdvanceMoneyDomain\Request\" />
+    <Folder Include="ConstructionBatchDomain\Request\" />
+    <Folder Include="ConstructionDocumentationDomain\Request\" />
+    <Folder Include="ConstructionDocumentationDomain\Response\" />
+    <Folder Include="ConstructionExpenseDomain\Request\" />
+    <Folder Include="ConstructionExpenseDomain\Response\" />
+    <Folder Include="ConstructionHouseDomain\Request\" />
+    <Folder Include="ConstructionHouseDomain\Response\" />
   </ItemGroup>
 </Project>

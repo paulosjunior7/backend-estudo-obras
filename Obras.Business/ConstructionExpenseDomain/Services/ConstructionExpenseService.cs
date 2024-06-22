@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Obras.Business.ConstructionDocumentationDomain.Response;
 using Obras.Business.ConstructionExpenseDomain.Enums;
 using Obras.Business.ConstructionExpenseDomain.Models;
 using Obras.Business.SharedDomain.Enums;
@@ -17,8 +18,8 @@ namespace Obras.Business.ConstructionExpenseDomain.Services
     {
         Task<ConstructionExpense> CreateAsync(ConstructionExpenseModel model);
         Task<ConstructionExpense> UpdateAsync(int id, ConstructionExpenseModel model);
-        Task<PageResponse<ConstructionExpense>> GetAsync(PageRequest<ConstructionExpenseFilter, ConstructionExpenseSortingFields> pageRequest);
-        Task<ConstructionExpense> GetId(int id);
+        Task<PageResponse<ConstructionExpenseResponse>> GetAsync(PageRequest<ConstructionExpenseFilter, ConstructionExpenseSortingFields> pageRequest);
+        Task<ConstructionExpenseResponse> GetId(int constructionId, int id);
     }
     public class ConstructionExpenseService : IConstructionExpenseService
     {
@@ -70,14 +71,16 @@ namespace Obras.Business.ConstructionExpenseDomain.Services
             return constructionExpense;
         }
 
-        public async Task<ConstructionExpense> GetId(int id)
+        public async Task<ConstructionExpenseResponse> GetId(int constructionId, int id)
         {
-            return await _dbContext.ConstructionExpenses.FindAsync(id);
+            var response = await _dbContext.ConstructionExpenses.Include(c => c.Expense).Where(c => c.Id == id && c.ConstructionId == constructionId).AsNoTracking().FirstOrDefaultAsync();
+
+            return _mapper.Map<ConstructionExpenseResponse>(response);
         }
 
-        public async Task<PageResponse<ConstructionExpense>> GetAsync(PageRequest<ConstructionExpenseFilter, ConstructionExpenseSortingFields> pageRequest)
+        public async Task<PageResponse<ConstructionExpenseResponse>> GetAsync(PageRequest<ConstructionExpenseFilter, ConstructionExpenseSortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.ConstructionExpenses.Where(x => x.Id > 0);
+            var filterQuery = _dbContext.ConstructionExpenses.Include(c => c.Expense).AsNoTracking().Where(x => x.Id > 0);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 
@@ -100,9 +103,11 @@ namespace Obras.Business.ConstructionExpenseDomain.Services
 
             #endregion
 
-            return new PageResponse<ConstructionExpense>
+            var expenses = _mapper.Map<List<ConstructionExpenseResponse>>(nodes);
+
+            return new PageResponse<ConstructionExpenseResponse>
             {
-                Nodes = nodes,
+                Nodes = expenses,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount

@@ -2,6 +2,7 @@
 {
     public class ConstructionHouseModel
     {
+        public int? Id { get; set; }
         public int ConstructionId { get; set; }
         public string Description { get; set; }
         public double? FractionBatch { get; set; }

@@ -3,12 +3,19 @@ using Obras.Business.BrandDomain.Models;
 using Obras.Business.BrandDomain.Request;
 using Obras.Business.CompanyDomain.Models;
 using Obras.Business.ConstructionAdvanceMoneyDomain.Models;
+using Obras.Business.ConstructionAdvanceMoneyDomain.Request;
 using Obras.Business.ConstructionBatchDomain.Models;
+using Obras.Business.ConstructionBatchDomain.Request;
 using Obras.Business.ConstructionDocumentationDomain.Models;
+using Obras.Business.ConstructionDocumentationDomain.Request;
+using Obras.Business.ConstructionDocumentationDomain.Response;
 using Obras.Business.ConstructionDomain.Models;
 using Obras.Business.ConstructionDomain.Request;
 using Obras.Business.ConstructionExpenseDomain.Models;
+using Obras.Business.ConstructionExpenseDomain.Request;
 using Obras.Business.ConstructionHouseDomain.Models;
+using Obras.Business.ConstructionHouseDomain.Request;
+using Obras.Business.ConstructionHouseDomain.Response;
 using Obras.Business.ConstructionInvestorDomain.Models;
 using Obras.Business.ConstructionManpowerDomain.Models;
 using Obras.Business.ConstructionMaterialDomain.Models;
@@ -63,7 +70,10 @@ namespace Obras.Business.Mappings
             CreateMap<ConstructionInput, ConstructionModel>().ReverseMap();
             CreateMap<ConstructionInvestorModel, ConstructionInvestor>().ReverseMap();
             CreateMap<ConstructionBatchModel, ConstructionBatch>().ReverseMap();
+            CreateMap<ConstructionBatchInput, ConstructionBatchModel>().ReverseMap();
             CreateMap<ConstructionHouseModel, ConstructionHouse>().ReverseMap();
+            CreateMap<ConstructionHouseModel, ConstructionHouseInput>().ReverseMap();
+            CreateMap<ConstructionHouseResponse, ConstructionHouse>().ReverseMap();
             CreateMap<UnityModel, Unity>().ReverseMap();
             CreateMap<UnityInput, UnityModel>().ReverseMap();
             CreateMap<GroupModel, Group>().ReverseMap();
@@ -71,8 +81,14 @@ namespace Obras.Business.Mappings
             CreateMap<ConstructionMaterialModel, ConstructionMaterial>().ReverseMap();
             CreateMap<ConstructionManpowerModel, ConstructionManpower>().ReverseMap();
             CreateMap<ConstructionDocumentationModel, ConstructionDocumentation>().ReverseMap();
+            CreateMap<ConstructionDocumentationResponse, ConstructionDocumentation>().ReverseMap();
+            CreateMap<ConstructionDocumentationResponse, ConstructionDocumentationModel>().ReverseMap();
+            CreateMap<ConstructionDocumentationInput, ConstructionDocumentationModel>().ReverseMap();
             CreateMap<ConstructionExpenseModel, ConstructionExpense>().ReverseMap();
+            CreateMap<ConstructionExpenseModel, ConstructionExpenseInput>().ReverseMap();
+            CreateMap<ConstructionExpense, ConstructionExpenseResponse>().ReverseMap();
             CreateMap<ConstructionAdvanceMoneyModel, ConstructionAdvanceMoney>().ReverseMap();
+            CreateMap<ConstructionAdvanceMoneyInput, ConstructionAdvanceMoneyModel>().ReverseMap();
         }
     }
 }

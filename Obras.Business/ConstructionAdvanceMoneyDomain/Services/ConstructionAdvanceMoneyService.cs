@@ -18,7 +18,7 @@ namespace Obras.Business.ConstructionAdvanceMoneyDomain.Services
         Task<ConstructionAdvanceMoney> CreateAsync(ConstructionAdvanceMoneyModel model);
         Task<ConstructionAdvanceMoney> UpdateAsync(int id, ConstructionAdvanceMoneyModel model);
         Task<PageResponse<ConstructionAdvanceMoney>> GetAsync(PageRequest<ConstructionAdvanceMoneyFilter, ConstructionAdvanceMoneySortingFields> pageRequest);
-        Task<ConstructionAdvanceMoney> GetId(int id);
+        Task<ConstructionAdvanceMoney?> GetId(int constructionId, int id);
     }
     public class ConstructionAdvanceMoneyService : IConstructionAdvanceMoneyService
     {
@@ -69,9 +69,9 @@ namespace Obras.Business.ConstructionAdvanceMoneyDomain.Services
             return constructionAdvanceMoney;
         }
 
-        public async Task<ConstructionAdvanceMoney> GetId(int id)
+        public async Task<ConstructionAdvanceMoney?> GetId(int constructionId, int id)
         {
-            return await _dbContext.ConstructionAdvancesMoney.FindAsync(id);
+            return await _dbContext.ConstructionAdvancesMoney.Where(c => c.Id == id && c.ConstructionId == constructionId).FirstOrDefaultAsync();
         }
 
         public async Task<PageResponse<ConstructionAdvanceMoney>> GetAsync(PageRequest<ConstructionAdvanceMoneyFilter, ConstructionAdvanceMoneySortingFields> pageRequest)

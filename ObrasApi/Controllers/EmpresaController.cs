@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Obras.Business.CompanyDomain.Models;
 using Obras.Business.CompanyDomain.Services;
 using System.Threading.Tasks;
+using static Obras.Business.SharedDomain.Helpers.Constants;
 
 namespace Obras.Api.Controllers
 {
@@ -17,6 +19,7 @@ namespace Obras.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create([FromBody] CompanyModel model)
         {
             var response = await companyService.CreateAsync(model);
@@ -41,6 +44,7 @@ namespace Obras.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var response = await companyService.GetCompaniesAsync();

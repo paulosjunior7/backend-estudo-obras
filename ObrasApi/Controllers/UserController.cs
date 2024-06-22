@@ -134,7 +134,7 @@
                         {
                             try
                             {
-                                await _userManager.AddToRoleAsync(userDetails, model.Roles);
+                                await _userManager.AddToRoleAsync(userDetails, "Customer");
                             } catch (Exception e)
                             {
                                 await _userManager.DeleteAsync(userDetails);
@@ -237,17 +237,19 @@
             SigningCredentials credentials = new SigningCredentials(new SymmetricSecurityKey(keyInBytes), SecurityAlgorithms.HmacSha256);
             DateTime tokenExpireOn = DateTime.Now.AddDays(3);
 
-            // Obtain Role of User
-            IList<string> rolesOfUser = await _userManager.GetRolesAsync(user);
-
-            // Add new claims
-            List<Claim> tokenClaims = new List<Claim>
+            var rolesOfUser = await _userManager.GetRolesAsync(user);
+            var tokenClaims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Role, rolesOfUser.FirstOrDefault()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
+
+            // Adicionar todas as roles do usuário às claims
+            foreach (var role in rolesOfUser)
+            {
+                tokenClaims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             // Make JWT token
             JwtSecurityToken token = new JwtSecurityToken(

@@ -4,6 +4,7 @@ namespace Obras.Business.ConstructionDocumentationDomain.Models
 {
     public class  ConstructionDocumentationModel
     {
+        public int? Id { get; set; }
         public DateTime Date { get; set; }
         public int DocumentationId { get; set; }
         public double Value { get; set; }

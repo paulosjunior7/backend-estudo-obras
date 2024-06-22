@@ -94,6 +94,13 @@
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("Customer", policy => policy.RequireRole("Customer"));
+                options.AddPolicy("Engineer", policy => policy.RequireRole("Engineer"));
+            });
         }
 
         public static void AddCustomService(this IServiceCollection services)

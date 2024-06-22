@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Obras.Business.ConstructionDocumentationDomain.Enums;
 using Obras.Business.ConstructionDocumentationDomain.Models;
+using Obras.Business.ConstructionDocumentationDomain.Response;
 using Obras.Business.SharedDomain.Enums;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
@@ -17,8 +18,8 @@ namespace Obras.Business.ConstructionDocumentationDomain.Services
     {
         Task<ConstructionDocumentation> CreateAsync(ConstructionDocumentationModel model);
         Task<ConstructionDocumentation> UpdateAsync(int id, ConstructionDocumentationModel model);
-        Task<PageResponse<ConstructionDocumentation>> GetAsync(PageRequest<ConstructionDocumentationFilter, ConstructionDocumentationSortingFields> pageRequest);
-        Task<ConstructionDocumentation> GetId(int id);
+        Task<PageResponse<ConstructionDocumentationResponse>> GetAsync(PageRequest<ConstructionDocumentationFilter, ConstructionDocumentationSortingFields> pageRequest);
+        Task<ConstructionDocumentationResponse> GetId(int constructionId, int id);
     }
     public class ConstructionDocumentationService : IConstructionDocumentationService
     {
@@ -70,14 +71,16 @@ namespace Obras.Business.ConstructionDocumentationDomain.Services
             return constructionDocumentation;
         }
 
-        public async Task<ConstructionDocumentation> GetId(int id)
+        public async Task<ConstructionDocumentationResponse> GetId(int constructionId, int id)
         {
-            return await _dbContext.ConstructionDocumentations.FindAsync(id);
+            var response =  await _dbContext.ConstructionDocumentations.Include(a => a.Documentation).Where(c => c.Id == id && c.ConstructionId == constructionId).FirstOrDefaultAsync();
+
+            return _mapper.Map<ConstructionDocumentationResponse>(response);
         }
 
-        public async Task<PageResponse<ConstructionDocumentation>> GetAsync(PageRequest<ConstructionDocumentationFilter, ConstructionDocumentationSortingFields> pageRequest)
+        public async Task<PageResponse<ConstructionDocumentationResponse>> GetAsync(PageRequest<ConstructionDocumentationFilter, ConstructionDocumentationSortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.ConstructionDocumentations.Where(x => x.Id > 0);
+            var filterQuery = _dbContext.ConstructionDocumentations.Include(a => a.Documentation).Where(x => x.Id > 0).AsNoTracking();
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 
@@ -100,9 +103,11 @@ namespace Obras.Business.ConstructionDocumentationDomain.Services
 
             #endregion
 
-            return new PageResponse<ConstructionDocumentation>
+            var documentacoes = _mapper.Map<List<ConstructionDocumentationResponse>>(nodes);
+
+            return new PageResponse<ConstructionDocumentationResponse>
             {
-                Nodes = nodes,
+                Nodes = documentacoes,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount

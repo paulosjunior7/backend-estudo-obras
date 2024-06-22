@@ -11,32 +11,32 @@ namespace Obras.Api.Validators
         public ConstructionValidator()
         {
             RuleFor(user => user.Identifier)
-                .NotEmpty().WithMessage("Identifier é obrigatório.")
-                .MaximumLength(50).WithMessage("Tamanho máximo permitido é de 50 caracteres.");
+                .NotEmpty()
+                .MaximumLength(50);
 
             RuleFor(user => user.ZipCode)
-                .MaximumLength(10).WithMessage("Tamanho máximo permitido é de 10 caracteres.");
+                .MaximumLength(10);
 
             RuleFor(user => user.Address)
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
+                .MaximumLength(100);
 
             RuleFor(user => user.Number)
-                .MaximumLength(15).WithMessage("Tamanho máximo permitido é de 15 caracteres.");
+                .MaximumLength(15);
 
             RuleFor(user => user.Neighbourhood)
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
+                .MaximumLength(100);
 
             RuleFor(user => user.City)
-                .MaximumLength(50).WithMessage("Tamanho máximo permitido é de 50 caracteres.");
+                .MaximumLength(50);
 
             RuleFor(user => user.State)
-                .MaximumLength(2).WithMessage("Tamanho máximo permitido é de 2 caracteres.");
+                .MaximumLength(2);
 
             RuleFor(user => user.Complement)
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
+                .MaximumLength(100);
 
             RuleFor(user => user.Active)
-                .NotEmpty().WithMessage("Active é obrigatório.");
+                .NotEmpty();
         }
     }
 }

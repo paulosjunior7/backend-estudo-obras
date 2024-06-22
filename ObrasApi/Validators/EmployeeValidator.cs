@@ -10,51 +10,51 @@ namespace Obras.Api.Validators
         public EmployeeValidator()
         {
             RuleFor(user => user.TypePeople)
-                .NotEmpty().WithMessage("TypePeople é obrigatório.")
-                .IsInEnum().WithMessage("Tipo de Pessoa invalida.");
+                .NotEmpty()
+                .IsInEnum();
 
             RuleFor(user => user.Cpf)
-                .MaximumLength(14).WithMessage("Tamanho máximo permitido é de 14 caracteres.");
+                .MaximumLength(14);
 
             RuleFor(user => user.Cnpj)
-                .MaximumLength(18).WithMessage("Tamanho máximo permitido é de 18 caracteres.");
+                .MaximumLength(18);
 
             RuleFor(user => user.Name)
-                .NotEmpty().WithMessage("Name é obrigatório.")
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
+                .NotEmpty()
+                .MaximumLength(100);
 
             RuleFor(user => user.ZipCode)
-                .MaximumLength(10).WithMessage("Tamanho máximo permitido é de 10 caracteres.");
+                .MaximumLength(10);
 
             RuleFor(user => user.Address)
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
+                .MaximumLength(100);
 
             RuleFor(user => user.Number)
-                .MaximumLength(15).WithMessage("Tamanho máximo permitido é de 15 caracteres.");
+                .MaximumLength(15);
 
             RuleFor(user => user.Neighbourhood)
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
+                .MaximumLength(100);
 
             RuleFor(user => user.City)
-                .MaximumLength(50).WithMessage("Tamanho máximo permitido é de 50 caracteres.");
+                .MaximumLength(50);
 
             RuleFor(user => user.State)
-                .MaximumLength(2).WithMessage("Tamanho máximo permitido é de 2 caracteres.");
+                .MaximumLength(2);
 
             RuleFor(user => user.Complement)
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
+                .MaximumLength(100);
 
             RuleFor(user => user.Telephone)
-                .MaximumLength(18).WithMessage("Tamanho máximo permitido é de 18 caracteres.");
+                .MaximumLength(18);
 
             RuleFor(user => user.CellPhone)
-                .MaximumLength(18).WithMessage("Tamanho máximo permitido é de 18 caracteres.");
+                .MaximumLength(18);
 
             RuleFor(user => user.EMail)
-                .MaximumLength(100).WithMessage("Tamanho máximo permitido é de 100 caracteres.");
+                .MaximumLength(100);
 
             RuleFor(user => user.Active)
-                .NotEmpty().WithMessage("Active é obrigatório.");
+                .NotEmpty();
         }
     }
 }

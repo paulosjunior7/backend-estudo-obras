@@ -18,7 +18,7 @@ namespace Obras.Business.ConstructionHouseDomain.Services
         Task<ConstructionHouse> CreateAsync(ConstructionHouseModel model);
         Task<ConstructionHouse> UpdateAsync(int id, ConstructionHouseModel model);
         Task<PageResponse<ConstructionHouse>> GetAsync(PageRequest<ConstructionHouseFilter, ConstructionHouseSortingFields> pageRequest);
-        Task<ConstructionHouse> GetId(int id);
+        Task<ConstructionHouse> GetId(int constructionId, int id);
     }
 
     public class ConstructionHouseService : IConstructionHouseService
@@ -73,9 +73,9 @@ namespace Obras.Business.ConstructionHouseDomain.Services
             return constructionHouse;
         }
 
-        public async Task<ConstructionHouse> GetId(int id)
+        public async Task<ConstructionHouse> GetId(int constructionId, int id)
         {
-            return await _dbContext.ConstructionHouses.FindAsync(id);
+            return await _dbContext.ConstructionHouses.Where(c => c.Id == id && c.ConstructionId == constructionId).AsNoTracking().FirstOrDefaultAsync();
         }
 
         public async Task<PageResponse<ConstructionHouse>> GetAsync(PageRequest<ConstructionHouseFilter, ConstructionHouseSortingFields> pageRequest)
