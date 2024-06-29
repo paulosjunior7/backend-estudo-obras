@@ -39,6 +39,8 @@
     <None Remove="ConstructionInvestorDomain\Response\" />
     <None Remove="ConstructionManpowerDomain\Request\" />
     <None Remove="ConstructionManpowerDomain\Response\" />
+    <None Remove="ConstructionMaterialDomain\Request\" />
+    <None Remove="ConstructionMaterialDomain\Response\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BrandDomain\Request\" />
@@ -65,5 +67,7 @@
     <Folder Include="ConstructionInvestorDomain\Response\" />
     <Folder Include="ConstructionManpowerDomain\Request\" />
     <Folder Include="ConstructionManpowerDomain\Response\" />
+    <Folder Include="ConstructionMaterialDomain\Request\" />
+    <Folder Include="ConstructionMaterialDomain\Response\" />
   </ItemGroup>
 </Project>

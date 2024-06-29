@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Obras.Business.BrandDomain.Enums;
-using Obras.Business.BrandDomain.Models;
-using Obras.Business.BrandDomain.Request;
-using Obras.Business.BrandDomain.Services;
 using Obras.Business.GroupDomain.Enums;
 using Obras.Business.GroupDomain.Models;
 using Obras.Business.GroupDomain.Request;
@@ -89,6 +84,15 @@ namespace Obras.Api.Controllers
         [HttpPost("get-all")]
         public async Task<IActionResult> GetAll([FromBody] PageRequest<GroupFilter, GroupSortingFields> pageRequest)
         {
+            var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault()?.Value;
+            if (userId == null) return Unauthorized();
+
+            var user = await userRepository.FindAsync(userId);
+            if (user == null || user.CompanyId == null)
+                throw new Exception("Usuário não exite ou não possui empresa vinculada!");
+
+            pageRequest.Filter.CompanyId = user.CompanyId;
+
             var response = await groupService.GetAsync(pageRequest);
 
             return Ok(response);

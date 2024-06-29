@@ -4,6 +4,7 @@ namespace Obras.Business.ConstructionMaterialDomain.Models
 {
     public class ConstructionMaterialModel
     {
+        public int? Id { get; set; }
         public DateTime PurchaseDate { get; set; }
         public double Quantity { get; set; }
         public double UnitPrice { get; set; }

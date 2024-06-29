@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.EntityFrameworkCore;
+using Obras.Business.ConstructionManpowerDomain.Response;
 using Obras.Business.ConstructionMaterialDomain.Enums;
 using Obras.Business.ConstructionMaterialDomain.Models;
+using Obras.Business.ConstructionMaterialDomain.Response;
 using Obras.Business.SharedDomain.Enums;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
@@ -17,8 +20,8 @@ namespace Obras.Business.ConstructionMaterialDomain.Services
     {
         Task<ConstructionMaterial> CreateAsync(ConstructionMaterialModel model);
         Task<ConstructionMaterial> UpdateAsync(int id, ConstructionMaterialModel model);
-        Task<PageResponse<ConstructionMaterial>> GetAsync(PageRequest<ConstructionMaterialFilter, ConstructionMaterialSortingFields> pageRequest);
-        Task<ConstructionMaterial> GetId(int id);
+        Task<PageResponse<ConstructionMaterialResponse>> GetAsync(PageRequest<ConstructionMaterialFilter, ConstructionMaterialSortingFields> pageRequest);
+        Task<ConstructionMaterialResponse> GetId(int construcaoId, int id);
     }
     public class ConstructionMaterialService : IConstructionMaterialService
     {
@@ -75,14 +78,29 @@ namespace Obras.Business.ConstructionMaterialDomain.Services
             return constructionMaterial;
         }
 
-        public async Task<ConstructionMaterial> GetId(int id)
+        public async Task<ConstructionMaterialResponse> GetId(int construcaoId, int id)
         {
-            return await _dbContext.ConstructionMaterials.FindAsync(id);
+            var response = await _dbContext.ConstructionMaterials
+                    .Include(a => a.Group)
+                    .Include(a => a.Product)
+                    .Include(a => a.Provider)
+                    .Include(a => a.Unity)
+                    .Include(a => a.Brand)
+                    .Where(c => c.Id == id && c.ConstructionId == construcaoId)
+            .AsNoTracking().SingleOrDefaultAsync();
+
+            return _mapper.Map<ConstructionMaterialResponse>(response);
         }
 
-        public async Task<PageResponse<ConstructionMaterial>> GetAsync(PageRequest<ConstructionMaterialFilter, ConstructionMaterialSortingFields> pageRequest)
+        public async Task<PageResponse<ConstructionMaterialResponse>> GetAsync(PageRequest<ConstructionMaterialFilter, ConstructionMaterialSortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.ConstructionMaterials.Where(x => x.Id > 0);
+            var filterQuery = _dbContext.ConstructionMaterials
+                .Include(a => a.Group)
+                .Include(a => a.Product)
+                .Include(a => a.Provider)
+                .Include(a => a.Unity)
+                .Include(a => a.Brand)
+                .Where(x => x.Id > 0);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 
@@ -105,9 +123,11 @@ namespace Obras.Business.ConstructionMaterialDomain.Services
 
             #endregion
 
-            return new PageResponse<ConstructionMaterial>
+            var itens = _mapper.Map <List<ConstructionMaterialResponse>>(nodes);
+
+            return new PageResponse<ConstructionMaterialResponse>
             {
-                Nodes = nodes,
+                Nodes = itens,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount

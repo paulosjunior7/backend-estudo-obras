@@ -103,6 +103,15 @@ namespace Obras.Api.Controllers
         [HttpPost("get-all")]
         public async Task<IActionResult> GetAll([FromBody] PageRequest<EmployeeFilter, EmployeeSortingFields> pageRequest)
         {
+            var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault()?.Value;
+            if (userId == null) return Unauthorized();
+
+            var user = await userRepository.FindAsync(userId);
+            if (user == null || user.CompanyId == null)
+                throw new Exception("Usuário não exite ou não possui empresa vinculada!");
+
+            pageRequest.Filter.CompanyId = user.CompanyId;
+
             var response = await employeeService.GetEmployeesAsync(pageRequest);
 
             return Ok(response);

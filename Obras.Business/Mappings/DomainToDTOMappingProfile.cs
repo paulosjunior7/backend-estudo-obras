@@ -23,6 +23,8 @@ using Obras.Business.ConstructionManpowerDomain.Models;
 using Obras.Business.ConstructionManpowerDomain.Request;
 using Obras.Business.ConstructionManpowerDomain.Response;
 using Obras.Business.ConstructionMaterialDomain.Models;
+using Obras.Business.ConstructionMaterialDomain.Request;
+using Obras.Business.ConstructionMaterialDomain.Response;
 using Obras.Business.DocumentationDomain.Models;
 using Obras.Business.DocumentationDomain.Request;
 using Obras.Business.EmployeeDomain.Models;
@@ -85,6 +87,8 @@ namespace Obras.Business.Mappings
             CreateMap<GroupModel, Group>().ReverseMap();
             CreateMap<GroupInput, GroupModel>().ReverseMap();
             CreateMap<ConstructionMaterialModel, ConstructionMaterial>().ReverseMap();
+            CreateMap<ConstructionMaterialModel, ConstructionMaterialInput>().ReverseMap();
+            CreateMap<ConstructionMaterialResponse, ConstructionMaterial>().ReverseMap();
             CreateMap<ConstructionManpowerModel, ConstructionManpower>().ReverseMap();
             CreateMap<ConstructionManpowerModel, ConstructionManpowerInput>().ReverseMap();
             CreateMap<ConstructionManpowerResponse, ConstructionManpower>().ReverseMap();
