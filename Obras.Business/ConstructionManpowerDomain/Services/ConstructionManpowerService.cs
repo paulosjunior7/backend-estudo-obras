@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Obras.Business.SharedDomain.Enums;
 using System.Collections.Generic;
+using Obras.Business.ConstructionManpowerDomain.Response;
+using Azure;
 
 namespace Obras.Business.ConstructionManpowerDomain.Services
 {
@@ -17,8 +19,8 @@ namespace Obras.Business.ConstructionManpowerDomain.Services
     {
         Task<ConstructionManpower> CreateAsync(ConstructionManpowerModel model);
         Task<ConstructionManpower> UpdateAsync(int id, ConstructionManpowerModel model);
-        Task<PageResponse<ConstructionManpower>> GetAsync(PageRequest<ConstructionManpowerFilter, ConstructionManpowerSortingFields> pageRequest);
-        Task<ConstructionManpower> GetId(int id);
+        Task<PageResponse<ConstructionManpowerResponse>> GetAsync(PageRequest<ConstructionManpowerFilter, ConstructionManpowerSortingFields> pageRequest);
+        Task<ConstructionManpowerResponse> GetId(int construcaoId, int id);
     }
 
     public class ConstructionManpowerService: IConstructionManpowerService
@@ -72,14 +74,23 @@ namespace Obras.Business.ConstructionManpowerDomain.Services
             return constructionManpower;
         }
 
-        public async Task<ConstructionManpower> GetId(int id)
+        public async Task<ConstructionManpowerResponse> GetId(int construcaoId, int id)
         {
-            return await _dbContext.ConstructionManpowers.FindAsync(id);
+            var response = await _dbContext.ConstructionManpowers
+                    .Include(a => a.Outsourced)
+                    .Include(a => a.Employee)
+                    .Where(c => c.Id == id && c.ConstructionId == construcaoId)
+                    .AsNoTracking().SingleOrDefaultAsync();
+
+            return _mapper.Map<ConstructionManpowerResponse>(response);
         }
 
-        public async Task<PageResponse<ConstructionManpower>> GetAsync(PageRequest<ConstructionManpowerFilter, ConstructionManpowerSortingFields> pageRequest)
+        public async Task<PageResponse<ConstructionManpowerResponse>> GetAsync(PageRequest<ConstructionManpowerFilter, ConstructionManpowerSortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.ConstructionManpowers.Where(x => x.Id > 0);
+            var filterQuery = _dbContext.ConstructionManpowers
+                .Include(a => a.Outsourced)
+                .Include(a => a.Employee)
+                .Where(x => x.Id > 0);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 
@@ -102,9 +113,11 @@ namespace Obras.Business.ConstructionManpowerDomain.Services
 
             #endregion
 
-            return new PageResponse<ConstructionManpower>
+            var manpowers = _mapper.Map<List<ConstructionManpowerResponse>>(nodes);
+
+            return new PageResponse<ConstructionManpowerResponse>
             {
-                Nodes = nodes,
+                Nodes = manpowers,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount

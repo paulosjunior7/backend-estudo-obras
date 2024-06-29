@@ -44,7 +44,7 @@ namespace Obras.Api.Controllers
         {
             var model = this.mapper.Map<ExpenseModel>(input);
 
-            var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;
+            var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault()?.Value;
             if (userId == null) return Unauthorized();
 
             var user = await userRepository.FindAsync(userId);
@@ -66,7 +66,7 @@ namespace Obras.Api.Controllers
         {
             var model = this.mapper.Map<ExpenseModel>(input);
 
-            var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault().Value;
+            var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault()?.Value;
             if (userId == null) return Unauthorized();
 
             var user = await userRepository.FindAsync(userId);

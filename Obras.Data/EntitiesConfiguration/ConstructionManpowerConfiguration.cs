@@ -20,8 +20,8 @@ namespace Obras.Data.EntitiesConfiguration
             builder.Property(p => p.CreationDate).IsRequired();
             builder.Property(p => p.ConstructionId).IsRequired();
 
-            builder.HasOne(e => e.Employee).WithMany(e => e.ConstructionManpowers).HasForeignKey(e => e.EmployeeId);
-            builder.HasOne(e => e.Outsourced).WithMany(e => e.ConstructionManpowers).HasForeignKey(e => e.OutsourcedId);
+            builder.HasOne(e => e.Employee).WithMany(e => e.ConstructionManpowers).HasForeignKey(e => e.EmployeeId).IsRequired(false);
+            builder.HasOne(e => e.Outsourced).WithMany(e => e.ConstructionManpowers).HasForeignKey(e => e.OutsourcedId).IsRequired(false);
             builder.HasOne(e => e.Construction).WithMany(e => e.ConstructionManpowers).HasForeignKey(e => e.ConstructionId);
             builder.HasOne(e => e.RegistrationUser).WithMany(e => e.RegistrationConstructionManpowers).HasForeignKey(e => e.RegistrationUserId);
             builder.HasOne(e => e.ChangeUser).WithMany(e => e.ChangeConstructionManpowers).HasForeignKey(e => e.ChangeUserId);

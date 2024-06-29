@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.EntityFrameworkCore;
+using Obras.Business.ConstructionDocumentationDomain.Response;
 using Obras.Business.ConstructionInvestorDomain.Enums;
 using Obras.Business.ConstructionInvestorDomain.Models;
+using Obras.Business.ConstructionInvestorDomain.Response;
 using Obras.Business.SharedDomain.Enums;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
@@ -17,8 +20,8 @@ namespace Obras.Business.ConstructionInvestorDomain.Services
     {
         Task<ConstructionInvestor> CreateAsync(ConstructionInvestorModel model);
         Task<ConstructionInvestor> UpdateAsync(int id, ConstructionInvestorModel model);
-        Task<PageResponse<ConstructionInvestor>> GetAsync(PageRequest<ConstructionInvestorFilter, ConstructionInvestorSortingFields> pageRequest);
-        Task<ConstructionInvestor> GetId(int id);
+        Task<PageResponse<ConstructionInvestorResponse>> GetAsync(PageRequest<ConstructionInvestorFilter, ConstructionInvestorSortingFields> pageRequest);
+        Task<ConstructionInvestorResponse> GetId(int construcaoId,int id);
     }
     public class ConstructionInvestorService : IConstructionInvestorService
     {
@@ -67,12 +70,14 @@ namespace Obras.Business.ConstructionInvestorDomain.Services
             return constructionInvestor;
         }
 
-        public async Task<ConstructionInvestor> GetId(int id)
+        public async Task<ConstructionInvestorResponse> GetId(int construcaoId, int id)
         {
-            return await _dbContext.ConstructionInvestors.FindAsync(id);
+            var response = await _dbContext.ConstructionInvestors.Include(a => a.People).Where(c => c.Id == id && c.ConstructionId == construcaoId).AsNoTracking().FirstOrDefaultAsync();
+
+            return _mapper.Map<ConstructionInvestorResponse>(response);
         }
 
-        public async Task<PageResponse<ConstructionInvestor>> GetAsync(PageRequest<ConstructionInvestorFilter, ConstructionInvestorSortingFields> pageRequest)
+        public async Task<PageResponse<ConstructionInvestorResponse>> GetAsync(PageRequest<ConstructionInvestorFilter, ConstructionInvestorSortingFields> pageRequest)
         {
             var filterQuery = _dbContext.ConstructionInvestors.Include(a => a.People).Where(x => x.Id > 0);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
@@ -97,9 +102,11 @@ namespace Obras.Business.ConstructionInvestorDomain.Services
 
             #endregion
 
-            return new PageResponse<ConstructionInvestor>
+            var investors = _mapper.Map<List<ConstructionInvestorResponse>>(nodes);
+
+            return new PageResponse<ConstructionInvestorResponse>
             {
-                Nodes = nodes,
+                Nodes = investors,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount

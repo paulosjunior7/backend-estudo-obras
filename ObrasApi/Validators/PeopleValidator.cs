@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Obras.Business.PeopleDomain.Request;
+using Obras.Data.Entities;
 using Obras.Data.Enums;
 using System;
 namespace Obras.Api.Validators
@@ -12,14 +13,9 @@ namespace Obras.Api.Validators
                 .NotEmpty()
                 .IsInEnum();
 
-            RuleFor(user => user.Constructor)
-                .NotEmpty();
-
-            RuleFor(user => user.Investor)
-                .NotEmpty();
-
-            RuleFor(user => user.Client)
-                .NotEmpty();
+            RuleFor(user => user)
+                .Must(this.HaveAtLeastOneTrueField)
+                .WithMessage("Pelo menos um dos campos (Construtor, Investidor, Cliente) deve ser verdadeiro.");
 
             RuleFor(user => user.Cpf)
                 .MaximumLength(14);
@@ -66,6 +62,11 @@ namespace Obras.Api.Validators
 
             RuleFor(user => user.Active)
                 .NotEmpty();
+        }
+
+        private bool HaveAtLeastOneTrueField(PeopleInput user)
+        {
+            return user.Constructor || user.Investor || user.Client;
         }
     }
 }

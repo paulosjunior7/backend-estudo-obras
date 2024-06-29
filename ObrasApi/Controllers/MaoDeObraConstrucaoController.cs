@@ -5,58 +5,59 @@ using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Obras.Business.ConstructionAdvanceMoneyDomain.Enums;
-using Obras.Business.ConstructionAdvanceMoneyDomain.Models;
-using Obras.Business.ConstructionAdvanceMoneyDomain.Request;
-using Obras.Business.ConstructionAdvanceMoneyDomain.Services;
+using Obras.Business.ConstructionManpowerDomain.Enums;
+using Obras.Business.ConstructionManpowerDomain.Models;
+using Obras.Business.ConstructionManpowerDomain.Request;
+using Obras.Business.ConstructionManpowerDomain.Services;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
 using Obras.Data.Entities;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Obras.Api.Controllers
 {
-    [Route("api/Construcao/{construcaoId}/[controller]")]
-    public class AdiantarDinheiroController : Controller
+    [Route("api/Construcao/{construcaoId}/MaoDeObra")]
+    public class MaoDeObraConstrucaoController : Controller
     {
-        private readonly IConstructionAdvanceMoneyService  advanceMoneyService;
+        private readonly IConstructionManpowerService manpowerService;
         private readonly IMapper mapper;
         private readonly DbSet<User> userRepository;
-        private readonly IValidator<ConstructionAdvanceMoneyInput> _advanceMoneyValidator;
+        private readonly IValidator<ConstructionManpowerInput> _manpowerValidator;
 
-        public AdiantarDinheiroController(IValidator<ConstructionAdvanceMoneyInput> advanceMoneyValidator, IConstructionAdvanceMoneyService advanceMoneyService, IMapper mapper, ObrasDBContext dBContext)
+        public MaoDeObraConstrucaoController(IValidator<ConstructionManpowerInput> manpowerValidator, IConstructionManpowerService manpowerService, IMapper mapper, ObrasDBContext dBContext)
         {
-            this.advanceMoneyService = advanceMoneyService;
+            this.manpowerService = manpowerService;
             this.mapper = mapper;
             this.userRepository = dBContext.User;
-            this._advanceMoneyValidator = advanceMoneyValidator;
+            this._manpowerValidator = manpowerValidator;
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int construcaoId, int id)
         {
-            var response = await advanceMoneyService.GetId(construcaoId, id);
+            var response = await manpowerService.GetId(construcaoId, id);
 
             if (response == null)
             {
                 return NotFound();
             }
 
-            return Ok(this.mapper.Map<ConstructionAdvanceMoneyModel>( response));
+            return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(int construcaoId, [FromBody] ConstructionAdvanceMoneyInput input)
+        public async Task<IActionResult> Create(int construcaoId, [FromBody] ConstructionManpowerInput input)
         {
-            var validationResult = _advanceMoneyValidator.Validate(input);
+            var validationResult = _manpowerValidator.Validate(input);
 
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors);
             }
 
-            var model = this.mapper.Map<ConstructionAdvanceMoneyModel>(input);
+            var model = this.mapper.Map<ConstructionManpowerModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault()?.Value;
             if (userId == null) return Unauthorized();
@@ -69,22 +70,22 @@ namespace Obras.Api.Controllers
             model.ChangeUserId = user.Id;
             model.ConstructionId = construcaoId;
 
-            var response = await advanceMoneyService.CreateAsync(model);
+            var response = await manpowerService.CreateAsync(model);
             model.Id = response.Id;
             return Ok(model);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int construcaoId, int id, [FromBody] ConstructionAdvanceMoneyInput input)
+        public async Task<IActionResult> Update(int construcaoId, int id, [FromBody] ConstructionManpowerInput input)
         {
-            var validationResult = _advanceMoneyValidator.Validate(input);
+            var validationResult = _manpowerValidator.Validate(input);
 
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors);
             }
 
-            var model = this.mapper.Map<ConstructionAdvanceMoneyModel>(input);
+            var model = this.mapper.Map<ConstructionManpowerModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault()?.Value;
             if (userId == null) return Unauthorized();
@@ -96,16 +97,16 @@ namespace Obras.Api.Controllers
             model.ChangeUserId = user.Id;
             model.ConstructionId = construcaoId;
 
-            var response = await advanceMoneyService.UpdateAsync(id, model);
+            var response = await manpowerService.UpdateAsync(id, model);
             model.Id = id;
             return Ok(model);
         }
 
         [HttpPost("get-all")]
-        public async Task<IActionResult> GetAll(int construcaoId, [FromBody] PageRequest<ConstructionAdvanceMoneyFilter, ConstructionAdvanceMoneySortingFields> pageRequest)
+        public async Task<IActionResult> GetAll(int construcaoId, [FromBody] PageRequest<ConstructionManpowerFilter, ConstructionManpowerSortingFields> pageRequest)
         {
             pageRequest.Filter.ConstructionId = construcaoId;
-            var response = await advanceMoneyService.GetAsync(pageRequest);
+            var response = await manpowerService.GetAsync(pageRequest);
 
             return Ok(response);
         }

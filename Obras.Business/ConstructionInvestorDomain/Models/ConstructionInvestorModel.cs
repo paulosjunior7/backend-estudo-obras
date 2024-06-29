@@ -2,6 +2,7 @@
 {
     public class  ConstructionInvestorModel
     {
+        public int? Id { get; set; }
         public int ConstructionId { get; set; }
         public int PeopleId { get; set; }
         public bool Active { get; set; }
