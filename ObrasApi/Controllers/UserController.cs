@@ -1,5 +1,6 @@
 ﻿namespace Obras.Api.Controllers
 {
+    using AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using Obras.Api.Models;
+    using Obras.Business.CompanyDomain.Models;
     using Obras.Business.CompanyDomain.Services;
 
     using Obras.Business.SharedDomain.Helpers;
@@ -28,6 +30,7 @@
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
         private readonly ICompanyService _companyService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -36,11 +39,13 @@
             RoleManager<IdentityRole> roleManager,
             IHttpContextAccessor httpContextAccessor, 
             ICompanyService companyService,
+            IMapper mapper,
             UserManager<User> userManager)
         {
             _configuration = configuration;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             _companyService = companyService;
             _userManager = userManager;
@@ -230,6 +235,36 @@
             return Ok("Default User has been created");
         }
 
+        [HttpGet("me")]
+        public async Task<IActionResult> GetUser()
+        {
+            var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault()?.Value;
+            if (userId == null) return Unauthorized();
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var rolesOfUser = await _userManager.GetRolesAsync(user);
+
+            var company = await _companyService.GetCompanyId(user.CompanyId != null ? (int) user.CompanyId : 0);
+
+            var companyModel = _mapper.Map<CompanyModel>(company);
+
+            #region Users
+
+            var userDetails = new UserDetails
+            {
+                Email = user.Email,
+                UserName = user.UserName,
+                PhoneNumber = user.PhoneNumber,
+                Roles = rolesOfUser.FirstOrDefault(),
+                Company = companyModel
+            };
+
+            #endregion
+
+            return Ok(userDetails);
+        }
+
 
         private async Task<TokenDetails> GetJwtSecurityTokenAsync(User user)
         {
@@ -264,6 +299,8 @@
             TokenDetails TokenDetails = new TokenDetails
             {
                 UserId = user.Id,
+                Name = user.UserName,
+                Email = user.Email,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 ExpireOn = tokenExpireOn,
             };
