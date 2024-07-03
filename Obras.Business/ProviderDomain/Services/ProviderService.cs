@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using Obras.Business.ProviderDomain.Enums;
     using Obras.Business.ProviderDomain.Models;
+    using Obras.Business.ProviderDomain.Response;
     using Obras.Business.SharedDomain.Models;
     using Obras.Data;
     using Obras.Data.Entities;
@@ -17,8 +18,8 @@
     {
         Task<Provider> CreateAsync(ProviderModel provider);
         Task<Provider> UpdateProviderAsync(int providerId, ProviderModel provider);
-        Task<PageResponse<Provider>> GetProvidersAsync(PageRequest<ProviderFilter, ProviderSortingFields> pageRequest);
-        Task<Provider> GetProviderId(int id);
+        Task<PageResponse<ProviderResponse>> GetProvidersAsync(PageRequest<ProviderFilter, ProviderSortingFields> pageRequest);
+        Task<ProviderResponse> GetProviderId(int id);
     }
 
     public class ProviderService : IProviderService
@@ -81,12 +82,13 @@
             return prov;
         }
 
-        public async Task<Provider> GetProviderId(int id)
+        public async Task<ProviderResponse> GetProviderId(int id)
         {
-            return await _dbContext.Providers.FindAsync(id);
+            var provider =  await _dbContext.Providers.Where(c => c.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            return this._mapper.Map<ProviderResponse>(provider);
         }
 
-        public async Task<PageResponse<Provider>> GetProvidersAsync(PageRequest<ProviderFilter, ProviderSortingFields> pageRequest)
+        public async Task<PageResponse<ProviderResponse>> GetProvidersAsync(PageRequest<ProviderFilter, ProviderSortingFields> pageRequest)
         {
             var filterQuery = _dbContext.Providers.Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
@@ -111,9 +113,11 @@
 
             #endregion
 
-            return new PageResponse<Provider>
+            var itens = this._mapper.Map<List<ProviderResponse>>(nodes);
+
+            return new PageResponse<ProviderResponse>
             {
-                Nodes = nodes,
+                Nodes = itens,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount

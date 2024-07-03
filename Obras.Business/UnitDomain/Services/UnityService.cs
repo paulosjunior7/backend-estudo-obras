@@ -65,7 +65,7 @@ namespace Obras.Business.UnitDomain.Services
         {
             var unity = await _dbContext.Unities.FindAsync(id);
 
-            if (unity.CompanyId != CompanyId)
+            if (unity != null && unity.CompanyId != CompanyId)
             {
                 throw new Exception("Unidade não encontrada.");
             }

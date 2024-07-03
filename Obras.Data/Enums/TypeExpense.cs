@@ -14,11 +14,11 @@
     {
         public override TypeExpense Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var value = reader.GetInt32();
+            var value = reader.GetString();
             return value switch
             {
-                0 => TypeExpense.DespesaFinal,
-                1 => TypeExpense.DespesaDiversa,
+                "0" => TypeExpense.DespesaFinal,
+                "1" => TypeExpense.DespesaDiversa,
                 _ => throw new JsonException("Invalid value for TypeExpense")
             };
         }

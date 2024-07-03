@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Obras.Business.BrandDomain.Enums;
 using Obras.Business.BrandDomain.Models;
+using Obras.Business.BrandDomain.Response;
+using Obras.Business.ConstructionDocumentationDomain.Response;
 using Obras.Business.SharedDomain.Enums;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
@@ -17,8 +19,8 @@ namespace Obras.Business.BrandDomain.Services
     {
         Task<Brand> CreateAsync(BrandModel brand);
         Task<Brand> UpdateBrandAsync(int brandId, BrandModel brand);
-        Task<PageResponse<Brand>> GetBrandsAsync(PageRequest<BrandFilter, BrandSortingFields> pageRequest);
-        Task<Brand> GetBrandId(int id);
+        Task<PageResponse<BrandResponse>> GetBrandsAsync(PageRequest<BrandFilter, BrandSortingFields> pageRequest);
+        Task<BrandResponse> GetBrandId(int id);
     }
 
     public class BrandService : IBrandService
@@ -66,12 +68,14 @@ namespace Obras.Business.BrandDomain.Services
             return bra;
         }
 
-        public async Task<Brand> GetBrandId(int id)
+        public async Task<BrandResponse> GetBrandId(int id)
         {
-            return await _dbContext.Brands.FindAsync(id);
+            var response =  await _dbContext.Brands.FindAsync(id);
+
+            return _mapper.Map<BrandResponse>(response);
         }
 
-        public async Task<PageResponse<Brand>> GetBrandsAsync(PageRequest<BrandFilter, BrandSortingFields> pageRequest)
+        public async Task<PageResponse<BrandResponse>> GetBrandsAsync(PageRequest<BrandFilter, BrandSortingFields> pageRequest)
         {
             var filterQuery = _dbContext.Brands.Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
@@ -96,9 +100,11 @@ namespace Obras.Business.BrandDomain.Services
 
             #endregion
 
-            return new PageResponse<Brand>
+            var branchs = _mapper.Map<List<BrandResponse>>(nodes);
+
+            return new PageResponse<BrandResponse>
             {
-                Nodes = nodes,
+                Nodes = branchs,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount
