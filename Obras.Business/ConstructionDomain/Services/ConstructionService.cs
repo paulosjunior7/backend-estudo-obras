@@ -101,7 +101,7 @@ namespace Obras.Business.ConstructionDomain.Services
 
         public async Task<PageResponse<Construction>> GetAsync(PageRequest<ConstructionFilter, ConstructionSortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.Constructions.Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
+            var filterQuery = _dbContext.Constructions.AsNoTracking().Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 

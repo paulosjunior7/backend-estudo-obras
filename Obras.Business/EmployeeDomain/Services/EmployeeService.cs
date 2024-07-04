@@ -39,6 +39,18 @@ namespace Obras.Business.EmployeeDomain.Services
             emp.ChangeDate = DateTime.Now;
             emp.CompanyId = (int)(model.CompanyId == null ? 0 : model.CompanyId);
 
+            // Certifique-se de que a responsabilidade existe no banco de dados
+            var responsibility = await _dbContext.Responsibilities
+                .SingleOrDefaultAsync(r => r.Id == emp.ResponsibilityId);
+
+            if (responsibility == null)
+            {
+                throw new Exception($"Responsibility with Id {emp.ResponsibilityId} does not exist.");
+            }
+
+            // Anexe a responsabilidade existente ao contexto sem marcá-la como modificada
+            _dbContext.Entry(responsibility).State = EntityState.Unchanged;
+
             _dbContext.Employees.Add(emp);
             try
             {

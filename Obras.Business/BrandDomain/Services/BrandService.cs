@@ -77,7 +77,7 @@ namespace Obras.Business.BrandDomain.Services
 
         public async Task<PageResponse<BrandResponse>> GetBrandsAsync(PageRequest<BrandFilter, BrandSortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.Brands.Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
+            var filterQuery = _dbContext.Brands.AsNoTracking().Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 
