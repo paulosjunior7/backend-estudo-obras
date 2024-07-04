@@ -20,6 +20,7 @@ namespace Obras.Business.ConstructionDomain.Services
         Task<Construction> UpdateAsync(int id, ConstructionModel model);
         Task<Construction> UpdateAddressAsync(int id, User user, ConstructionAddressInput input);
         Task<Construction> UpdateDateAsync(int id, User user, ConstructionDateInput input);
+        Task<Construction> UpdateDetailsAsync(int id, User user, ConstructionDetailsInput input);
         Task<PageResponse<Construction>> GetAsync(PageRequest<ConstructionFilter, ConstructionSortingFields> pageRequest);
         Task<Construction> GetId(int id);
     }
@@ -237,6 +238,30 @@ namespace Obras.Business.ConstructionDomain.Services
                 construction.DateBegin = input.DateBegin;
                 construction.DateEnd = input.DateEnd;
                 construction.StatusConstruction = input.StatusConstruction;
+                construction.ChangeUserId = user.Id;
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return construction;
+        }
+
+        public async Task<Construction> UpdateDetailsAsync(int id, User user, ConstructionDetailsInput input)
+        {
+            var construction = await _dbContext.Constructions.FindAsync(id);
+
+            if (construction != null)
+            {
+                construction.UndergroundUse = input.UndergroundUse;
+                construction.SaleValue = input.SaleValue;
+                construction.MunicipalRegistration = input.MunicipalRegistration;
+                construction.MotherEnrollment = input.MotherEnrollment;
+                construction.Longitude = input.Longitude;
+                construction.License = input.License;
+                construction.Latitude = input.Latitude;
+                construction.Cno = input.Cno;
+                construction.BuildingArea = input.BuildingArea;
+                construction.BatchArea = input.BatchArea;
+                construction.Art = input.Art;
                 construction.ChangeUserId = user.Id;
                 await _dbContext.SaveChangesAsync();
             }
