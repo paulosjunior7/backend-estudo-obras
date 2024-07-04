@@ -27,13 +27,24 @@ namespace Obras.Api.Controllers
         private readonly IMapper mapper;
         private readonly DbSet<User> userRepository;
         private readonly IValidator<ConstructionInput> _constructionValidator;
+        private readonly IValidator<ConstructionAddressInput> _constructionAddressValidator;
+        private readonly IValidator<ConstructionDateInput> _constructionDateValidator;
 
-        public ConstrucaoController(IValidator<ConstructionInput> constructionValidator, IConstructionService constructionService, IMapper mapper, ObrasDBContext dBContext)
+        public ConstrucaoController(
+            IValidator<ConstructionInput> constructionValidator,
+            IValidator<ConstructionAddressInput> constructionAddressValidator,
+            IValidator<ConstructionDateInput> constructionDateValidator,
+            IConstructionService constructionService,
+            IMapper mapper,
+            ObrasDBContext dBContext
+        )
         {
             this.constructionService = constructionService;
             this.mapper = mapper;
             this.userRepository = dBContext.User;
             this._constructionValidator = constructionValidator;
+            this._constructionAddressValidator = constructionAddressValidator;
+            this._constructionDateValidator = constructionDateValidator;
         }
 
         [HttpGet("{id}")]
@@ -73,17 +84,15 @@ namespace Obras.Api.Controllers
             return Ok(model);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ConstructionInput input)
+        [HttpPut("{id}/endereco")]
+        public async Task<IActionResult> UpdateAddress(int id, [FromBody] ConstructionAddressInput input)
         {
-            var validationResult = _constructionValidator.Validate(input);
+            var validationResult = _constructionAddressValidator.Validate(input);
 
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors);
             }
-
-            var model = this.mapper.Map<ConstructionModel>(input);
 
             var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault()?.Value;
             if (userId == null) return Unauthorized();
@@ -92,11 +101,30 @@ namespace Obras.Api.Controllers
             if (user == null || user.CompanyId == null)
                 throw new Exception("Usuário não exite ou não possui empresa vinculada!");
 
-            model.ChangeUserId = user.Id;
-            model.CompanyId = (int) user.CompanyId;
+            var response = await constructionService.UpdateAddressAsync(id, user, input);
+            var model = mapper.Map<ConstructionModel>(response);
+            return Ok(model);
+        }
 
-            var response = await constructionService.UpdateAsync(id, model);
-            model.Id = id;
+        [HttpPut("{id}/dados")]
+        public async Task<IActionResult> UpdateDate(int id, [FromBody] ConstructionDateInput input)
+        {
+            var validationResult = _constructionDateValidator.Validate(input);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
+            var userId = User?.Identities?.FirstOrDefault()?.Claims?.Where(a => a.Type == "sub")?.FirstOrDefault()?.Value;
+            if (userId == null) return Unauthorized();
+
+            var user = await userRepository.FindAsync(userId);
+            if (user == null || user.CompanyId == null)
+                throw new Exception("Usuário não exite ou não possui empresa vinculada!");
+
+            var response = await constructionService.UpdateDateAsync(id, user, input);
+            var model = mapper.Map<ConstructionModel>(response);
             return Ok(model);
         }
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Obras.Business.ConstructionDomain.Enums;
 using Obras.Business.ConstructionDomain.Models;
+using Obras.Business.ConstructionDomain.Request;
 using Obras.Business.SharedDomain.Enums;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
@@ -17,6 +18,8 @@ namespace Obras.Business.ConstructionDomain.Services
     {
         Task<Construction> CreateAsync(ConstructionModel model);
         Task<Construction> UpdateAsync(int id, ConstructionModel model);
+        Task<Construction> UpdateAddressAsync(int id, User user, ConstructionAddressInput input);
+        Task<Construction> UpdateDateAsync(int id, User user, ConstructionDateInput input);
         Task<PageResponse<Construction>> GetAsync(PageRequest<ConstructionFilter, ConstructionSortingFields> pageRequest);
         Task<Construction> GetId(int id);
     }
@@ -202,6 +205,43 @@ namespace Obras.Business.ConstructionDomain.Services
             }
 
             return filterQuery;
+        }
+
+        public async Task<Construction> UpdateAddressAsync(int id, User user, ConstructionAddressInput input)
+        {
+            var construction = await _dbContext.Constructions.FindAsync(id);
+
+            if (construction != null)
+            {
+                construction.Address = input.Address;
+                construction.City = input.City;
+                construction.Complement = input.Complement;
+                construction.Neighbourhood = input.Neighbourhood;
+                construction.State = input.State;
+                construction.Number = input.Number;
+                construction.ZipCode = input.ZipCode;
+                construction.ChangeUserId = user.Id;
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return construction;
+        }
+
+        public async Task<Construction> UpdateDateAsync(int id, User user, ConstructionDateInput input)
+        {
+            var construction = await _dbContext.Constructions.FindAsync(id);
+
+            if (construction != null)
+            {
+                construction.Identifier = input.Identifier;
+                construction.DateBegin = input.DateBegin;
+                construction.DateEnd = input.DateEnd;
+                construction.StatusConstruction = input.StatusConstruction;
+                construction.ChangeUserId = user.Id;
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return construction;
         }
     }
 }
