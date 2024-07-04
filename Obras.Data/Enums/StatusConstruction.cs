@@ -6,21 +6,21 @@
 
     public enum StatusConstruction
     {
-        CONSTRUCAO = 'C',
-        FINALIZADA = 'F',
-        VENDIDA = 'V'
+        CONSTRUCAO = 0,
+        FINALIZADA = 1,
+        VENDIDA = 2
     }
 
     public class StatusConstructionConverter : JsonConverter<StatusConstruction>
     {
         public override StatusConstruction Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var value = reader.GetString();
+            var value = reader.GetUInt32();
             return value switch
             {
-                "C" => StatusConstruction.CONSTRUCAO,
-                "F" => StatusConstruction.FINALIZADA,
-                "V" => StatusConstruction.VENDIDA,
+                0 => StatusConstruction.CONSTRUCAO,
+                1 => StatusConstruction.FINALIZADA,
+                2 => StatusConstruction.VENDIDA,
                 _ => throw new JsonException("Invalid value for StatusConstruction")
             };
         }
@@ -29,12 +29,12 @@
         {
             var stringValue = value switch
             {
-                StatusConstruction.CONSTRUCAO => "C",
-                StatusConstruction.FINALIZADA => "F",
-                StatusConstruction.VENDIDA => "V",
+                StatusConstruction.CONSTRUCAO => 0,
+                StatusConstruction.FINALIZADA => 1,
+                StatusConstruction.VENDIDA => 2,
                 _ => throw new JsonException("Invalid value for StatusConstruction")
             };
-            writer.WriteStringValue(stringValue);
+            writer.WriteNumberValue(stringValue);
         }
     }
 }

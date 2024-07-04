@@ -11,7 +11,6 @@ namespace Obras.Api.Validators
         public ConstructionValidator()
         {
             RuleFor(user => user.Identifier)
-                .NotEmpty()
                 .MaximumLength(50);
 
             RuleFor(user => user.ZipCode)
@@ -35,8 +34,7 @@ namespace Obras.Api.Validators
             RuleFor(user => user.Complement)
                 .MaximumLength(100);
 
-            RuleFor(user => user.Active)
-                .NotEmpty();
+            RuleFor(user => user.Active);
         }
     }
 }

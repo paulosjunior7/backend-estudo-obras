@@ -10,7 +10,7 @@ namespace Obras.Data.EntitiesConfiguration
         {
             builder.HasKey(t => t.Id);
             builder.Property(p => p.Id).UseIdentityColumn();
-            builder.Property(p => p.Identifier).HasMaxLength(50).IsRequired();
+            builder.Property(p => p.Identifier).HasMaxLength(50);
             builder.Property(p => p.StatusConstruction);
             builder.Property(p => p.DateBegin);
             builder.Property(p => p.DateEnd);
