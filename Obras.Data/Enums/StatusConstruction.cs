@@ -21,7 +21,7 @@
                 0 => StatusConstruction.CONSTRUCAO,
                 1 => StatusConstruction.FINALIZADA,
                 2 => StatusConstruction.VENDIDA,
-                _ => throw new JsonException("Invalid value for StatusConstruction")
+                _ => StatusConstruction.CONSTRUCAO
             };
         }
 
@@ -32,7 +32,7 @@
                 StatusConstruction.CONSTRUCAO => 0,
                 StatusConstruction.FINALIZADA => 1,
                 StatusConstruction.VENDIDA => 2,
-                _ => throw new JsonException("Invalid value for StatusConstruction")
+                _ => 0
             };
             writer.WriteNumberValue(stringValue);
         }
