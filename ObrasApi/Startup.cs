@@ -65,7 +65,7 @@ namespace ObrasApi
             //.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")), optionsLifetime: ServiceLifetime.Singleton);
             services.AddDbContext<ObrasDBContext>(
                 optionsAction: options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly(typeof(ObrasDBContext).Assembly.FullName)),
-                contextLifetime: ServiceLifetime.Singleton);
+                contextLifetime: ServiceLifetime.Scoped);
 
             services.AddCustomIdentityAuth();
 
