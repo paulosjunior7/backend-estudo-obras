@@ -55,5 +55,6 @@ namespace Obras.Data
         public DbSet<ConstructionDocumentation> ConstructionDocumentations { get; set; }
         public DbSet<ConstructionExpense> ConstructionExpenses { get; set; }
         public DbSet<ConstructionAdvanceMoney> ConstructionAdvancesMoney { get; set; }
+        public DbSet<TotalExpense> TotalExpense { get; set; }
     }
 }

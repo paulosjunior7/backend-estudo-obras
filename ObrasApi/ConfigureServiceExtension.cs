@@ -37,6 +37,7 @@
     using Obras.Business.ConstructionExpenseDomain.Services;
     using Obras.Business.ConstructionAdvanceMoneyDomain.Services;
     using Microsoft.OpenApi.Models;
+    using Obras.Business.DashboardDomain.Services;
 
     public static class ConfigureServiceExtension
     {
@@ -127,6 +128,7 @@
             services.AddTransient<IConstructionDocumentationService, ConstructionDocumentationService>();
             services.AddTransient<IConstructionExpenseService, ConstructionExpenseService>();
             services.AddTransient<IConstructionAdvanceMoneyService, ConstructionAdvanceMoneyService>();
+            services.AddTransient<IDashboardService, DashboardService>();
         }
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)

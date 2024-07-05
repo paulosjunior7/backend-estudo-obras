@@ -8,6 +8,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
     <PackageReference Include="System.IO.Abstractions" Version="17.0.24" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +44,11 @@
     <None Remove="ConstructionMaterialDomain\Response\" />
     <None Remove="BrandDomain\Response\" />
     <None Remove="ProviderDomain\Response\" />
+    <None Remove="PeopleDomain\Response\" />
+    <None Remove="DashboardDomain\" />
+    <None Remove="DashboardDomain\Response\" />
+    <None Remove="DashboardDomain\Services\" />
+    <None Remove="SharedDomain\Cache\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BrandDomain\Request\" />
@@ -73,5 +79,10 @@
     <Folder Include="ConstructionMaterialDomain\Response\" />
     <Folder Include="BrandDomain\Response\" />
     <Folder Include="ProviderDomain\Response\" />
+    <Folder Include="PeopleDomain\Response\" />
+    <Folder Include="DashboardDomain\" />
+    <Folder Include="DashboardDomain\Response\" />
+    <Folder Include="DashboardDomain\Services\" />
+    <Folder Include="SharedDomain\Cache\" />
   </ItemGroup>
 </Project>

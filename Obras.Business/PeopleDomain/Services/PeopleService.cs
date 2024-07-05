@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.EntityFrameworkCore;
+using Obras.Business.ConstructionMaterialDomain.Response;
 using Obras.Business.PeopleDomain.Enums;
 using Obras.Business.PeopleDomain.Models;
+using Obras.Business.PeopleDomain.Response;
 using Obras.Business.SharedDomain.Enums;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
@@ -17,8 +20,8 @@ namespace Obras.Business.PeopleDomain.Services
     {
         Task<People> CreateAsync(PeopleModel model);
         Task<People> UpdatePeopleAsync(int id, PeopleModel model);
-        Task<PageResponse<People>> GetPeoplesAsync(PageRequest<PeopleFilter, PeopleSortingFields> pageRequest);
-        Task<People> GetPeopleId(int id);
+        Task<PageResponse<PeopleResponse>> GetPeoplesAsync(PageRequest<PeopleFilter, PeopleSortingFields> pageRequest);
+        Task<PeopleResponse> GetPeopleId(int id);
     }
 
     public class PeopleService : IPeopleService
@@ -83,12 +86,14 @@ namespace Obras.Business.PeopleDomain.Services
             return peo;
         }
 
-        public async Task<People> GetPeopleId(int id)
+        public async Task<PeopleResponse> GetPeopleId(int id)
         {
-            return await _dbContext.Peoples.FindAsync(id);
+            var response = await _dbContext.Peoples.FindAsync(id);
+
+            return _mapper.Map<PeopleResponse>(response);
         }
 
-        public async Task<PageResponse<People>> GetPeoplesAsync(PageRequest<PeopleFilter, PeopleSortingFields> pageRequest)
+        public async Task<PageResponse<PeopleResponse>> GetPeoplesAsync(PageRequest<PeopleFilter, PeopleSortingFields> pageRequest)
         {
             var filterQuery = _dbContext.Peoples.Where(x => x.CompanyId == pageRequest.Filter.CompanyId);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
@@ -113,9 +118,11 @@ namespace Obras.Business.PeopleDomain.Services
 
             #endregion
 
-            return new PageResponse<People>
+            var itens = _mapper.Map<List<PeopleResponse>>(nodes);
+
+            return new PageResponse<PeopleResponse>
             {
-                Nodes = nodes,
+                Nodes = itens,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount
