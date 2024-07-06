@@ -4,7 +4,6 @@ using Obras.Business.GroupDomain.Models;
 using Obras.Business.ProductDomain.Models;
 using Obras.Business.ProviderDomain.Models;
 using Obras.Business.UnitDomain.Models;
-using Obras.Data.Entities;
 using System;
 namespace Obras.Business.ConstructionMaterialDomain.Response
 {

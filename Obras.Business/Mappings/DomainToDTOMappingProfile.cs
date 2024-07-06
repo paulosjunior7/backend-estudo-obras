@@ -84,9 +84,9 @@ namespace Obras.Business.Mappings
             CreateMap<TotalExpense, TotalExpenseResponse>().ReverseMap();
             CreateMap<ConstructionModel, Construction>().ReverseMap();
             CreateMap<ConstructionInput, ConstructionModel>().ReverseMap();
-            CreateMap<ConstructionInvestorModel, ConstructionInvestor>().ReverseMap();
+            CreateMap<ConstructionInvestorModel, ConstructionInvestorResponse>().ReverseMap();
             CreateMap<ConstructionInvestorModel, ConstructionInvestorInput>().ReverseMap();
-            CreateMap<ConstructionInvestorResponse, ConstructionInvestor>().ReverseMap();
+            CreateMap<ConstructionInvestor, ConstructionInvestorResponse>().ReverseMap();
             CreateMap<ConstructionBatchModel, ConstructionBatch>().ReverseMap();
             CreateMap<ConstructionBatchInput, ConstructionBatchModel>().ReverseMap();
             CreateMap<ConstructionHouseModel, ConstructionHouse>().ReverseMap();

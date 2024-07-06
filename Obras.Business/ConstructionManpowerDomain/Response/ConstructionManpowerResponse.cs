@@ -2,7 +2,6 @@
 using Obras.Business.ConstructionInvestorDomain.Response;
 using Obras.Business.EmployeeDomain.Models;
 using Obras.Business.OutsourcedDomain.Models;
-using Obras.Data.Entities;
 using System;
 namespace Obras.Business.ConstructionManpowerDomain.Response
 {

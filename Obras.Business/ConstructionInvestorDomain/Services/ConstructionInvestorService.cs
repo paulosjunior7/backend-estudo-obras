@@ -104,7 +104,7 @@ namespace Obras.Business.ConstructionInvestorDomain.Services
 
             var investors = _mapper.Map<List<ConstructionInvestorResponse>>(nodes);
 
-            return new PageResponse<ConstructionInvestorResponse>
+            return new PageResponse<Response.ConstructionInvestorResponse>
             {
                 Nodes = investors,
                 HasNextPage = hasNextPage,

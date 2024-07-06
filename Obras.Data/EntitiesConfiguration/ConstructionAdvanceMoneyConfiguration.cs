@@ -19,7 +19,7 @@ namespace Obras.Data.EntitiesConfiguration
             builder.Property(p => p.ConstructionInvestorId).IsRequired();
 
             builder.HasOne(e => e.Construction).WithMany(e => e.ConstructionAdvanceMoneys).HasForeignKey(e => e.ConstructionId);
-            builder.HasOne(e => e.ConstructionInvestor).WithMany(e => e.ConstructionAdvanceMoneys).HasForeignKey(e => e.ConstructionInvestorId);
+            builder.HasOne(e => e.ConstructionInvestor).WithMany(e => e.ConstructionAdvanceMoneys).HasForeignKey(e => e.ConstructionInvestorId).IsRequired(false);
             builder.HasOne(e => e.RegistrationUser).WithMany(e => e.RegistrationConstructionAdvanceMoneys).HasForeignKey(e => e.RegistrationUserId);
             builder.HasOne(e => e.ChangeUser).WithMany(e => e.ChangeConstructionAdvanceMoneys).HasForeignKey(e => e.ChangeUserId);
         }

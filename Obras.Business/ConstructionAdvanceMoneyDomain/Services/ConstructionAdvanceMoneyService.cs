@@ -71,12 +71,18 @@ namespace Obras.Business.ConstructionAdvanceMoneyDomain.Services
 
         public async Task<ConstructionAdvanceMoney?> GetId(int constructionId, int id)
         {
-            return await _dbContext.ConstructionAdvancesMoney.Where(c => c.Id == id && c.ConstructionId == constructionId).FirstOrDefaultAsync();
+            return await _dbContext.ConstructionAdvancesMoney
+                .Include(a => a.ConstructionInvestor)
+                .ThenInclude(a => a.People)
+                .Where(c => c.Id == id && c.ConstructionId == constructionId).FirstOrDefaultAsync();
         }
 
         public async Task<PageResponse<ConstructionAdvanceMoney>> GetAsync(PageRequest<ConstructionAdvanceMoneyFilter, ConstructionAdvanceMoneySortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.ConstructionAdvancesMoney.Where(x => x.Id > 0);
+            var filterQuery = _dbContext.ConstructionAdvancesMoney
+                .Include(a => a.ConstructionInvestor)
+                .ThenInclude(a => a.People)
+                .Where(x => x.Id > 0);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 

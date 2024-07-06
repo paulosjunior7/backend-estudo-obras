@@ -84,8 +84,7 @@ namespace Obras.Business.ConstructionBatchDomain.Services
 
             int totalCount = await dataQuery.CountAsync();
 
-            List<ConstructionBatch> nodes = await dataQuery.Skip((pageRequest.Pagination.PageNumber - 1) * pageRequest.Pagination.PageSize)
-                   .Take(pageRequest.Pagination.PageSize).AsNoTracking().ToListAsync();
+            List<ConstructionBatch> nodes = await dataQuery.ToListAsync();
 
             #endregion
 

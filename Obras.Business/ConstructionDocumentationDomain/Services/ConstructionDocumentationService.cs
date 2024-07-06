@@ -73,7 +73,10 @@ namespace Obras.Business.ConstructionDocumentationDomain.Services
 
         public async Task<ConstructionDocumentationResponse> GetId(int constructionId, int id)
         {
-            var response =  await _dbContext.ConstructionDocumentations.Include(a => a.Documentation).Where(c => c.Id == id && c.ConstructionId == constructionId).FirstOrDefaultAsync();
+            var response =  await _dbContext.ConstructionDocumentations
+                .Include(a => a.ConstructionInvestor)
+                .ThenInclude(a => a.People)
+                .Include(a => a.Documentation).Where(c => c.Id == id && c.ConstructionId == constructionId).FirstOrDefaultAsync();
 
             return _mapper.Map<ConstructionDocumentationResponse>(response);
         }

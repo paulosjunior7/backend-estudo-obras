@@ -73,14 +73,21 @@ namespace Obras.Business.ConstructionExpenseDomain.Services
 
         public async Task<ConstructionExpenseResponse> GetId(int constructionId, int id)
         {
-            var response = await _dbContext.ConstructionExpenses.Include(c => c.Expense).Where(c => c.Id == id && c.ConstructionId == constructionId).AsNoTracking().FirstOrDefaultAsync();
+            var response = await _dbContext.ConstructionExpenses
+                .Include(a => a.ConstructionInvestor)
+                .ThenInclude(a => a.People)
+                .Include(c => c.Expense)
+                .Where(c => c.Id == id && c.ConstructionId == constructionId).AsNoTracking().FirstOrDefaultAsync();
 
             return _mapper.Map<ConstructionExpenseResponse>(response);
         }
 
         public async Task<PageResponse<ConstructionExpenseResponse>> GetAsync(PageRequest<ConstructionExpenseFilter, ConstructionExpenseSortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.ConstructionExpenses.Include(c => c.Expense).AsNoTracking().Where(x => x.Id > 0);
+            var filterQuery = _dbContext.ConstructionExpenses
+                .Include(a => a.ConstructionInvestor)
+                .ThenInclude(a => a.People)
+                .Include(c => c.Expense).AsNoTracking().Where(x => x.Id > 0);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 
