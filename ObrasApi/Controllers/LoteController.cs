@@ -48,7 +48,7 @@ namespace Obras.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(this.mapper.Map<ConstructionBatchModel>(response));
+            return Ok(response);
         }
 
         [HttpPost]
