@@ -83,7 +83,11 @@ namespace Obras.Business.ConstructionDocumentationDomain.Services
 
         public async Task<PageResponse<ConstructionDocumentationResponse>> GetAsync(PageRequest<ConstructionDocumentationFilter, ConstructionDocumentationSortingFields> pageRequest)
         {
-            var filterQuery = _dbContext.ConstructionDocumentations.Include(a => a.Documentation).Where(x => x.Id > 0).AsNoTracking();
+            var filterQuery = _dbContext.ConstructionDocumentations
+                .Include(a => a.ConstructionInvestor)
+                .ThenInclude(a => a.People)
+                .Include(a => a.Documentation)
+                .Where(x => x.Id > 0).AsNoTracking();
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
 

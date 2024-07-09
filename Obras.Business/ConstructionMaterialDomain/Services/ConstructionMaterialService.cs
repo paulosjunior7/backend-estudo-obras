@@ -86,6 +86,8 @@ namespace Obras.Business.ConstructionMaterialDomain.Services
                     .Include(a => a.Provider)
                     .Include(a => a.Unity)
                     .Include(a => a.Brand)
+                    .Include(a => a.ConstructionInvestor)
+                    .ThenInclude(a => a.People)
                     .Where(c => c.Id == id && c.ConstructionId == construcaoId)
             .AsNoTracking().SingleOrDefaultAsync();
 
@@ -100,6 +102,8 @@ namespace Obras.Business.ConstructionMaterialDomain.Services
                 .Include(a => a.Provider)
                 .Include(a => a.Unity)
                 .Include(a => a.Brand)
+                .Include(a => a.ConstructionInvestor)
+                .ThenInclude(a => a.People)
                 .Where(x => x.Id > 0);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
             #region Obtain Nodes
