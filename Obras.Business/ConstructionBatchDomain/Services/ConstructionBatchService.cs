@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.EntityFrameworkCore;
 using Obras.Business.ConstructionBatchDomain.Enums;
 using Obras.Business.ConstructionBatchDomain.Models;
+using Obras.Business.ConstructionBatchDomain.Response;
+using Obras.Business.ConstructionManpowerDomain.Response;
 using Obras.Business.SharedDomain.Enums;
 using Obras.Business.SharedDomain.Models;
 using Obras.Data;
@@ -17,8 +20,8 @@ namespace Obras.Business.ConstructionBatchDomain.Services
     {
         Task<ConstructionBatch> CreateAsync(ConstructionBatchModel model);
         Task<ConstructionBatch> UpdateAsync(int id, ConstructionBatchModel model);
-        Task<PageResponse<ConstructionBatch>> GetAsync(PageRequest<ConstructionBatchFilter, ConstructionBatchSortingFields> pageRequest);
-        Task<ConstructionBatch> GetId(int constructionId, int id);
+        Task<PageResponse<ConstructionBatchResponse>> GetAsync(PageRequest<ConstructionBatchFilter, ConstructionBatchSortingFields> pageRequest);
+        Task<ConstructionBatchResponse> GetId(int constructionId, int id);
     }
     public class ConstructionBatchService : IConstructionBatchService
     {
@@ -68,12 +71,14 @@ namespace Obras.Business.ConstructionBatchDomain.Services
             return constructionBatch;
         }
 
-        public async Task<ConstructionBatch> GetId(int constructionId, int id)
+        public async Task<ConstructionBatchResponse> GetId(int constructionId, int id)
         {
-            return await _dbContext.ConstructionBatchs.Where(c => c.Id == id && c.ConstructionId == constructionId).FirstOrDefaultAsync();
+            var response = await _dbContext.ConstructionBatchs.Include(a => a.People).Where(c => c.Id == id && c.ConstructionId == constructionId).FirstOrDefaultAsync();
+
+            return _mapper.Map<ConstructionBatchResponse>(response);
         }
 
-        public async Task<PageResponse<ConstructionBatch>> GetAsync(PageRequest<ConstructionBatchFilter, ConstructionBatchSortingFields> pageRequest)
+        public async Task<PageResponse<ConstructionBatchResponse>> GetAsync(PageRequest<ConstructionBatchFilter, ConstructionBatchSortingFields> pageRequest)
         {
             var filterQuery = _dbContext.ConstructionBatchs.Include(a => a.People).Where(x => x.Id > 0);
             filterQuery = LoadFilterQuery(pageRequest.Filter, filterQuery);
@@ -97,9 +102,11 @@ namespace Obras.Business.ConstructionBatchDomain.Services
 
             #endregion
 
-            return new PageResponse<ConstructionBatch>
+            var itens = _mapper.Map<List<ConstructionBatchResponse>>(nodes);
+
+            return new PageResponse<ConstructionBatchResponse>
             {
-                Nodes = nodes,
+                Nodes = itens,
                 HasNextPage = hasNextPage,
                 HasPreviousPage = hasPrevPage,
                 TotalCount = totalCount

@@ -7,6 +7,7 @@ using Obras.Business.ConstructionAdvanceMoneyDomain.Models;
 using Obras.Business.ConstructionAdvanceMoneyDomain.Request;
 using Obras.Business.ConstructionBatchDomain.Models;
 using Obras.Business.ConstructionBatchDomain.Request;
+using Obras.Business.ConstructionBatchDomain.Response;
 using Obras.Business.ConstructionDocumentationDomain.Models;
 using Obras.Business.ConstructionDocumentationDomain.Request;
 using Obras.Business.ConstructionDocumentationDomain.Response;
@@ -89,6 +90,7 @@ namespace Obras.Business.Mappings
             CreateMap<ConstructionInvestor, ConstructionInvestorResponse>().ReverseMap();
             CreateMap<ConstructionBatchModel, ConstructionBatch>().ReverseMap();
             CreateMap<ConstructionBatchInput, ConstructionBatchModel>().ReverseMap();
+            CreateMap<ConstructionBatchResponse, ConstructionBatch>().ReverseMap();
             CreateMap<ConstructionHouseModel, ConstructionHouse>().ReverseMap();
             CreateMap<ConstructionHouseModel, ConstructionHouseInput>().ReverseMap();
             CreateMap<ConstructionHouseResponse, ConstructionHouse>().ReverseMap();

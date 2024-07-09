@@ -49,6 +49,7 @@
     <None Remove="DashboardDomain\Response\" />
     <None Remove="DashboardDomain\Services\" />
     <None Remove="SharedDomain\Cache\" />
+    <None Remove="ConstructionBatchDomain\Response\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BrandDomain\Request\" />
@@ -84,5 +85,6 @@
     <Folder Include="DashboardDomain\Response\" />
     <Folder Include="DashboardDomain\Services\" />
     <Folder Include="SharedDomain\Cache\" />
+    <Folder Include="ConstructionBatchDomain\Response\" />
   </ItemGroup>
 </Project>
